@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="../scripts/utils/auth-guard.js"></script>
+  <title>Taller de Mecánica Diego - Orden de Servicio</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+  <link rel="stylesheet" href="../styles/css/side_bar.css">
+  <link rel="stylesheet" href="../styles/css/header.css">
+  <link rel="stylesheet" href="../styles/css/orden.css">
+  <link rel="stylesheet" href="../styles/css/notification.css">
+  <link rel="stylesheet" href="../styles/css/modal-confirm.css">
+  <link href="https://fonts.googleapis.com/css2?family=Istok+Web:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Header dinámico -->
+  <div id="header"></div>
+  
+  <div class="container">
+    <!-- Sidebar principal -->
+    <div id="side-bar-container" class="side-bar-container"></div>
+    
+    <!-- Sidebar secundario de Operaciones -->
+    <div id="orden-sidebar" class="orden-sidebar">
+      <div class="orden-sidebar-header">OPERACIONES</div>
+      <ul class="orden-sidebar-menu">
+        <li><a href="#" class="active" data-section="venta-producto">Venta de producto</a></li>
+        <li><a href="#" data-section="servicios">Servicios</a></li>
+        <li><a href="#" data-section="historial-servicios">Historial de servicios</a></li>
+        <li><a href="#" data-section="pendiente">Pendiente</a></li>
+        <li><a href="#" data-section="revisado">Revisado</a></li>
+      </ul>
+    </div>
+
+    <!-- Contenido principal -->
+    <main class="main-content with-orden-sidebar">
+      <section class="orden-section">
+        <!-- Contenido dinámico según la sección seleccionada -->
+        <div id="orden-content">
+          <p>Selecciona una opción del menú</p>
+        </div>
+
+        <!-- Template para Venta de Producto -->
+        <template id="venta-producto-template">
+          <div class="venta-producto-container">
+            <div class="venta-form-row">
+              <div class="form-field">
+                <label>Producto</label>
+                <input type="text" id="producto-search" placeholder="Buscar producto..." autocomplete="off">
+                <div id="producto-dropdown" class="producto-dropdown" hidden></div>
+              </div>
+              <div class="form-field">
+                <label>Cantidad</label>
+                <input type="number" id="cantidad-input" min="1" value="1">
+              </div>
+              <div class="form-field-btn">
+                <button id="add-producto-btn" class="btn-add">Añadir</button>
+              </div>
+            </div>
+
+            <div class="venta-table-container">
+              <div class="table-header">
+                <div class="header-item">Producto</div>
+                <div class="header-item">Cantidad</div>
+                <div class="header-item">Precio Unit.</div>
+                <div class="header-item">Total</div>
+                <div class="header-item">Acciones</div>
+              </div>
+              <div class="table-body" id="productos-table-body"></div>
+              <div class="venta-total">
+                <strong>Total:</strong>
+                <span id="total-venta">$0</span>
+              </div>
+            </div>
+
+            <div class="venta-actions">
+              <button id="registrar-venta-btn" class="btn-registrar">Registrar venta</button>
+            </div>
+          </div>
+        </template>
+        
+      </section>
+    </main>
+  </div>
+  
+  <!-- Contenedor para modales -->
+  <div id="modal-container"></div>
+  
+  <!-- Script principal -->
+  <script type="module" src="../scripts/header-actions.js"></script>
+  <script type="module" src="../scripts/orden.js"></script>
+</body>
+</html>

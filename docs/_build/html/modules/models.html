@@ -1,0 +1,769 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modelos de Base de Datos &mdash; Taller Diego - Backend API 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Esquemas de Validación" href="schemas.html" />
+    <link rel="prev" title="Backend API Documentation" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Taller Diego - Backend API
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Módulos Backend</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Modelos de Base de Datos</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-db.models.producto">Productos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#db.models.producto.Producto"><code class="docutils literal notranslate"><span class="pre">Producto</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.producto.Producto.id"><code class="docutils literal notranslate"><span class="pre">Producto.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.producto.Producto.nombre"><code class="docutils literal notranslate"><span class="pre">Producto.nombre</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.producto.Producto.descripcion"><code class="docutils literal notranslate"><span class="pre">Producto.descripcion</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.producto.Producto.precioVenta"><code class="docutils literal notranslate"><span class="pre">Producto.precioVenta</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.producto.Producto.precioCompra"><code class="docutils literal notranslate"><span class="pre">Producto.precioCompra</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.producto.Producto.marca"><code class="docutils literal notranslate"><span class="pre">Producto.marca</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.producto.Producto.categoria"><code class="docutils literal notranslate"><span class="pre">Producto.categoria</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.producto.Producto.stock"><code class="docutils literal notranslate"><span class="pre">Producto.stock</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.producto.Producto.stockMin"><code class="docutils literal notranslate"><span class="pre">Producto.stockMin</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.producto.Producto.codBarras"><code class="docutils literal notranslate"><span class="pre">Producto.codBarras</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.producto.Producto.img"><code class="docutils literal notranslate"><span class="pre">Producto.img</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.producto.Producto.tipo"><code class="docutils literal notranslate"><span class="pre">Producto.tipo</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.producto.Producto.ventas"><code class="docutils literal notranslate"><span class="pre">Producto.ventas</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-db.models.autoparte">Autopartes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#db.models.autoparte.Autoparte"><code class="docutils literal notranslate"><span class="pre">Autoparte</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.autoparte.Autoparte.id"><code class="docutils literal notranslate"><span class="pre">Autoparte.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.autoparte.Autoparte.modelo"><code class="docutils literal notranslate"><span class="pre">Autoparte.modelo</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.autoparte.Autoparte.anio"><code class="docutils literal notranslate"><span class="pre">Autoparte.anio</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.autoparte.Autoparte.categoria"><code class="docutils literal notranslate"><span class="pre">Autoparte.categoria</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.autoparte.Autoparte.codBarras"><code class="docutils literal notranslate"><span class="pre">Autoparte.codBarras</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.autoparte.Autoparte.descripcion"><code class="docutils literal notranslate"><span class="pre">Autoparte.descripcion</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.autoparte.Autoparte.img"><code class="docutils literal notranslate"><span class="pre">Autoparte.img</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.autoparte.Autoparte.marca"><code class="docutils literal notranslate"><span class="pre">Autoparte.marca</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.autoparte.Autoparte.nombre"><code class="docutils literal notranslate"><span class="pre">Autoparte.nombre</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.autoparte.Autoparte.precioCompra"><code class="docutils literal notranslate"><span class="pre">Autoparte.precioCompra</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.autoparte.Autoparte.precioVenta"><code class="docutils literal notranslate"><span class="pre">Autoparte.precioVenta</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.autoparte.Autoparte.stock"><code class="docutils literal notranslate"><span class="pre">Autoparte.stock</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.autoparte.Autoparte.stockMin"><code class="docutils literal notranslate"><span class="pre">Autoparte.stockMin</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.autoparte.Autoparte.tipo"><code class="docutils literal notranslate"><span class="pre">Autoparte.tipo</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.autoparte.Autoparte.ventas"><code class="docutils literal notranslate"><span class="pre">Autoparte.ventas</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-db.models.servicio">Servicios</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#db.models.servicio.Servicio"><code class="docutils literal notranslate"><span class="pre">Servicio</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.servicio.Servicio.id"><code class="docutils literal notranslate"><span class="pre">Servicio.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.servicio.Servicio.nombre"><code class="docutils literal notranslate"><span class="pre">Servicio.nombre</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.servicio.Servicio.descripcion"><code class="docutils literal notranslate"><span class="pre">Servicio.descripcion</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.servicio.Servicio.ordenes"><code class="docutils literal notranslate"><span class="pre">Servicio.ordenes</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-db.models.empleado">Empleados</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#db.models.empleado.Empleado"><code class="docutils literal notranslate"><span class="pre">Empleado</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.empleado.Empleado.id"><code class="docutils literal notranslate"><span class="pre">Empleado.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.empleado.Empleado.nombres"><code class="docutils literal notranslate"><span class="pre">Empleado.nombres</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.empleado.Empleado.apellidos"><code class="docutils literal notranslate"><span class="pre">Empleado.apellidos</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.empleado.Empleado.estado"><code class="docutils literal notranslate"><span class="pre">Empleado.estado</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.empleado.Empleado.especialidad"><code class="docutils literal notranslate"><span class="pre">Empleado.especialidad</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.empleado.Empleado.ordenes"><code class="docutils literal notranslate"><span class="pre">Empleado.ordenes</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-db.models.orden">Órdenes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#db.models.orden.Orden"><code class="docutils literal notranslate"><span class="pre">Orden</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.orden.Orden.id"><code class="docutils literal notranslate"><span class="pre">Orden.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.orden.Orden.garantia"><code class="docutils literal notranslate"><span class="pre">Orden.garantia</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.orden.Orden.estadoPago"><code class="docutils literal notranslate"><span class="pre">Orden.estadoPago</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.orden.Orden.precio"><code class="docutils literal notranslate"><span class="pre">Orden.precio</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.orden.Orden.fecha"><code class="docutils literal notranslate"><span class="pre">Orden.fecha</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.orden.Orden.servicios"><code class="docutils literal notranslate"><span class="pre">Orden.servicios</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.orden.Orden.empleados"><code class="docutils literal notranslate"><span class="pre">Orden.empleados</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-db.models.orden_servicio">Órdenes - Servicios (Junction Table)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.orden_servicio.OrdenServicio"><code class="docutils literal notranslate"><span class="pre">OrdenServicio</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-db.models.orden_empleado">Órdenes - Empleados (Many-to-Many)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.orden_empleado.OrdenEmpleado"><code class="docutils literal notranslate"><span class="pre">OrdenEmpleado</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-db.models.venta">Ventas</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#db.models.venta.Venta"><code class="docutils literal notranslate"><span class="pre">Venta</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.venta.Venta.id"><code class="docutils literal notranslate"><span class="pre">Venta.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.venta.Venta.fecha"><code class="docutils literal notranslate"><span class="pre">Venta.fecha</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.venta.Venta.productos"><code class="docutils literal notranslate"><span class="pre">Venta.productos</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-db.models.venta_producto">Ventas - Productos (Line Items)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#db.models.venta_producto.VentaProducto"><code class="docutils literal notranslate"><span class="pre">VentaProducto</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="schemas.html">Esquemas de Validación</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repositories.html">Repositorios (Data Access)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="services.html">Servicios (Business Logic)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="routes.html">Rutas API (FastAPI Endpoints)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Información General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Introducción a la Arquitectura</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Taller Diego - Backend API</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Modelos de Base de Datos</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/models.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-db.models">
+<span id="modelos-de-base-de-datos"></span><h1>Modelos de Base de Datos<a class="headerlink" href="#module-db.models" title="Link to this heading"></a></h1>
+<p>Los modelos representan las tablas de la base de datos usando SQLAlchemy ORM.</p>
+<section id="module-db.models.producto">
+<span id="productos"></span><h2>Productos<a class="headerlink" href="#module-db.models.producto" title="Link to this heading"></a></h2>
+<p>Modelo de base de datos para Producto.</p>
+<p>Define la estructura y relaciones de la entidad Producto en la BD.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="db.models.producto.Producto">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">db.models.producto.</span></span><span class="sig-name descname"><span class="pre">Producto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/db/models/producto.html#Producto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#db.models.producto.Producto" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Base</span></code></p>
+<p>Modelo ORM para productos del taller.</p>
+<p>Entidad base que puede ser especializada en Autoparte.
+Representa artículos que se pueden vender o utilizar en servicios.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> – Identificador único del producto.</p></li>
+<li><p><strong>nombre</strong> – Nombre del producto (único).</p></li>
+<li><p><strong>descripcion</strong> – Descripción detallada del producto.</p></li>
+<li><p><strong>precioVenta</strong> – Precio de venta al público.</p></li>
+<li><p><strong>precioCompra</strong> – Precio de costo de adquisición.</p></li>
+<li><p><strong>marca</strong> – Marca o fabricante del producto.</p></li>
+<li><p><strong>categoria</strong> – Categoría de clasificación del producto.</p></li>
+<li><p><strong>stock</strong> – Cantidad actual en existencia.</p></li>
+<li><p><strong>stockMin</strong> – Cantidad mínima para alertas de reorden.</p></li>
+<li><p><strong>codBarras</strong> – Código de barras (opcional, único).</p></li>
+<li><p><strong>img</strong> – URL o ruta de imagen del producto.</p></li>
+<li><p><strong>tipo</strong> – Tipo de producto (discriminador de herencia).</p></li>
+<li><p><strong>ventas</strong> – Relación con órdenes de venta.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.producto.Producto.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#db.models.producto.Producto.id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.producto.Producto.nombre">
+<span class="sig-name descname"><span class="pre">nombre</span></span><a class="headerlink" href="#db.models.producto.Producto.nombre" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.producto.Producto.descripcion">
+<span class="sig-name descname"><span class="pre">descripcion</span></span><a class="headerlink" href="#db.models.producto.Producto.descripcion" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.producto.Producto.precioVenta">
+<span class="sig-name descname"><span class="pre">precioVenta</span></span><a class="headerlink" href="#db.models.producto.Producto.precioVenta" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.producto.Producto.precioCompra">
+<span class="sig-name descname"><span class="pre">precioCompra</span></span><a class="headerlink" href="#db.models.producto.Producto.precioCompra" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.producto.Producto.marca">
+<span class="sig-name descname"><span class="pre">marca</span></span><a class="headerlink" href="#db.models.producto.Producto.marca" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.producto.Producto.categoria">
+<span class="sig-name descname"><span class="pre">categoria</span></span><a class="headerlink" href="#db.models.producto.Producto.categoria" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.producto.Producto.stock">
+<span class="sig-name descname"><span class="pre">stock</span></span><a class="headerlink" href="#db.models.producto.Producto.stock" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.producto.Producto.stockMin">
+<span class="sig-name descname"><span class="pre">stockMin</span></span><a class="headerlink" href="#db.models.producto.Producto.stockMin" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.producto.Producto.codBarras">
+<span class="sig-name descname"><span class="pre">codBarras</span></span><a class="headerlink" href="#db.models.producto.Producto.codBarras" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.producto.Producto.img">
+<span class="sig-name descname"><span class="pre">img</span></span><a class="headerlink" href="#db.models.producto.Producto.img" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.producto.Producto.tipo">
+<span class="sig-name descname"><span class="pre">tipo</span></span><a class="headerlink" href="#db.models.producto.Producto.tipo" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.producto.Producto.ventas">
+<span class="sig-name descname"><span class="pre">ventas</span></span><a class="headerlink" href="#db.models.producto.Producto.ventas" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-db.models.autoparte">
+<span id="autopartes"></span><h2>Autopartes<a class="headerlink" href="#module-db.models.autoparte" title="Link to this heading"></a></h2>
+<p>Modelo de base de datos para Autoparte.</p>
+<p>Define la estructura y relaciones de la entidad Autoparte, especialización de Producto.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="db.models.autoparte.Autoparte">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">db.models.autoparte.</span></span><span class="sig-name descname"><span class="pre">Autoparte</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/db/models/autoparte.html#Autoparte"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#db.models.autoparte.Autoparte" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#db.models.producto.Producto" title="db.models.producto.Producto"><code class="xref py py-class docutils literal notranslate"><span class="pre">Producto</span></code></a></p>
+<p>Modelo ORM para autopartes específicas.</p>
+<p>Especialización de Producto para artículos automotrices específicos de modelo y año.
+Implementa herencia joined-table con la entidad Producto.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> – Identificador único (heredado de Producto).</p></li>
+<li><p><strong>modelo</strong> – Modelo de vehículo compatible.</p></li>
+<li><p><strong>anio</strong> – Año del modelo de vehículo.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.autoparte.Autoparte.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#db.models.autoparte.Autoparte.id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.autoparte.Autoparte.modelo">
+<span class="sig-name descname"><span class="pre">modelo</span></span><a class="headerlink" href="#db.models.autoparte.Autoparte.modelo" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.autoparte.Autoparte.anio">
+<span class="sig-name descname"><span class="pre">anio</span></span><a class="headerlink" href="#db.models.autoparte.Autoparte.anio" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.autoparte.Autoparte.categoria">
+<span class="sig-name descname"><span class="pre">categoria</span></span><a class="headerlink" href="#db.models.autoparte.Autoparte.categoria" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.autoparte.Autoparte.codBarras">
+<span class="sig-name descname"><span class="pre">codBarras</span></span><a class="headerlink" href="#db.models.autoparte.Autoparte.codBarras" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.autoparte.Autoparte.descripcion">
+<span class="sig-name descname"><span class="pre">descripcion</span></span><a class="headerlink" href="#db.models.autoparte.Autoparte.descripcion" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.autoparte.Autoparte.img">
+<span class="sig-name descname"><span class="pre">img</span></span><a class="headerlink" href="#db.models.autoparte.Autoparte.img" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.autoparte.Autoparte.marca">
+<span class="sig-name descname"><span class="pre">marca</span></span><a class="headerlink" href="#db.models.autoparte.Autoparte.marca" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.autoparte.Autoparte.nombre">
+<span class="sig-name descname"><span class="pre">nombre</span></span><a class="headerlink" href="#db.models.autoparte.Autoparte.nombre" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.autoparte.Autoparte.precioCompra">
+<span class="sig-name descname"><span class="pre">precioCompra</span></span><a class="headerlink" href="#db.models.autoparte.Autoparte.precioCompra" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.autoparte.Autoparte.precioVenta">
+<span class="sig-name descname"><span class="pre">precioVenta</span></span><a class="headerlink" href="#db.models.autoparte.Autoparte.precioVenta" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.autoparte.Autoparte.stock">
+<span class="sig-name descname"><span class="pre">stock</span></span><a class="headerlink" href="#db.models.autoparte.Autoparte.stock" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.autoparte.Autoparte.stockMin">
+<span class="sig-name descname"><span class="pre">stockMin</span></span><a class="headerlink" href="#db.models.autoparte.Autoparte.stockMin" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.autoparte.Autoparte.tipo">
+<span class="sig-name descname"><span class="pre">tipo</span></span><a class="headerlink" href="#db.models.autoparte.Autoparte.tipo" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.autoparte.Autoparte.ventas">
+<span class="sig-name descname"><span class="pre">ventas</span></span><a class="headerlink" href="#db.models.autoparte.Autoparte.ventas" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-db.models.servicio">
+<span id="servicios"></span><h2>Servicios<a class="headerlink" href="#module-db.models.servicio" title="Link to this heading"></a></h2>
+<p>Modelo de base de datos para Servicio.</p>
+<p>Define la estructura y relaciones de la entidad Servicio en la BD.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="db.models.servicio.Servicio">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">db.models.servicio.</span></span><span class="sig-name descname"><span class="pre">Servicio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/db/models/servicio.html#Servicio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#db.models.servicio.Servicio" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Base</span></code></p>
+<p>Modelo ORM para servicios de taller.</p>
+<p>Representa un servicio que puede ser ofrecido a los clientes.
+Cada servicio puede estar asociado a múltiples órdenes de trabajo.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> – Identificador único del servicio.</p></li>
+<li><p><strong>nombre</strong> – Nombre del servicio (único).</p></li>
+<li><p><strong>descripcion</strong> – Descripción detallada del servicio.</p></li>
+<li><p><strong>ordenes</strong> – Relación con órdenes de servicio.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.servicio.Servicio.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#db.models.servicio.Servicio.id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.servicio.Servicio.nombre">
+<span class="sig-name descname"><span class="pre">nombre</span></span><a class="headerlink" href="#db.models.servicio.Servicio.nombre" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.servicio.Servicio.descripcion">
+<span class="sig-name descname"><span class="pre">descripcion</span></span><a class="headerlink" href="#db.models.servicio.Servicio.descripcion" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.servicio.Servicio.ordenes">
+<span class="sig-name descname"><span class="pre">ordenes</span></span><a class="headerlink" href="#db.models.servicio.Servicio.ordenes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-db.models.empleado">
+<span id="empleados"></span><h2>Empleados<a class="headerlink" href="#module-db.models.empleado" title="Link to this heading"></a></h2>
+<p>Modelo de base de datos para Empleado.</p>
+<p>Define la estructura y relaciones de la entidad Empleado en la BD.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="db.models.empleado.Empleado">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">db.models.empleado.</span></span><span class="sig-name descname"><span class="pre">Empleado</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/db/models/empleado.html#Empleado"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#db.models.empleado.Empleado" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Base</span></code></p>
+<p>Modelo ORM para empleados del taller.</p>
+<p>Representa personal que trabaja en el taller y que puede ser asignado a órdenes de trabajo.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> – Identificador único del empleado.</p></li>
+<li><p><strong>nombres</strong> – Nombre del empleado (único).</p></li>
+<li><p><strong>apellidos</strong> – Apellido del empleado.</p></li>
+<li><p><strong>estado</strong> – Estado del empleado (activo/inactivo).</p></li>
+<li><p><strong>especialidad</strong> – Especialidad laboral del empleado.</p></li>
+<li><p><strong>ordenes</strong> – Relación con órdenes asignadas al empleado.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.empleado.Empleado.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#db.models.empleado.Empleado.id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.empleado.Empleado.nombres">
+<span class="sig-name descname"><span class="pre">nombres</span></span><a class="headerlink" href="#db.models.empleado.Empleado.nombres" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.empleado.Empleado.apellidos">
+<span class="sig-name descname"><span class="pre">apellidos</span></span><a class="headerlink" href="#db.models.empleado.Empleado.apellidos" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.empleado.Empleado.estado">
+<span class="sig-name descname"><span class="pre">estado</span></span><a class="headerlink" href="#db.models.empleado.Empleado.estado" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.empleado.Empleado.especialidad">
+<span class="sig-name descname"><span class="pre">especialidad</span></span><a class="headerlink" href="#db.models.empleado.Empleado.especialidad" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.empleado.Empleado.ordenes">
+<span class="sig-name descname"><span class="pre">ordenes</span></span><a class="headerlink" href="#db.models.empleado.Empleado.ordenes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-db.models.orden">
+<span id="ordenes"></span><h2>Órdenes<a class="headerlink" href="#module-db.models.orden" title="Link to this heading"></a></h2>
+<p>Modelo de base de datos para Orden.</p>
+<p>Define la estructura y relaciones de la entidad Orden en la BD.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="db.models.orden.Orden">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">db.models.orden.</span></span><span class="sig-name descname"><span class="pre">Orden</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/db/models/orden.html#Orden"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#db.models.orden.Orden" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Base</span></code></p>
+<p>Modelo ORM para órdenes de trabajo del taller.</p>
+<p>Representa una orden de servicio que agrupa servicios y empleados asignados.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> – Identificador único de la orden.</p></li>
+<li><p><strong>garantia</strong> – Período de garantía en días.</p></li>
+<li><p><strong>estadoPago</strong> – Estado del pago (pendiente/pagado/parcial).</p></li>
+<li><p><strong>precio</strong> – Precio total de la orden.</p></li>
+<li><p><strong>fecha</strong> – Fecha de creación de la orden.</p></li>
+<li><p><strong>servicios</strong> – Relación con servicios incluidos en la orden.</p></li>
+<li><p><strong>empleados</strong> – Relación con empleados asignados a la orden.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.orden.Orden.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#db.models.orden.Orden.id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.orden.Orden.garantia">
+<span class="sig-name descname"><span class="pre">garantia</span></span><a class="headerlink" href="#db.models.orden.Orden.garantia" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.orden.Orden.estadoPago">
+<span class="sig-name descname"><span class="pre">estadoPago</span></span><a class="headerlink" href="#db.models.orden.Orden.estadoPago" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.orden.Orden.precio">
+<span class="sig-name descname"><span class="pre">precio</span></span><a class="headerlink" href="#db.models.orden.Orden.precio" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.orden.Orden.fecha">
+<span class="sig-name descname"><span class="pre">fecha</span></span><a class="headerlink" href="#db.models.orden.Orden.fecha" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.orden.Orden.servicios">
+<span class="sig-name descname"><span class="pre">servicios</span></span><a class="headerlink" href="#db.models.orden.Orden.servicios" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.orden.Orden.empleados">
+<span class="sig-name descname"><span class="pre">empleados</span></span><a class="headerlink" href="#db.models.orden.Orden.empleados" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<section id="module-db.models.orden_servicio">
+<span id="ordenes-servicios-junction-table"></span><h3>Órdenes - Servicios (Junction Table)<a class="headerlink" href="#module-db.models.orden_servicio" title="Link to this heading"></a></h3>
+<p>Modelo de base de datos para OrdenServicio.</p>
+<p>Define la relación muchos-a-muchos entre Orden y Servicio.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="db.models.orden_servicio.OrdenServicio">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">db.models.orden_servicio.</span></span><span class="sig-name descname"><span class="pre">OrdenServicio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/db/models/orden_servicio.html#OrdenServicio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#db.models.orden_servicio.OrdenServicio" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Base</span></code></p>
+<p>Modelo ORM para la relación entre Orden y Servicio.</p>
+<p>Tabla intermedia que asocia servicios a órdenes con su precio específico.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> – Identificador único del registro.</p></li>
+<li><p><strong>orden_id</strong> – Identificador de la orden.</p></li>
+<li><p><strong>servicio_id</strong> – Identificador del servicio.</p></li>
+<li><p><strong>precio_servicio</strong> – Precio del servicio en la orden.</p></li>
+<li><p><strong>servicio</strong> – Relación con la entidad Servicio.</p></li>
+<li><p><strong>orden</strong> – Relación con la entidad Orden.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.orden_servicio.OrdenServicio.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#db.models.orden_servicio.OrdenServicio.id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.orden_servicio.OrdenServicio.orden_id">
+<span class="sig-name descname"><span class="pre">orden_id</span></span><a class="headerlink" href="#db.models.orden_servicio.OrdenServicio.orden_id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.orden_servicio.OrdenServicio.servicio_id">
+<span class="sig-name descname"><span class="pre">servicio_id</span></span><a class="headerlink" href="#db.models.orden_servicio.OrdenServicio.servicio_id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.orden_servicio.OrdenServicio.precio_servicio">
+<span class="sig-name descname"><span class="pre">precio_servicio</span></span><a class="headerlink" href="#db.models.orden_servicio.OrdenServicio.precio_servicio" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.orden_servicio.OrdenServicio.servicio">
+<span class="sig-name descname"><span class="pre">servicio</span></span><a class="headerlink" href="#db.models.orden_servicio.OrdenServicio.servicio" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.orden_servicio.OrdenServicio.orden">
+<span class="sig-name descname"><span class="pre">orden</span></span><a class="headerlink" href="#db.models.orden_servicio.OrdenServicio.orden" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-db.models.orden_empleado">
+<span id="ordenes-empleados-many-to-many"></span><h3>Órdenes - Empleados (Many-to-Many)<a class="headerlink" href="#module-db.models.orden_empleado" title="Link to this heading"></a></h3>
+<p>Modelo de base de datos para OrdenEmpleado.</p>
+<p>Define la relación muchos-a-muchos entre Orden y Empleado.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="db.models.orden_empleado.OrdenEmpleado">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">db.models.orden_empleado.</span></span><span class="sig-name descname"><span class="pre">OrdenEmpleado</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/db/models/orden_empleado.html#OrdenEmpleado"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#db.models.orden_empleado.OrdenEmpleado" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Base</span></code></p>
+<p>Modelo ORM para la relación entre Orden y Empleado.</p>
+<p>Tabla intermedia que asocia empleados a órdenes de trabajo.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> – Identificador único del registro.</p></li>
+<li><p><strong>orden_id</strong> – Identificador de la orden.</p></li>
+<li><p><strong>empleado_id</strong> – Identificador del empleado.</p></li>
+<li><p><strong>empleado</strong> – Relación con la entidad Empleado.</p></li>
+<li><p><strong>orden</strong> – Relación con la entidad Orden.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.orden_empleado.OrdenEmpleado.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#db.models.orden_empleado.OrdenEmpleado.id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.orden_empleado.OrdenEmpleado.orden_id">
+<span class="sig-name descname"><span class="pre">orden_id</span></span><a class="headerlink" href="#db.models.orden_empleado.OrdenEmpleado.orden_id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.orden_empleado.OrdenEmpleado.empleado_id">
+<span class="sig-name descname"><span class="pre">empleado_id</span></span><a class="headerlink" href="#db.models.orden_empleado.OrdenEmpleado.empleado_id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.orden_empleado.OrdenEmpleado.empleado">
+<span class="sig-name descname"><span class="pre">empleado</span></span><a class="headerlink" href="#db.models.orden_empleado.OrdenEmpleado.empleado" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.orden_empleado.OrdenEmpleado.orden">
+<span class="sig-name descname"><span class="pre">orden</span></span><a class="headerlink" href="#db.models.orden_empleado.OrdenEmpleado.orden" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+<section id="module-db.models.venta">
+<span id="ventas"></span><h2>Ventas<a class="headerlink" href="#module-db.models.venta" title="Link to this heading"></a></h2>
+<p>Modelo de base de datos para Venta.</p>
+<p>Define la estructura y relaciones de la entidad Venta en la BD.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="db.models.venta.Venta">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">db.models.venta.</span></span><span class="sig-name descname"><span class="pre">Venta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/db/models/venta.html#Venta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#db.models.venta.Venta" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Base</span></code></p>
+<p>Modelo ORM para ventas de productos.</p>
+<p>Representa una venta que agrupa productos vendidos en una transacción.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> – Identificador único de la venta.</p></li>
+<li><p><strong>fecha</strong> – Fecha y hora de la venta.</p></li>
+<li><p><strong>productos</strong> – Relación con productos incluidos en la venta.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.venta.Venta.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#db.models.venta.Venta.id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.venta.Venta.fecha">
+<span class="sig-name descname"><span class="pre">fecha</span></span><a class="headerlink" href="#db.models.venta.Venta.fecha" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.venta.Venta.productos">
+<span class="sig-name descname"><span class="pre">productos</span></span><a class="headerlink" href="#db.models.venta.Venta.productos" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<section id="module-db.models.venta_producto">
+<span id="ventas-productos-line-items"></span><h3>Ventas - Productos (Line Items)<a class="headerlink" href="#module-db.models.venta_producto" title="Link to this heading"></a></h3>
+<p>Modelo de base de datos para VentaProducto.</p>
+<p>Define la relación muchos-a-muchos entre Venta y Producto.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="db.models.venta_producto.VentaProducto">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">db.models.venta_producto.</span></span><span class="sig-name descname"><span class="pre">VentaProducto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/db/models/venta_producto.html#VentaProducto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#db.models.venta_producto.VentaProducto" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Base</span></code></p>
+<p>Modelo ORM para la relación entre Venta y Producto.</p>
+<p>Tabla intermedia que asocia productos a ventas con la cantidad vendida.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> – Identificador único del registro.</p></li>
+<li><p><strong>venta_id</strong> – Identificador de la venta.</p></li>
+<li><p><strong>producto_id</strong> – Identificador del producto.</p></li>
+<li><p><strong>cantidad</strong> – Cantidad del producto vendido.</p></li>
+<li><p><strong>producto</strong> – Relación con la entidad Producto.</p></li>
+<li><p><strong>venta</strong> – Relación con la entidad Venta.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.venta_producto.VentaProducto.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#db.models.venta_producto.VentaProducto.id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.venta_producto.VentaProducto.venta_id">
+<span class="sig-name descname"><span class="pre">venta_id</span></span><a class="headerlink" href="#db.models.venta_producto.VentaProducto.venta_id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.venta_producto.VentaProducto.producto_id">
+<span class="sig-name descname"><span class="pre">producto_id</span></span><a class="headerlink" href="#db.models.venta_producto.VentaProducto.producto_id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.venta_producto.VentaProducto.cantidad">
+<span class="sig-name descname"><span class="pre">cantidad</span></span><a class="headerlink" href="#db.models.venta_producto.VentaProducto.cantidad" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.venta_producto.VentaProducto.producto">
+<span class="sig-name descname"><span class="pre">producto</span></span><a class="headerlink" href="#db.models.venta_producto.VentaProducto.producto" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="db.models.venta_producto.VentaProducto.venta">
+<span class="sig-name descname"><span class="pre">venta</span></span><a class="headerlink" href="#db.models.venta_producto.VentaProducto.venta" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="Backend API Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="schemas.html" class="btn btn-neutral float-right" title="Esquemas de Validación" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, ESIS-DevTeam.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

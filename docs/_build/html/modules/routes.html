@@ -1,0 +1,1243 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rutas API (FastAPI Endpoints) &mdash; Taller Diego - Backend API 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="intro" href="../intro.html" />
+    <link rel="prev" title="Servicios (Business Logic)" href="services.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Taller Diego - Backend API
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Módulos Backend</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="models.html">Modelos de Base de Datos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schemas.html">Esquemas de Validación</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repositories.html">Repositorios (Data Access)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="services.html">Servicios (Business Logic)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Rutas API (FastAPI Endpoints)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-api.v1.routes.producto_routes">Productos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.producto_routes.get_db"><code class="docutils literal notranslate"><span class="pre">get_db()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.producto_routes.get_producto_service"><code class="docutils literal notranslate"><span class="pre">get_producto_service()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.producto_routes.create_producto"><code class="docutils literal notranslate"><span class="pre">create_producto()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.producto_routes.list_productos"><code class="docutils literal notranslate"><span class="pre">list_productos()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.producto_routes.get_producto"><code class="docutils literal notranslate"><span class="pre">get_producto()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.producto_routes.update_producto"><code class="docutils literal notranslate"><span class="pre">update_producto()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.producto_routes.delete_producto"><code class="docutils literal notranslate"><span class="pre">delete_producto()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-api.v1.routes.autoparte_routes">Autopartes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.autoparte_routes.get_db"><code class="docutils literal notranslate"><span class="pre">get_db()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.autoparte_routes.get_autoparte_service"><code class="docutils literal notranslate"><span class="pre">get_autoparte_service()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.autoparte_routes.create_autoparte"><code class="docutils literal notranslate"><span class="pre">create_autoparte()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.autoparte_routes.list_autopartes"><code class="docutils literal notranslate"><span class="pre">list_autopartes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.autoparte_routes.get_autoparte"><code class="docutils literal notranslate"><span class="pre">get_autoparte()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.autoparte_routes.update_autoparte"><code class="docutils literal notranslate"><span class="pre">update_autoparte()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.autoparte_routes.delete_autoparte"><code class="docutils literal notranslate"><span class="pre">delete_autoparte()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.autoparte_routes.get_autopartes_by_modelo"><code class="docutils literal notranslate"><span class="pre">get_autopartes_by_modelo()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.autoparte_routes.get_autopartes_by_anio"><code class="docutils literal notranslate"><span class="pre">get_autopartes_by_anio()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-api.v1.routes.servicio_routes">Servicios</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.servicio_routes.get_db"><code class="docutils literal notranslate"><span class="pre">get_db()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.servicio_routes.get_servicio_service"><code class="docutils literal notranslate"><span class="pre">get_servicio_service()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.servicio_routes.create_servicio"><code class="docutils literal notranslate"><span class="pre">create_servicio()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.servicio_routes.list_servicios"><code class="docutils literal notranslate"><span class="pre">list_servicios()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.servicio_routes.get_servicio"><code class="docutils literal notranslate"><span class="pre">get_servicio()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.servicio_routes.update_servicio"><code class="docutils literal notranslate"><span class="pre">update_servicio()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.servicio_routes.delete_servicio"><code class="docutils literal notranslate"><span class="pre">delete_servicio()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-api.v1.routes.empleado_routes">Empleados</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.empleado_routes.get_db"><code class="docutils literal notranslate"><span class="pre">get_db()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.empleado_routes.get_empleado_service"><code class="docutils literal notranslate"><span class="pre">get_empleado_service()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.empleado_routes.create_empleado"><code class="docutils literal notranslate"><span class="pre">create_empleado()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.empleado_routes.list_empleados"><code class="docutils literal notranslate"><span class="pre">list_empleados()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.empleado_routes.get_empleado"><code class="docutils literal notranslate"><span class="pre">get_empleado()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.empleado_routes.update_empleado"><code class="docutils literal notranslate"><span class="pre">update_empleado()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.empleado_routes.delete_empleado"><code class="docutils literal notranslate"><span class="pre">delete_empleado()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-api.v1.routes.orden_routes">Órdenes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.orden_routes.get_db"><code class="docutils literal notranslate"><span class="pre">get_db()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.orden_routes.get_orden_service"><code class="docutils literal notranslate"><span class="pre">get_orden_service()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.orden_routes.create_orden"><code class="docutils literal notranslate"><span class="pre">create_orden()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.orden_routes.list_ordens"><code class="docutils literal notranslate"><span class="pre">list_ordens()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.orden_routes.get_orden_by_id"><code class="docutils literal notranslate"><span class="pre">get_orden_by_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.orden_routes.get_ordens_by_fecha"><code class="docutils literal notranslate"><span class="pre">get_ordens_by_fecha()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.orden_routes.delete_orden"><code class="docutils literal notranslate"><span class="pre">delete_orden()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-api.v1.routes.venta_routes">Ventas</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.venta_routes.get_db"><code class="docutils literal notranslate"><span class="pre">get_db()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.venta_routes.get_venta_service"><code class="docutils literal notranslate"><span class="pre">get_venta_service()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.venta_routes.create_venta"><code class="docutils literal notranslate"><span class="pre">create_venta()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.venta_routes.list_ventas"><code class="docutils literal notranslate"><span class="pre">list_ventas()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.venta_routes.get_venta_by_id"><code class="docutils literal notranslate"><span class="pre">get_venta_by_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.venta_routes.get_ventas_by_fecha"><code class="docutils literal notranslate"><span class="pre">get_ventas_by_fecha()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.venta_routes.delete_venta"><code class="docutils literal notranslate"><span class="pre">delete_venta()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-api.v1.routes.status_routes">Health Check</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.status_routes.get_db"><code class="docutils literal notranslate"><span class="pre">get_db()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api.v1.routes.status_routes.health_check"><code class="docutils literal notranslate"><span class="pre">health_check()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Información General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Introducción a la Arquitectura</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Taller Diego - Backend API</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Rutas API (FastAPI Endpoints)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/routes.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-api.v1.routes">
+<span id="rutas-api-fastapi-endpoints"></span><h1>Rutas API (FastAPI Endpoints)<a class="headerlink" href="#module-api.v1.routes" title="Link to this heading"></a></h1>
+<p>Endpoints REST para cada recurso.</p>
+<section id="module-api.v1.routes.producto_routes">
+<span id="productos"></span><h2>Productos<a class="headerlink" href="#module-api.v1.routes.producto_routes" title="Link to this heading"></a></h2>
+<p>Rutas API para gestión de productos.</p>
+<p>Define los endpoints REST para operaciones CRUD de productos.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.producto_routes.get_db">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.producto_routes.</span></span><span class="sig-name descname"><span class="pre">get_db</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/producto_routes.html#get_db"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.producto_routes.get_db" title="Link to this definition"></a></dt>
+<dd><p>Obtiene una sesión de base de datos.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Yields<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Sesión de SQLAlchemy.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.producto_routes.get_producto_service">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.producto_routes.</span></span><span class="sig-name descname"><span class="pre">get_producto_service</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_db)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/producto_routes.html#get_producto_service"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.producto_routes.get_producto_service" title="Link to this definition"></a></dt>
+<dd><p>Obtiene una instancia del servicio de productos.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>db</strong> (<em>Session</em>) – Sesión de base de datos.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Instancia de ProductoService.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="services.html#services.producto_service.ProductoService" title="services.producto_service.ProductoService"><em>ProductoService</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.producto_routes.create_producto">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.producto_routes.</span></span><span class="sig-name descname"><span class="pre">create_producto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_producto_service)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/producto_routes.html#create_producto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.producto_routes.create_producto" title="Link to this definition"></a></dt>
+<dd><p>Crea un nuevo producto.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference internal" href="schemas.html#schemas.producto_schema.ProductoCreate" title="schemas.producto_schema.ProductoCreate"><em>ProductoCreate</em></a>) – Datos del producto a crear.</p></li>
+<li><p><strong>service</strong> (<a class="reference internal" href="services.html#services.producto_service.ProductoService" title="services.producto_service.ProductoService"><em>ProductoService</em></a>) – Instancia del servicio de productos.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Producto creado.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>HTTPException</strong> – Si la creación falla.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.producto_routes.list_productos">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.producto_routes.</span></span><span class="sig-name descname"><span class="pre">list_productos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_producto_service)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/producto_routes.html#list_productos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.producto_routes.list_productos" title="Link to this definition"></a></dt>
+<dd><p>Obtiene todos los productos.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>service</strong> (<a class="reference internal" href="services.html#services.producto_service.ProductoService" title="services.producto_service.ProductoService"><em>ProductoService</em></a>) – Instancia del servicio de productos.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Lista de productos.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.producto_routes.get_producto">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.producto_routes.</span></span><span class="sig-name descname"><span class="pre">get_producto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_producto_service)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/producto_routes.html#get_producto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.producto_routes.get_producto" title="Link to this definition"></a></dt>
+<dd><p>Obtiene un producto por su identificador.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>int</em>) – Identificador del producto.</p></li>
+<li><p><strong>service</strong> (<a class="reference internal" href="services.html#services.producto_service.ProductoService" title="services.producto_service.ProductoService"><em>ProductoService</em></a>) – Instancia del servicio de productos.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Producto solicitado.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>HTTPException</strong> – Si el producto no existe (404).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.producto_routes.update_producto">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.producto_routes.</span></span><span class="sig-name descname"><span class="pre">update_producto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_producto_service)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/producto_routes.html#update_producto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.producto_routes.update_producto" title="Link to this definition"></a></dt>
+<dd><p>Actualiza un producto existente.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>int</em>) – Identificador del producto a actualizar.</p></li>
+<li><p><strong>data</strong> (<a class="reference internal" href="schemas.html#schemas.producto_schema.ProductoCreate" title="schemas.producto_schema.ProductoCreate"><em>ProductoCreate</em></a>) – Nuevos datos del producto.</p></li>
+<li><p><strong>service</strong> (<a class="reference internal" href="services.html#services.producto_service.ProductoService" title="services.producto_service.ProductoService"><em>ProductoService</em></a>) – Instancia del servicio de productos.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Producto actualizado.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>HTTPException</strong> – Si el producto no existe (404).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.producto_routes.delete_producto">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.producto_routes.</span></span><span class="sig-name descname"><span class="pre">delete_producto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_producto_service)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/producto_routes.html#delete_producto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.producto_routes.delete_producto" title="Link to this definition"></a></dt>
+<dd><p>Elimina un producto.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>int</em>) – Identificador del producto a eliminar.</p></li>
+<li><p><strong>service</strong> (<a class="reference internal" href="services.html#services.producto_service.ProductoService" title="services.producto_service.ProductoService"><em>ProductoService</em></a>) – Instancia del servicio de productos.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Mensaje de confirmación.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>HTTPException</strong> – Si el producto no existe (404).</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-api.v1.routes.autoparte_routes">
+<span id="autopartes"></span><h2>Autopartes<a class="headerlink" href="#module-api.v1.routes.autoparte_routes" title="Link to this heading"></a></h2>
+<p>Rutas API para operaciones de Autopartes.</p>
+<p>Este módulo define los endpoints REST para crear, leer, actualizar y eliminar
+autopartes. Incluye operaciones de búsqueda especializadas por modelo y año.</p>
+<p>Las rutas siguen el patrón RESTful:
+- POST /: Crear nueva autoparte
+- GET /: Listar todas las autopartes
+- GET /{id}: Obtener autoparte por ID
+- PUT /{id}: Actualizar autoparte
+- DELETE /{id}: Eliminar autoparte
+- GET /modelo/{modelo}: Buscar por modelo
+- GET /anio/{anio}: Buscar por año</p>
+<dl class="field-list simple">
+<dt class="field-odd">author<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Backend Team</p>
+</dd>
+<dt class="field-even">version<span class="colon">:</span></dt>
+<dd class="field-even"><p>1.0</p>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.autoparte_routes.get_db">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.autoparte_routes.</span></span><span class="sig-name descname"><span class="pre">get_db</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/autoparte_routes.html#get_db"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.autoparte_routes.get_db" title="Link to this definition"></a></dt>
+<dd><p>Función de dependencia que proporciona una sesión de base de datos.</p>
+<p>Crea una nueva sesión SQLAlchemy para cada request y la cierra
+después de completar la solicitud.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Sesión de base de datos</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Session</p>
+</dd>
+<dt class="field-odd">Yields<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Sesión de SQLAlchemy</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.autoparte_routes.get_autoparte_service">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.autoparte_routes.</span></span><span class="sig-name descname"><span class="pre">get_autoparte_service</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_db)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/autoparte_routes.html#get_autoparte_service"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.autoparte_routes.get_autoparte_service" title="Link to this definition"></a></dt>
+<dd><p>Función de dependencia que proporciona el servicio de autopartes.</p>
+<p>Inyecta la sesión de base de datos en el servicio de autopartes
+para que este pueda acceder a los datos.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>db</strong> (<em>Session</em>) – Sesión de base de datos inyectada</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Instancia del servicio de autopartes</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="services.html#services.autoparte_service.AutoparteService" title="services.autoparte_service.AutoparteService">AutoparteService</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.autoparte_routes.create_autoparte">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.autoparte_routes.</span></span><span class="sig-name descname"><span class="pre">create_autoparte</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_autoparte_service)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/autoparte_routes.html#create_autoparte"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.autoparte_routes.create_autoparte" title="Link to this definition"></a></dt>
+<dd><p>Crea una nueva autoparte.</p>
+<p>Recibe los datos de la autoparte en el cuerpo de la solicitud
+y retorna la autoparte creada con su ID generado.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference internal" href="schemas.html#schemas.autoparte_schema.AutoparteCreate" title="schemas.autoparte_schema.AutoparteCreate"><em>AutoparteCreate</em></a>) – Datos de la autoparte a crear</p></li>
+<li><p><strong>service</strong> (<a class="reference internal" href="services.html#services.autoparte_service.AutoparteService" title="services.autoparte_service.AutoparteService"><em>AutoparteService</em></a>) – Servicio de autopartes inyectado</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Autoparte creada</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="schemas.html#schemas.autoparte_schema.AutoparteResponse" title="schemas.autoparte_schema.AutoparteResponse">AutoparteResponse</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – Si el nombre de la autoparte ya existe</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.autoparte_routes.list_autopartes">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.autoparte_routes.</span></span><span class="sig-name descname"><span class="pre">list_autopartes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_autoparte_service)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/autoparte_routes.html#list_autopartes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.autoparte_routes.list_autopartes" title="Link to this definition"></a></dt>
+<dd><p>Lista todas las autopartes registradas.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>service</strong> (<a class="reference internal" href="services.html#services.autoparte_service.AutoparteService" title="services.autoparte_service.AutoparteService"><em>AutoparteService</em></a>) – Servicio de autopartes inyectado</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Lista de todas las autopartes</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[<a class="reference internal" href="schemas.html#schemas.autoparte_schema.AutoparteResponse" title="schemas.autoparte_schema.AutoparteResponse">AutoparteResponse</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.autoparte_routes.get_autoparte">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.autoparte_routes.</span></span><span class="sig-name descname"><span class="pre">get_autoparte</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_autoparte_service)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/autoparte_routes.html#get_autoparte"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.autoparte_routes.get_autoparte" title="Link to this definition"></a></dt>
+<dd><p>Obtiene una autoparte específica por su ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>int</em>) – Identificador de la autoparte</p></li>
+<li><p><strong>service</strong> (<a class="reference internal" href="services.html#services.autoparte_service.AutoparteService" title="services.autoparte_service.AutoparteService"><em>AutoparteService</em></a>) – Servicio de autopartes inyectado</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Autoparte encontrada</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="schemas.html#schemas.autoparte_schema.AutoparteResponse" title="schemas.autoparte_schema.AutoparteResponse">AutoparteResponse</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>HTTPException</strong> – Si la autoparte no existe (404)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.autoparte_routes.update_autoparte">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.autoparte_routes.</span></span><span class="sig-name descname"><span class="pre">update_autoparte</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_autoparte_service)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/autoparte_routes.html#update_autoparte"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.autoparte_routes.update_autoparte" title="Link to this definition"></a></dt>
+<dd><p>Actualiza una autoparte existente.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>int</em>) – Identificador de la autoparte a actualizar</p></li>
+<li><p><strong>data</strong> (<a class="reference internal" href="schemas.html#schemas.autoparte_schema.AutoparteCreate" title="schemas.autoparte_schema.AutoparteCreate"><em>AutoparteCreate</em></a>) – Nuevos datos de la autoparte</p></li>
+<li><p><strong>service</strong> (<a class="reference internal" href="services.html#services.autoparte_service.AutoparteService" title="services.autoparte_service.AutoparteService"><em>AutoparteService</em></a>) – Servicio de autopartes inyectado</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Autoparte actualizada</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="schemas.html#schemas.autoparte_schema.AutoparteResponse" title="schemas.autoparte_schema.AutoparteResponse">AutoparteResponse</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>HTTPException</strong> – Si la autoparte no existe (404)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.autoparte_routes.delete_autoparte">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.autoparte_routes.</span></span><span class="sig-name descname"><span class="pre">delete_autoparte</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_autoparte_service)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/autoparte_routes.html#delete_autoparte"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.autoparte_routes.delete_autoparte" title="Link to this definition"></a></dt>
+<dd><p>Elimina una autoparte existente.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>int</em>) – Identificador de la autoparte a eliminar</p></li>
+<li><p><strong>service</strong> (<a class="reference internal" href="services.html#services.autoparte_service.AutoparteService" title="services.autoparte_service.AutoparteService"><em>AutoparteService</em></a>) – Servicio de autopartes inyectado</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Mensaje de confirmación de eliminación</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>HTTPException</strong> – Si la autoparte no existe (404)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.autoparte_routes.get_autopartes_by_modelo">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.autoparte_routes.</span></span><span class="sig-name descname"><span class="pre">get_autopartes_by_modelo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">modelo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_autoparte_service)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/autoparte_routes.html#get_autopartes_by_modelo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.autoparte_routes.get_autopartes_by_modelo" title="Link to this definition"></a></dt>
+<dd><p>Busca autopartes compatibles con un modelo específico de vehículo.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>modelo</strong> (<em>str</em>) – Modelo del vehículo para filtrar autopartes</p></li>
+<li><p><strong>service</strong> (<a class="reference internal" href="services.html#services.autoparte_service.AutoparteService" title="services.autoparte_service.AutoparteService"><em>AutoparteService</em></a>) – Servicio de autopartes inyectado</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Lista de autopartes compatible con el modelo</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[<a class="reference internal" href="schemas.html#schemas.autoparte_schema.AutoparteResponse" title="schemas.autoparte_schema.AutoparteResponse">AutoparteResponse</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.autoparte_routes.get_autopartes_by_anio">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.autoparte_routes.</span></span><span class="sig-name descname"><span class="pre">get_autopartes_by_anio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">anio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_autoparte_service)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/autoparte_routes.html#get_autopartes_by_anio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.autoparte_routes.get_autopartes_by_anio" title="Link to this definition"></a></dt>
+<dd><p>Busca autopartes compatibles con un año específico de vehículo.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>anio</strong> (<em>int</em>) – Año del vehículo para filtrar autopartes</p></li>
+<li><p><strong>service</strong> (<a class="reference internal" href="services.html#services.autoparte_service.AutoparteService" title="services.autoparte_service.AutoparteService"><em>AutoparteService</em></a>) – Servicio de autopartes inyectado</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Lista de autopartes compatibles con el año</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[<a class="reference internal" href="schemas.html#schemas.autoparte_schema.AutoparteResponse" title="schemas.autoparte_schema.AutoparteResponse">AutoparteResponse</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-api.v1.routes.servicio_routes">
+<span id="servicios"></span><h2>Servicios<a class="headerlink" href="#module-api.v1.routes.servicio_routes" title="Link to this heading"></a></h2>
+<p>Rutas API para gestión de servicios.</p>
+<p>Define los endpoints REST para operaciones CRUD de servicios.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.servicio_routes.get_db">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.servicio_routes.</span></span><span class="sig-name descname"><span class="pre">get_db</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/servicio_routes.html#get_db"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.servicio_routes.get_db" title="Link to this definition"></a></dt>
+<dd><p>Obtiene una sesión de base de datos.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Yields<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Sesión de SQLAlchemy.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.servicio_routes.get_servicio_service">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.servicio_routes.</span></span><span class="sig-name descname"><span class="pre">get_servicio_service</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_db)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/servicio_routes.html#get_servicio_service"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.servicio_routes.get_servicio_service" title="Link to this definition"></a></dt>
+<dd><p>Obtiene una instancia del servicio de servicios.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>db</strong> (<em>Session</em>) – Sesión de base de datos.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Instancia de ServicioService.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="services.html#services.servicio_service.ServicioService" title="services.servicio_service.ServicioService"><em>ServicioService</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.servicio_routes.create_servicio">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.servicio_routes.</span></span><span class="sig-name descname"><span class="pre">create_servicio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_servicio_service)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/servicio_routes.html#create_servicio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.servicio_routes.create_servicio" title="Link to this definition"></a></dt>
+<dd><p>Crea un nuevo servicio.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference internal" href="schemas.html#schemas.servicio_schema.ServicioCreate" title="schemas.servicio_schema.ServicioCreate"><em>ServicioCreate</em></a>) – Datos del servicio a crear.</p></li>
+<li><p><strong>service</strong> (<a class="reference internal" href="services.html#services.servicio_service.ServicioService" title="services.servicio_service.ServicioService"><em>ServicioService</em></a>) – Instancia del servicio de servicios.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Servicio creado.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>HTTPException</strong> – Si la creación falla.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.servicio_routes.list_servicios">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.servicio_routes.</span></span><span class="sig-name descname"><span class="pre">list_servicios</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_servicio_service)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/servicio_routes.html#list_servicios"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.servicio_routes.list_servicios" title="Link to this definition"></a></dt>
+<dd><p>Obtiene todos los servicios.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>service</strong> (<a class="reference internal" href="services.html#services.servicio_service.ServicioService" title="services.servicio_service.ServicioService"><em>ServicioService</em></a>) – Instancia del servicio de servicios.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Lista de servicios.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.servicio_routes.get_servicio">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.servicio_routes.</span></span><span class="sig-name descname"><span class="pre">get_servicio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_servicio_service)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/servicio_routes.html#get_servicio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.servicio_routes.get_servicio" title="Link to this definition"></a></dt>
+<dd><p>Obtiene un servicio por su identificador.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>int</em>) – Identificador del servicio.</p></li>
+<li><p><strong>service</strong> (<a class="reference internal" href="services.html#services.servicio_service.ServicioService" title="services.servicio_service.ServicioService"><em>ServicioService</em></a>) – Instancia del servicio de servicios.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Servicio solicitado.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>HTTPException</strong> – Si el servicio no existe (404).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.servicio_routes.update_servicio">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.servicio_routes.</span></span><span class="sig-name descname"><span class="pre">update_servicio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_servicio_service)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/servicio_routes.html#update_servicio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.servicio_routes.update_servicio" title="Link to this definition"></a></dt>
+<dd><p>Actualiza un servicio existente.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>int</em>) – Identificador del servicio a actualizar.</p></li>
+<li><p><strong>data</strong> (<a class="reference internal" href="schemas.html#schemas.servicio_schema.ServicioCreate" title="schemas.servicio_schema.ServicioCreate"><em>ServicioCreate</em></a>) – Nuevos datos del servicio.</p></li>
+<li><p><strong>service</strong> (<a class="reference internal" href="services.html#services.servicio_service.ServicioService" title="services.servicio_service.ServicioService"><em>ServicioService</em></a>) – Instancia del servicio de servicios.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Servicio actualizado.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>HTTPException</strong> – Si el servicio no existe (404).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.servicio_routes.delete_servicio">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.servicio_routes.</span></span><span class="sig-name descname"><span class="pre">delete_servicio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_servicio_service)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/servicio_routes.html#delete_servicio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.servicio_routes.delete_servicio" title="Link to this definition"></a></dt>
+<dd><p>Elimina un servicio.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>int</em>) – Identificador del servicio a eliminar.</p></li>
+<li><p><strong>service</strong> (<a class="reference internal" href="services.html#services.servicio_service.ServicioService" title="services.servicio_service.ServicioService"><em>ServicioService</em></a>) – Instancia del servicio de servicios.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Mensaje de confirmación.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>HTTPException</strong> – Si el servicio no existe (404).</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-api.v1.routes.empleado_routes">
+<span id="empleados"></span><h2>Empleados<a class="headerlink" href="#module-api.v1.routes.empleado_routes" title="Link to this heading"></a></h2>
+<p>Rutas API para operaciones de Empleados.</p>
+<p>Este módulo define los endpoints REST para crear, leer, actualizar y eliminar
+empleados. Implementa el patrón de inyección de dependencias de FastAPI para
+gestionar sesiones de base de datos y servicios.</p>
+<p>Las rutas siguen el patrón RESTful:
+- POST /: Crear nuevo empleado
+- GET /: Listar todos los empleados
+- GET /{id}: Obtener empleado por ID
+- PUT /{id}: Actualizar empleado
+- DELETE /{id}: Eliminar empleado</p>
+<dl class="field-list simple">
+<dt class="field-odd">author<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Backend Team</p>
+</dd>
+<dt class="field-even">version<span class="colon">:</span></dt>
+<dd class="field-even"><p>1.0</p>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.empleado_routes.get_db">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.empleado_routes.</span></span><span class="sig-name descname"><span class="pre">get_db</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/empleado_routes.html#get_db"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.empleado_routes.get_db" title="Link to this definition"></a></dt>
+<dd><p>Función de dependencia que proporciona una sesión de base de datos.</p>
+<p>Crea una nueva sesión SQLAlchemy para cada request y la cierra
+después de completar la solicitud.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Sesión de base de datos</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Session</p>
+</dd>
+<dt class="field-odd">Yields<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Sesión de SQLAlchemy</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.empleado_routes.get_empleado_service">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.empleado_routes.</span></span><span class="sig-name descname"><span class="pre">get_empleado_service</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_db)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/empleado_routes.html#get_empleado_service"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.empleado_routes.get_empleado_service" title="Link to this definition"></a></dt>
+<dd><p>Función de dependencia que proporciona el servicio de empleados.</p>
+<p>Inyecta la sesión de base de datos en el servicio de empleados
+para que este pueda acceder a los datos.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>db</strong> (<em>Session</em>) – Sesión de base de datos inyectada</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Instancia del servicio de empleados</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="services.html#services.empleado_service.EmpleadoService" title="services.empleado_service.EmpleadoService">EmpleadoService</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.empleado_routes.create_empleado">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.empleado_routes.</span></span><span class="sig-name descname"><span class="pre">create_empleado</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_empleado_service)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/empleado_routes.html#create_empleado"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.empleado_routes.create_empleado" title="Link to this definition"></a></dt>
+<dd><p>Crea un nuevo empleado.</p>
+<p>Recibe los datos del empleado en el cuerpo de la solicitud
+y retorna el empleado creado con su ID generado.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference internal" href="schemas.html#schemas.empleado_schema.EmpleadoCreate" title="schemas.empleado_schema.EmpleadoCreate"><em>EmpleadoCreate</em></a>) – Datos del empleado a crear</p></li>
+<li><p><strong>service</strong> (<a class="reference internal" href="services.html#services.empleado_service.EmpleadoService" title="services.empleado_service.EmpleadoService"><em>EmpleadoService</em></a>) – Servicio de empleados inyectado</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Empleado creado</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="schemas.html#schemas.empleado_schema.EmpleadoResponse" title="schemas.empleado_schema.EmpleadoResponse">EmpleadoResponse</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – Si ya existe un empleado con ese nombre</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.empleado_routes.list_empleados">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.empleado_routes.</span></span><span class="sig-name descname"><span class="pre">list_empleados</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_empleado_service)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/empleado_routes.html#list_empleados"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.empleado_routes.list_empleados" title="Link to this definition"></a></dt>
+<dd><p>Lista todos los empleados registrados.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>service</strong> (<a class="reference internal" href="services.html#services.empleado_service.EmpleadoService" title="services.empleado_service.EmpleadoService"><em>EmpleadoService</em></a>) – Servicio de empleados inyectado</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Lista de todos los empleados</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[<a class="reference internal" href="schemas.html#schemas.empleado_schema.EmpleadoResponse" title="schemas.empleado_schema.EmpleadoResponse">EmpleadoResponse</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.empleado_routes.get_empleado">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.empleado_routes.</span></span><span class="sig-name descname"><span class="pre">get_empleado</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_empleado_service)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/empleado_routes.html#get_empleado"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.empleado_routes.get_empleado" title="Link to this definition"></a></dt>
+<dd><p>Obtiene un empleado específico por su ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>int</em>) – Identificador del empleado</p></li>
+<li><p><strong>service</strong> (<a class="reference internal" href="services.html#services.empleado_service.EmpleadoService" title="services.empleado_service.EmpleadoService"><em>EmpleadoService</em></a>) – Servicio de empleados inyectado</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Empleado encontrado</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="schemas.html#schemas.empleado_schema.EmpleadoResponse" title="schemas.empleado_schema.EmpleadoResponse">EmpleadoResponse</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>HTTPException</strong> – Si el empleado no existe (404)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.empleado_routes.update_empleado">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.empleado_routes.</span></span><span class="sig-name descname"><span class="pre">update_empleado</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_empleado_service)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/empleado_routes.html#update_empleado"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.empleado_routes.update_empleado" title="Link to this definition"></a></dt>
+<dd><p>Actualiza un empleado existente.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>int</em>) – Identificador del empleado a actualizar</p></li>
+<li><p><strong>data</strong> (<a class="reference internal" href="schemas.html#schemas.empleado_schema.EmpleadoCreate" title="schemas.empleado_schema.EmpleadoCreate"><em>EmpleadoCreate</em></a>) – Nuevos datos del empleado</p></li>
+<li><p><strong>service</strong> (<a class="reference internal" href="services.html#services.empleado_service.EmpleadoService" title="services.empleado_service.EmpleadoService"><em>EmpleadoService</em></a>) – Servicio de empleados inyectado</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Empleado actualizado</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="schemas.html#schemas.empleado_schema.EmpleadoResponse" title="schemas.empleado_schema.EmpleadoResponse">EmpleadoResponse</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>HTTPException</strong> – Si el empleado no existe (404)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.empleado_routes.delete_empleado">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.empleado_routes.</span></span><span class="sig-name descname"><span class="pre">delete_empleado</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_empleado_service)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/empleado_routes.html#delete_empleado"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.empleado_routes.delete_empleado" title="Link to this definition"></a></dt>
+<dd><p>Elimina un empleado existente.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>int</em>) – Identificador del empleado a eliminar</p></li>
+<li><p><strong>service</strong> (<a class="reference internal" href="services.html#services.empleado_service.EmpleadoService" title="services.empleado_service.EmpleadoService"><em>EmpleadoService</em></a>) – Servicio de empleados inyectado</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Mensaje de confirmación de eliminación</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>HTTPException</strong> – Si el empleado no existe (404)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-api.v1.routes.orden_routes">
+<span id="ordenes"></span><h2>Órdenes<a class="headerlink" href="#module-api.v1.routes.orden_routes" title="Link to this heading"></a></h2>
+<p>Rutas API para operaciones de Órdenes.</p>
+<p>Este módulo define los endpoints REST para crear, leer y eliminar órdenes
+de servicio. Proporciona funcionalidad de búsqueda por ID y por fecha.</p>
+<p>Las rutas siguen el patrón RESTful:
+- POST /: Crear nueva orden
+- GET /: Listar todas las órdenes
+- GET /{id}: Obtener orden por ID
+- GET /fecha/{fecha}: Buscar órdenes por fecha
+- DELETE /{id}: Eliminar orden</p>
+<dl class="field-list simple">
+<dt class="field-odd">author<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Backend Team</p>
+</dd>
+<dt class="field-even">version<span class="colon">:</span></dt>
+<dd class="field-even"><p>1.0</p>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.orden_routes.get_db">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.orden_routes.</span></span><span class="sig-name descname"><span class="pre">get_db</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/orden_routes.html#get_db"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.orden_routes.get_db" title="Link to this definition"></a></dt>
+<dd><p>Función de dependencia que proporciona una sesión de base de datos.</p>
+<p>Crea una nueva sesión SQLAlchemy para cada request y la cierra
+después de completar la solicitud.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Sesión de base de datos</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Session</p>
+</dd>
+<dt class="field-odd">Yields<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Sesión de SQLAlchemy</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.orden_routes.get_orden_service">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.orden_routes.</span></span><span class="sig-name descname"><span class="pre">get_orden_service</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_db)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/orden_routes.html#get_orden_service"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.orden_routes.get_orden_service" title="Link to this definition"></a></dt>
+<dd><p>Función de dependencia que proporciona el servicio de órdenes.</p>
+<p>Inyecta la sesión de base de datos en el servicio de órdenes
+para que este pueda acceder a los datos.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>db</strong> (<em>Session</em>) – Sesión de base de datos inyectada</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Instancia del servicio de órdenes</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="services.html#services.orden_service.OrdenService" title="services.orden_service.OrdenService">OrdenService</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.orden_routes.create_orden">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.orden_routes.</span></span><span class="sig-name descname"><span class="pre">create_orden</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_orden_service)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/orden_routes.html#create_orden"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.orden_routes.create_orden" title="Link to this definition"></a></dt>
+<dd><p>Crea una nueva orden de servicio.</p>
+<p>Soporta la creación de órdenes simples o complejas (con servicios
+y empleados asociados). El servicio maneja la lógica de transacciones.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference internal" href="schemas.html#schemas.orden_schema.OrdenCreate" title="schemas.orden_schema.OrdenCreate"><em>OrdenCreate</em></a>) – Datos de la orden a crear</p></li>
+<li><p><strong>service</strong> (<a class="reference internal" href="services.html#services.orden_service.OrdenService" title="services.orden_service.OrdenService"><em>OrdenService</em></a>) – Servicio de órdenes inyectado</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Orden creada</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="schemas.html#schemas.orden_schema.OrdenResponse" title="schemas.orden_schema.OrdenResponse">OrdenResponse</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>HTTPException</strong> – Si hay error de validación (400)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.orden_routes.list_ordens">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.orden_routes.</span></span><span class="sig-name descname"><span class="pre">list_ordens</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_orden_service)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/orden_routes.html#list_ordens"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.orden_routes.list_ordens" title="Link to this definition"></a></dt>
+<dd><p>Lista todas las órdenes registradas.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>service</strong> (<a class="reference internal" href="services.html#services.orden_service.OrdenService" title="services.orden_service.OrdenService"><em>OrdenService</em></a>) – Servicio de órdenes inyectado</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Lista de todas las órdenes</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[<a class="reference internal" href="schemas.html#schemas.orden_schema.OrdenResponse" title="schemas.orden_schema.OrdenResponse">OrdenResponse</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.orden_routes.get_orden_by_id">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.orden_routes.</span></span><span class="sig-name descname"><span class="pre">get_orden_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_orden_service)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/orden_routes.html#get_orden_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.orden_routes.get_orden_by_id" title="Link to this definition"></a></dt>
+<dd><p>Obtiene una orden específica por su ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>int</em>) – Identificador de la orden</p></li>
+<li><p><strong>service</strong> (<a class="reference internal" href="services.html#services.orden_service.OrdenService" title="services.orden_service.OrdenService"><em>OrdenService</em></a>) – Servicio de órdenes inyectado</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Orden encontrada</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="schemas.html#schemas.orden_schema.OrdenResponse" title="schemas.orden_schema.OrdenResponse">OrdenResponse</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>HTTPException</strong> – Si la orden no existe (404)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.orden_routes.get_ordens_by_fecha">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.orden_routes.</span></span><span class="sig-name descname"><span class="pre">get_ordens_by_fecha</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fecha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_orden_service)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/orden_routes.html#get_ordens_by_fecha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.orden_routes.get_ordens_by_fecha" title="Link to this definition"></a></dt>
+<dd><p>Busca órdenes creadas en una fecha específica.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fecha</strong> (<em>date</em>) – Fecha para filtrar órdenes</p></li>
+<li><p><strong>service</strong> (<a class="reference internal" href="services.html#services.orden_service.OrdenService" title="services.orden_service.OrdenService"><em>OrdenService</em></a>) – Servicio de órdenes inyectado</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Lista de órdenes creadas en esa fecha</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[<a class="reference internal" href="schemas.html#schemas.orden_schema.OrdenResponse" title="schemas.orden_schema.OrdenResponse">OrdenResponse</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.orden_routes.delete_orden">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.orden_routes.</span></span><span class="sig-name descname"><span class="pre">delete_orden</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_orden_service)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/orden_routes.html#delete_orden"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.orden_routes.delete_orden" title="Link to this definition"></a></dt>
+<dd><p>Elimina una orden existente.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>int</em>) – Identificador de la orden a eliminar</p></li>
+<li><p><strong>service</strong> (<a class="reference internal" href="services.html#services.orden_service.OrdenService" title="services.orden_service.OrdenService"><em>OrdenService</em></a>) – Servicio de órdenes inyectado</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Mensaje de confirmación de eliminación</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>HTTPException</strong> – Si la orden no existe (404)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-api.v1.routes.venta_routes">
+<span id="ventas"></span><h2>Ventas<a class="headerlink" href="#module-api.v1.routes.venta_routes" title="Link to this heading"></a></h2>
+<p>Rutas API para operaciones de Ventas.</p>
+<p>Este módulo define los endpoints REST para crear, leer y eliminar ventas.
+Proporciona funcionalidad de búsqueda por ID y por fecha, incluyendo
+gestión de transacciones y control de stock.</p>
+<p>Las rutas siguen el patrón RESTful:
+- POST /: Crear nueva venta
+- GET /: Listar todas las ventas
+- GET /{id}: Obtener venta por ID
+- GET /fecha/{fecha}: Buscar ventas por fecha
+- DELETE /{id}: Eliminar venta</p>
+<dl class="field-list simple">
+<dt class="field-odd">author<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Backend Team</p>
+</dd>
+<dt class="field-even">version<span class="colon">:</span></dt>
+<dd class="field-even"><p>1.0</p>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.venta_routes.get_db">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.venta_routes.</span></span><span class="sig-name descname"><span class="pre">get_db</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/venta_routes.html#get_db"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.venta_routes.get_db" title="Link to this definition"></a></dt>
+<dd><p>Función de dependencia que proporciona una sesión de base de datos.</p>
+<p>Crea una nueva sesión SQLAlchemy para cada request y la cierra
+después de completar la solicitud.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Sesión de base de datos</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Session</p>
+</dd>
+<dt class="field-odd">Yields<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Sesión de SQLAlchemy</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.venta_routes.get_venta_service">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.venta_routes.</span></span><span class="sig-name descname"><span class="pre">get_venta_service</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_db)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/venta_routes.html#get_venta_service"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.venta_routes.get_venta_service" title="Link to this definition"></a></dt>
+<dd><p>Función de dependencia que proporciona el servicio de ventas.</p>
+<p>Inyecta la sesión de base de datos en el servicio de ventas
+para que este pueda acceder a los datos.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>db</strong> (<em>Session</em>) – Sesión de base de datos inyectada</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Instancia del servicio de ventas</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="services.html#services.venta_service.VentaService" title="services.venta_service.VentaService">VentaService</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.venta_routes.create_venta">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.venta_routes.</span></span><span class="sig-name descname"><span class="pre">create_venta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_venta_service)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/venta_routes.html#create_venta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.venta_routes.create_venta" title="Link to this definition"></a></dt>
+<dd><p>Crea una nueva venta.</p>
+<p>Soporta la creación de ventas simples o complejas (con productos asociados
+y control de stock). El servicio maneja la lógica de transacciones.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference internal" href="schemas.html#schemas.venta_schema.VentaCreate" title="schemas.venta_schema.VentaCreate"><em>VentaCreate</em></a>) – Datos de la venta a crear</p></li>
+<li><p><strong>service</strong> (<a class="reference internal" href="services.html#services.venta_service.VentaService" title="services.venta_service.VentaService"><em>VentaService</em></a>) – Servicio de ventas inyectado</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Venta creada</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="schemas.html#schemas.venta_schema.VentaResponse" title="schemas.venta_schema.VentaResponse">VentaResponse</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>HTTPException</strong> – Si hay error de validación o stock insuficiente (400)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.venta_routes.list_ventas">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.venta_routes.</span></span><span class="sig-name descname"><span class="pre">list_ventas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_venta_service)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/venta_routes.html#list_ventas"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.venta_routes.list_ventas" title="Link to this definition"></a></dt>
+<dd><p>Lista todas las ventas registradas.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>service</strong> (<a class="reference internal" href="services.html#services.venta_service.VentaService" title="services.venta_service.VentaService"><em>VentaService</em></a>) – Servicio de ventas inyectado</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Lista de todas las ventas</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[<a class="reference internal" href="schemas.html#schemas.venta_schema.VentaResponse" title="schemas.venta_schema.VentaResponse">VentaResponse</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.venta_routes.get_venta_by_id">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.venta_routes.</span></span><span class="sig-name descname"><span class="pre">get_venta_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_venta_service)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/venta_routes.html#get_venta_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.venta_routes.get_venta_by_id" title="Link to this definition"></a></dt>
+<dd><p>Obtiene una venta específica por su ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>int</em>) – Identificador de la venta</p></li>
+<li><p><strong>service</strong> (<a class="reference internal" href="services.html#services.venta_service.VentaService" title="services.venta_service.VentaService"><em>VentaService</em></a>) – Servicio de ventas inyectado</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Venta encontrada</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="schemas.html#schemas.venta_schema.VentaResponse" title="schemas.venta_schema.VentaResponse">VentaResponse</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>HTTPException</strong> – Si la venta no existe (404)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.venta_routes.get_ventas_by_fecha">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.venta_routes.</span></span><span class="sig-name descname"><span class="pre">get_ventas_by_fecha</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fecha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_venta_service)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/venta_routes.html#get_ventas_by_fecha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.venta_routes.get_ventas_by_fecha" title="Link to this definition"></a></dt>
+<dd><p>Busca ventas realizadas en una fecha específica.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fecha</strong> (<em>datetime</em>) – Fecha para filtrar ventas</p></li>
+<li><p><strong>service</strong> (<a class="reference internal" href="services.html#services.venta_service.VentaService" title="services.venta_service.VentaService"><em>VentaService</em></a>) – Servicio de ventas inyectado</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Lista de ventas realizadas en esa fecha</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[<a class="reference internal" href="schemas.html#schemas.venta_schema.VentaResponse" title="schemas.venta_schema.VentaResponse">VentaResponse</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.venta_routes.delete_venta">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.venta_routes.</span></span><span class="sig-name descname"><span class="pre">delete_venta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_venta_service)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/venta_routes.html#delete_venta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.venta_routes.delete_venta" title="Link to this definition"></a></dt>
+<dd><p>Elimina una venta existente.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>int</em>) – Identificador de la venta a eliminar</p></li>
+<li><p><strong>service</strong> (<a class="reference internal" href="services.html#services.venta_service.VentaService" title="services.venta_service.VentaService"><em>VentaService</em></a>) – Servicio de ventas inyectado</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Mensaje de confirmación de eliminación</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>HTTPException</strong> – Si la venta no existe (404)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-api.v1.routes.status_routes">
+<span id="health-check"></span><h2>Health Check<a class="headerlink" href="#module-api.v1.routes.status_routes" title="Link to this heading"></a></h2>
+<p>Rutas API para chequeo de salud (Health Check).</p>
+<p>Este módulo define endpoints para validar el estado del sistema y la conectividad
+entre las capas de la arquitectura (Frontend → Backend → Database).</p>
+<p>Valida el flujo arquitectónico completo del proyecto, verificando que:
+1. El frontend puede conectarse al backend
+2. El backend está operativo
+3. La base de datos está disponible y respondiendo</p>
+<dl class="field-list simple">
+<dt class="field-odd">author<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Backend Team</p>
+</dd>
+<dt class="field-even">version<span class="colon">:</span></dt>
+<dd class="field-even"><p>1.0</p>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.status_routes.get_db">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.status_routes.</span></span><span class="sig-name descname"><span class="pre">get_db</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/status_routes.html#get_db"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.status_routes.get_db" title="Link to this definition"></a></dt>
+<dd><p>Función de dependencia que proporciona una sesión de base de datos.</p>
+<p>Crea una nueva sesión SQLAlchemy para cada request y la cierra
+después de completar la solicitud.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Sesión de base de datos</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Session</p>
+</dd>
+<dt class="field-odd">Yields<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Sesión de SQLAlchemy</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="api.v1.routes.status_routes.health_check">
+<span class="sig-prename descclassname"><span class="pre">api.v1.routes.status_routes.</span></span><span class="sig-name descname"><span class="pre">health_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_db)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/api/v1/routes/status_routes.html#health_check"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#api.v1.routes.status_routes.health_check" title="Link to this definition"></a></dt>
+<dd><p>Realiza un chequeo de salud completo del sistema.</p>
+<p>Valida el flujo arquitectónico completo verificando:
+1. Conectividad con la base de datos
+2. Estado del backend
+3. Información del motor de base de datos</p>
+<p>Este endpoint es útil para:
+- Monitoreo del sistema
+- Validación de despliegues
+- Diagnóstico de problemas de conectividad</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>db</strong> (<em>Session</em>) – Sesión de base de datos inyectada para validar conectividad</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Respuesta de salud con estado de todas las capas arquitectónicas</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p>Captura excepciones y retorna estado de error</p>
+</dd>
+</dl>
+<p><strong>Ejemplo de respuesta exitosa:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;success&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Línea Base Arquitectónica validada ✅&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;layers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;presentation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Frontend conectado&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;service&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Backend operativo&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;persistence&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;database_connected&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;database_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;taller_diego_db&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;database_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PostgreSQL 15.0&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-11-25T10:30:45.123456&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;architecture_flow&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;✓ Frontend → ✓ Backend → ✓ Database → ✓ Response&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="services.html" class="btn btn-neutral float-left" title="Servicios (Business Logic)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../intro.html" class="btn btn-neutral float-right" title="intro" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, ESIS-DevTeam.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

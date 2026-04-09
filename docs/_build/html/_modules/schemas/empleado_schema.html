@@ -1,0 +1,158 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>schemas.empleado_schema &mdash; Taller Diego - Backend API 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Taller Diego - Backend API
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Módulos Backend</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/models.html">Modelos de Base de Datos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/schemas.html">Esquemas de Validación</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/repositories.html">Repositorios (Data Access)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/services.html">Servicios (Business Logic)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/routes.html">Rutas API (FastAPI Endpoints)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Información General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../intro.html">intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html">Introducción a la Arquitectura</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Taller Diego - Backend API</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">schemas.empleado_schema</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for schemas.empleado_schema</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Esquemas Pydantic para Empleado.</span>
+
+<span class="sd">Define modelos de validación y serialización para operaciones de empleado.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConfigDict</span>
+
+
+<div class="viewcode-block" id="EmpleadoBase">
+<a class="viewcode-back" href="../../modules/schemas.html#schemas.empleado_schema.EmpleadoBase">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">EmpleadoBase</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Datos comunes de un empleado.</span>
+
+<span class="sd">    :ivar nombres: Nombre del empleado.</span>
+<span class="sd">    :ivar apellidos: Apellido del empleado.</span>
+<span class="sd">    :ivar estado: Estado laboral (activo/inactivo).</span>
+<span class="sd">    :ivar especialidad: Especialidad técnica del empleado.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">nombres</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">apellidos</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">estado</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">especialidad</span><span class="p">:</span> <span class="nb">str</span></div>
+
+
+
+<div class="viewcode-block" id="EmpleadoCreate">
+<a class="viewcode-back" href="../../modules/schemas.html#schemas.empleado_schema.EmpleadoCreate">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">EmpleadoCreate</span><span class="p">(</span><span class="n">EmpleadoBase</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Payload de creación/actualización de empleado.&quot;&quot;&quot;</span>
+
+    <span class="k">pass</span></div>
+
+
+
+<div class="viewcode-block" id="EmpleadoResponse">
+<a class="viewcode-back" href="../../modules/schemas.html#schemas.empleado_schema.EmpleadoResponse">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">EmpleadoResponse</span><span class="p">(</span><span class="n">EmpleadoBase</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Modelo de respuesta para empleado.</span>
+
+<span class="sd">    :ivar id: Identificador único del empleado.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">from_attributes</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, ESIS-DevTeam.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

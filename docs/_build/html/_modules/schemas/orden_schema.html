@@ -1,0 +1,235 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>schemas.orden_schema &mdash; Taller Diego - Backend API 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Taller Diego - Backend API
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Módulos Backend</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/models.html">Modelos de Base de Datos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/schemas.html">Esquemas de Validación</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/repositories.html">Repositorios (Data Access)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/services.html">Servicios (Business Logic)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/routes.html">Rutas API (FastAPI Endpoints)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Información General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../intro.html">intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html">Introducción a la Arquitectura</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Taller Diego - Backend API</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">schemas.orden_schema</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for schemas.orden_schema</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Esquemas Pydantic para Orden.</span>
+
+<span class="sd">Define modelos de validación y serialización para operaciones de orden.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">date</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">schemas.servicio_schema</span><span class="w"> </span><span class="kn">import</span> <span class="n">ServicioResponse</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">schemas.empleado_schema</span><span class="w"> </span><span class="kn">import</span> <span class="n">EmpleadoResponse</span>
+
+
+<div class="viewcode-block" id="OrdenBase">
+<a class="viewcode-back" href="../../modules/schemas.html#schemas.orden_schema.OrdenBase">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">OrdenBase</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Datos comunes de una orden.</span>
+
+<span class="sd">    :ivar garantia: Período de garantía en días.</span>
+<span class="sd">    :ivar estadoPago: Estado del pago.</span>
+<span class="sd">    :ivar precio: Precio total de la orden.</span>
+<span class="sd">    :ivar fecha: Fecha de la orden.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">garantia</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">estadoPago</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">precio</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">fecha</span><span class="p">:</span> <span class="n">date</span></div>
+
+
+
+<div class="viewcode-block" id="OrdenServicioBase">
+<a class="viewcode-back" href="../../modules/schemas.html#schemas.orden_schema.OrdenServicioBase">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">OrdenServicioBase</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Datos de un servicio en una orden.</span>
+
+<span class="sd">    :ivar servicio_id: Identificador del servicio.</span>
+<span class="sd">    :ivar precio_servicio: Precio del servicio en la orden.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">servicio_id</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">precio_servicio</span><span class="p">:</span> <span class="nb">int</span></div>
+
+
+
+<div class="viewcode-block" id="OrdenServicioResponse">
+<a class="viewcode-back" href="../../modules/schemas.html#schemas.orden_schema.OrdenServicioResponse">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">OrdenServicioResponse</span><span class="p">(</span><span class="n">OrdenServicioBase</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Respuesta de servicio en orden con detalles.</span>
+
+<span class="sd">    :ivar servicio: Detalles del servicio.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">servicio</span><span class="p">:</span> <span class="n">ServicioResponse</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    
+<div class="viewcode-block" id="OrdenServicioResponse.Config">
+<a class="viewcode-back" href="../../modules/schemas.html#schemas.orden_schema.OrdenServicioResponse.Config">[docs]</a>
+    <span class="k">class</span><span class="w"> </span><span class="nc">Config</span><span class="p">:</span>
+        <span class="n">from_attributes</span> <span class="o">=</span> <span class="kc">True</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="OrdenEmpleadoBase">
+<a class="viewcode-back" href="../../modules/schemas.html#schemas.orden_schema.OrdenEmpleadoBase">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">OrdenEmpleadoBase</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Datos de un empleado asignado a una orden.</span>
+
+<span class="sd">    :ivar empleado_id: Identificador del empleado.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">empleado_id</span><span class="p">:</span> <span class="nb">int</span></div>
+
+
+
+<div class="viewcode-block" id="OrdenEmpleadoResponse">
+<a class="viewcode-back" href="../../modules/schemas.html#schemas.orden_schema.OrdenEmpleadoResponse">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">OrdenEmpleadoResponse</span><span class="p">(</span><span class="n">OrdenEmpleadoBase</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Respuesta de empleado en orden con detalles.</span>
+
+<span class="sd">    :ivar empleado: Detalles del empleado.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">empleado</span><span class="p">:</span> <span class="n">EmpleadoResponse</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    
+<div class="viewcode-block" id="OrdenEmpleadoResponse.Config">
+<a class="viewcode-back" href="../../modules/schemas.html#schemas.orden_schema.OrdenEmpleadoResponse.Config">[docs]</a>
+    <span class="k">class</span><span class="w"> </span><span class="nc">Config</span><span class="p">:</span>
+        <span class="n">from_attributes</span> <span class="o">=</span> <span class="kc">True</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="OrdenCreate">
+<a class="viewcode-back" href="../../modules/schemas.html#schemas.orden_schema.OrdenCreate">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">OrdenCreate</span><span class="p">(</span><span class="n">OrdenBase</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Payload de creación de orden.</span>
+
+<span class="sd">    :ivar servicios: Lista de servicios a incluir.</span>
+<span class="sd">    :ivar empleados: Lista de empleados a asignar.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">servicios</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">OrdenServicioBase</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">empleados</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">OrdenEmpleadoBase</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">[]</span></div>
+
+
+
+<div class="viewcode-block" id="OrdenResponse">
+<a class="viewcode-back" href="../../modules/schemas.html#schemas.orden_schema.OrdenResponse">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">OrdenResponse</span><span class="p">(</span><span class="n">OrdenBase</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Modelo de respuesta para orden.</span>
+
+<span class="sd">    :ivar id: Identificador único de la orden.</span>
+<span class="sd">    :ivar servicios: Servicios incluidos en la orden.</span>
+<span class="sd">    :ivar empleados: Empleados asignados a la orden.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">servicios</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">OrdenServicioResponse</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">empleados</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">OrdenEmpleadoResponse</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="OrdenResponse.Config">
+<a class="viewcode-back" href="../../modules/schemas.html#schemas.orden_schema.OrdenResponse.Config">[docs]</a>
+    <span class="k">class</span><span class="w"> </span><span class="nc">Config</span><span class="p">:</span>
+        <span class="n">from_attributes</span> <span class="o">=</span> <span class="kc">True</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, ESIS-DevTeam.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

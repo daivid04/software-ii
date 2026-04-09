@@ -1,0 +1,289 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>api.v1.routes.empleado_routes &mdash; Taller Diego - Backend API 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            Taller Diego - Backend API
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Módulos Backend</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules/models.html">Modelos de Base de Datos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules/schemas.html">Esquemas de Validación</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules/repositories.html">Repositorios (Data Access)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules/services.html">Servicios (Business Logic)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules/routes.html">Rutas API (FastAPI Endpoints)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Información General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../intro.html">intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../architecture.html">Introducción a la Arquitectura</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Taller Diego - Backend API</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">api.v1.routes.empleado_routes</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for api.v1.routes.empleado_routes</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Rutas API para operaciones de Empleados.</span>
+
+<span class="sd">Este módulo define los endpoints REST para crear, leer, actualizar y eliminar</span>
+<span class="sd">empleados. Implementa el patrón de inyección de dependencias de FastAPI para</span>
+<span class="sd">gestionar sesiones de base de datos y servicios.</span>
+
+<span class="sd">Las rutas siguen el patrón RESTful:</span>
+<span class="sd">- POST /: Crear nuevo empleado</span>
+<span class="sd">- GET /: Listar todos los empleados</span>
+<span class="sd">- GET /{id}: Obtener empleado por ID</span>
+<span class="sd">- PUT /{id}: Actualizar empleado</span>
+<span class="sd">- DELETE /{id}: Eliminar empleado</span>
+
+<span class="sd">:author: Backend Team</span>
+<span class="sd">:version: 1.0</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">APIRouter</span><span class="p">,</span> <span class="n">Depends</span><span class="p">,</span> <span class="n">HTTPException</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.orm</span><span class="w"> </span><span class="kn">import</span> <span class="n">Session</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">db.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">SessionLocal</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">schemas.empleado_schema</span><span class="w"> </span><span class="kn">import</span> <span class="n">EmpleadoCreate</span><span class="p">,</span> <span class="n">EmpleadoResponse</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">services.empleado_service</span><span class="w"> </span><span class="kn">import</span> <span class="n">EmpleadoService</span>
+
+<span class="n">router</span> <span class="o">=</span> <span class="n">APIRouter</span><span class="p">(</span><span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Empleados&quot;</span><span class="p">])</span>
+
+
+<div class="viewcode-block" id="get_db">
+<a class="viewcode-back" href="../../../../modules/routes.html#api.v1.routes.empleado_routes.get_db">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_db</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Función de dependencia que proporciona una sesión de base de datos.</span>
+<span class="sd">    </span>
+<span class="sd">    Crea una nueva sesión SQLAlchemy para cada request y la cierra</span>
+<span class="sd">    después de completar la solicitud.</span>
+<span class="sd">    </span>
+<span class="sd">    :returns: Sesión de base de datos</span>
+<span class="sd">    :rtype: Session</span>
+<span class="sd">    :yields: Sesión de SQLAlchemy</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">db</span> <span class="o">=</span> <span class="n">SessionLocal</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">db</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="get_empleado_service">
+<a class="viewcode-back" href="../../../../modules/routes.html#api.v1.routes.empleado_routes.get_empleado_service">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_empleado_service</span><span class="p">(</span><span class="n">db</span><span class="p">:</span> <span class="n">Session</span> <span class="o">=</span> <span class="n">Depends</span><span class="p">(</span><span class="n">get_db</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="n">EmpleadoService</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Función de dependencia que proporciona el servicio de empleados.</span>
+<span class="sd">    </span>
+<span class="sd">    Inyecta la sesión de base de datos en el servicio de empleados</span>
+<span class="sd">    para que este pueda acceder a los datos.</span>
+<span class="sd">    </span>
+<span class="sd">    :param db: Sesión de base de datos inyectada</span>
+<span class="sd">    :type db: Session</span>
+<span class="sd">    :returns: Instancia del servicio de empleados</span>
+<span class="sd">    :rtype: EmpleadoService</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">EmpleadoService</span><span class="p">(</span><span class="n">db</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="create_empleado">
+<a class="viewcode-back" href="../../../../modules/routes.html#api.v1.routes.empleado_routes.create_empleado">[docs]</a>
+<span class="nd">@router</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="n">response_model</span><span class="o">=</span><span class="n">EmpleadoResponse</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_empleado</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">EmpleadoCreate</span><span class="p">,</span>
+    <span class="n">service</span><span class="p">:</span> <span class="n">EmpleadoService</span> <span class="o">=</span> <span class="n">Depends</span><span class="p">(</span><span class="n">get_empleado_service</span><span class="p">)</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Crea un nuevo empleado.</span>
+<span class="sd">    </span>
+<span class="sd">    Recibe los datos del empleado en el cuerpo de la solicitud</span>
+<span class="sd">    y retorna el empleado creado con su ID generado.</span>
+<span class="sd">    </span>
+<span class="sd">    :param data: Datos del empleado a crear</span>
+<span class="sd">    :type data: EmpleadoCreate</span>
+<span class="sd">    :param service: Servicio de empleados inyectado</span>
+<span class="sd">    :type service: EmpleadoService</span>
+<span class="sd">    :returns: Empleado creado</span>
+<span class="sd">    :rtype: EmpleadoResponse</span>
+<span class="sd">    :raises ValueError: Si ya existe un empleado con ese nombre</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">service</span><span class="o">.</span><span class="n">create_empleado</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="list_empleados">
+<a class="viewcode-back" href="../../../../modules/routes.html#api.v1.routes.empleado_routes.list_empleados">[docs]</a>
+<span class="nd">@router</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="n">response_model</span><span class="o">=</span><span class="nb">list</span><span class="p">[</span><span class="n">EmpleadoResponse</span><span class="p">])</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">list_empleados</span><span class="p">(</span>
+    <span class="n">service</span><span class="p">:</span> <span class="n">EmpleadoService</span> <span class="o">=</span> <span class="n">Depends</span><span class="p">(</span><span class="n">get_empleado_service</span><span class="p">)</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Lista todos los empleados registrados.</span>
+<span class="sd">    </span>
+<span class="sd">    :param service: Servicio de empleados inyectado</span>
+<span class="sd">    :type service: EmpleadoService</span>
+<span class="sd">    :returns: Lista de todos los empleados</span>
+<span class="sd">    :rtype: list[EmpleadoResponse]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">service</span><span class="o">.</span><span class="n">list_empleados</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="get_empleado">
+<a class="viewcode-back" href="../../../../modules/routes.html#api.v1.routes.empleado_routes.get_empleado">[docs]</a>
+<span class="nd">@router</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/</span><span class="si">{id}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">response_model</span><span class="o">=</span><span class="n">EmpleadoResponse</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_empleado</span><span class="p">(</span><span class="nb">id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">service</span><span class="p">:</span> <span class="n">EmpleadoService</span> <span class="o">=</span> <span class="n">Depends</span><span class="p">(</span><span class="n">get_empleado_service</span><span class="p">)):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Obtiene un empleado específico por su ID.</span>
+<span class="sd">    </span>
+<span class="sd">    :param id: Identificador del empleado</span>
+<span class="sd">    :type id: int</span>
+<span class="sd">    :param service: Servicio de empleados inyectado</span>
+<span class="sd">    :type service: EmpleadoService</span>
+<span class="sd">    :returns: Empleado encontrado</span>
+<span class="sd">    :rtype: EmpleadoResponse</span>
+<span class="sd">    :raises HTTPException: Si el empleado no existe (404)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">empleado</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">get_by_id</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">empleado</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">404</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;Empleado no encontrado&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">empleado</span></div>
+
+
+
+<div class="viewcode-block" id="update_empleado">
+<a class="viewcode-back" href="../../../../modules/routes.html#api.v1.routes.empleado_routes.update_empleado">[docs]</a>
+<span class="nd">@router</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;/</span><span class="si">{id}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">response_model</span><span class="o">=</span><span class="n">EmpleadoResponse</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">update_empleado</span><span class="p">(</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">EmpleadoCreate</span><span class="p">,</span>
+    <span class="n">service</span><span class="p">:</span> <span class="n">EmpleadoService</span> <span class="o">=</span> <span class="n">Depends</span><span class="p">(</span><span class="n">get_empleado_service</span><span class="p">)</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Actualiza un empleado existente.</span>
+<span class="sd">    </span>
+<span class="sd">    :param id: Identificador del empleado a actualizar</span>
+<span class="sd">    :type id: int</span>
+<span class="sd">    :param data: Nuevos datos del empleado</span>
+<span class="sd">    :type data: EmpleadoCreate</span>
+<span class="sd">    :param service: Servicio de empleados inyectado</span>
+<span class="sd">    :type service: EmpleadoService</span>
+<span class="sd">    :returns: Empleado actualizado</span>
+<span class="sd">    :rtype: EmpleadoResponse</span>
+<span class="sd">    :raises HTTPException: Si el empleado no existe (404)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">empleado</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">update_empleado</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">empleado</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">404</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;Empleado no encontrado&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">empleado</span></div>
+
+
+
+<div class="viewcode-block" id="delete_empleado">
+<a class="viewcode-back" href="../../../../modules/routes.html#api.v1.routes.empleado_routes.delete_empleado">[docs]</a>
+<span class="nd">@router</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s2">&quot;/</span><span class="si">{id}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">delete_empleado</span><span class="p">(</span><span class="nb">id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">service</span><span class="p">:</span> <span class="n">EmpleadoService</span> <span class="o">=</span> <span class="n">Depends</span><span class="p">(</span><span class="n">get_empleado_service</span><span class="p">)):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Elimina un empleado existente.</span>
+<span class="sd">    </span>
+<span class="sd">    :param id: Identificador del empleado a eliminar</span>
+<span class="sd">    :type id: int</span>
+<span class="sd">    :param service: Servicio de empleados inyectado</span>
+<span class="sd">    :type service: EmpleadoService</span>
+<span class="sd">    :returns: Mensaje de confirmación de eliminación</span>
+<span class="sd">    :rtype: dict</span>
+<span class="sd">    :raises HTTPException: Si el empleado no existe (404)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">empleado</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">delete_empleado</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">empleado</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">404</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="s2">&quot;Empleado no encontrado&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;detail&quot;</span><span class="p">:</span> <span class="s2">&quot;Empleado eliminado&quot;</span><span class="p">}</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, ESIS-DevTeam.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

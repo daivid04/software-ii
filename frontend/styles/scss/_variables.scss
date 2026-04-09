@@ -1,0 +1,83 @@
+// ========================================
+// VARIABLES GLOBALES DEL SISTEMA
+// ========================================
+
+@use 'sass:map';
+
+// ========================================
+// COLORES
+// ========================================
+$colors: (
+  "primary": #1A242F,
+  "secondary": #EBF5FF,
+  "accent": #005bb6,
+  "error": #8B2727,
+  "success": #2E7D32,
+  "warning": #F9A825,
+  "text": #2c3e50,
+  "text-muted": #7f8c8d,
+  "border": #e5e7eb,
+  "bg-light": #f8f9fa,
+);
+
+@function color($name) {
+  @return map.get($colors, $name);
+}
+
+// ========================================
+// TIPOGRAFÍA
+// ========================================
+$font-base: 'Istok Web', sans-serif;
+$font-size-base: 16px;
+$font-size-sm: 14px;
+$font-size-lg: 18px;
+$font-size-xl: 24px;
+
+// ========================================
+// ESPACIADO
+// ========================================
+$spacings: (
+  "xs": 0.25rem,
+  "sm": 0.5rem,
+  "md": 1rem,
+  "lg": 2rem,
+  "xl": 4rem
+);
+
+@function spacing($size) {
+  @return map.get($spacings, $size);
+}
+
+// ========================================
+// BREAKPOINTS
+// ========================================
+$breakpoints: (
+  "sm": 576px,
+  "md": 768px,
+  "lg": 992px,
+  "xl": 1200px
+);
+
+@mixin media($bp) {
+  @media (max-width: map.get($breakpoints, $bp)) {
+    @content;
+  }
+}
+
+// ========================================
+// BORDES Y SOMBRAS
+// ========================================
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 16px;
+
+$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+$shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+$shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
+
+// ========================================
+// LAYOUT
+// ========================================
+$sidebar-width: 130px;
+$header-height: 75px;
+$header-height-mobile: 60px;

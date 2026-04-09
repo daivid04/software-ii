@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taller de Diego - Login</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+  <link rel="stylesheet" href="../styles/css/login.css">
+</head>
+
+<body>
+  <div class="main-container">
+    <div class="container">
+      <section class="section-login">
+        <div class="context">
+          <img src="../assets/icons/logo-taller.svg" alt="Logo Taller Diego" class="login-logo">
+          <h1>TALLER DE DIEGO</h1>
+          <p>Iniciar Sesión</p>
+        </div>
+        <form class="form-login">
+          <div>
+            <label for="user-email">Correo electrónico</label>
+            <input id="user-email" type="email" placeholder="ej diego@gmail.com">
+          </div>
+          <div>
+            <label for="user-key">Contraseña</label>
+            <input id="user-key" type="password" placeholder="********">
+          </div>
+          <p id="errorMsg" class="error hidden">Correo o contraseña incorrecta</p>
+          <button type="submit" class="btn-submit">Iniciar sesión<span></span></button>
+        </form>
+      </section>
+      <section class="section-context">
+        <div class="img-container">
+          <img src="../assets/fonts/context.jpg" alt="Gestión de mecanica">
+        </div>
+        <div class="container-context">
+          <h2>Control Total de tu Taller</h2>
+          <p>Gestión de inventario, servicios y operaciones de la manera mas eficiente</p>
+        </div>
+      </section>
+    </div>
+  </div>
+  <script type="module" src="../scripts/login.js"></script>
+</body>
+
+</html>

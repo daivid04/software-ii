@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="../scripts/utils/auth-guard.js"></script>
+  <title>Taller de Mecánica Diego</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+  <!-- Preconnect para recursos externos -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
+  <!-- Preload de recursos críticos -->
+  <link rel="preload" href="../styles/css/inventory.css" as="style">
+  <link rel="preload" href="../styles/css/side_bar.css" as="style">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Istok+Web:wght@400;700&display=swap" as="style">
+
+  <link rel="stylesheet" href="../styles/css/inventory.css">
+  <link rel="stylesheet" href="../styles/css/side_bar.css">
+  <link rel="stylesheet" href="../styles/css/header.css">
+  <link href="https://fonts.googleapis.com/css2?family=Istok+Web:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/css/modal-add-product.css">
+  <link rel="stylesheet" href="../styles/css/modal-confirm.css">
+  <link rel="stylesheet" href="../styles/css/product-details.css">
+  <link rel="stylesheet" href="../styles/css/notification.css">
+  <!-- Estilos para modal de descarga de códigos de barras PDF -->
+  <link rel="stylesheet" href="../styles/css/modal-pdfcod.css">
+
+  <!-- Scripts locales -->
+  <script src="../scripts/lib/fuse.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
+
+  <!-- Registrar Service Worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('../service-worker.js')
+          .then(registration => {
+          })
+          .catch(error => {
+            console.log('❌ Error registrando Service Worker:', error);
+          });
+      });
+    }
+  </script>
+</head>
+
+<body>
+  <div id="header">
+    <!--#include virtual="/includes/header.html" -->
+  </div>
+
+  <div id="mobile-menu-container">
+    <!--#include virtual="/includes/mobile-menu-inventory.html" -->
+  </div>
+
+  <div id="side-bar-container" class="side-bar-container sidebar-placeholder">
+    <!--#include virtual="/includes/sidebar.html" -->
+  </div>
+
+  <div class="container">
+    <main class="main-content">
+
+      <h1>Gestion de inventario</h1>
+
+      <!-- Botón para generar/ver códigos de barras (Nuevo) -->
+      <div class="card" id="barcode-btn">
+        <a href="#">
+          <p>Codigo de barras</p>
+        </a>
+      </div>
+
+      <div class="card" id="open-modal-btn">
+        <a href="#">
+          <p>Nuevo producto</p>
+        </a>
+      </div>
+
+      <section class="form-inventary">
+        <button class="btn-back-menu mobile-only">← Volver al menú</button>
+        <h2>Inventario</h2>
+        <form id="inventory-form" class="inventory-form">
+          <!-- Búsqueda -->
+          <div class="search-box">
+            <img src="../assets/icons/search.png" alt="Buscar">
+            <input id="search" type="text" data-search-input placeholder="Buscar producto...">
+          </div>
+
+          <!-- Categorías -->
+          <div class="section-filter category">
+            <h4>Categorías</h4>
+            <ul class="category-option">
+            </ul>
+          </div>
+
+          <!-- Stock bajo -->
+          <div class="section-filter low-stock">
+            <h4>Stock</h4>
+            <ul>
+              <li>
+                <label class="low-stock">
+                  <input type="checkbox" name="stock" data-low-stock>
+                  Stock bajo
+                </label>
+              </li>
+            </ul>
+          </div>
+
+          <div class="section-filter price-range">
+            <h4>Rango de precios</h4>
+            <div class="price-range">
+              <input type="number" placeholder="Mínimo" data-min-price>
+              <span>-</span>
+              <input type="number" placeholder="Máximo" data-max-price>
+            </div>
+          </div>
+
+        </form>
+      </section>
+
+      <section class="inventary-data">
+        <div class="inventory-header grid-layout" role="row">
+          <div class="header-item" role="columnheader">Nombre</div>
+          <div class="header-item" role="columnheader">Descripción</div>
+          <div class="header-item" role="columnheader">Stock</div>
+          <div class="header-item" role="columnheader">Precio de Compra</div>
+          <div class="header-item" role="columnheader">Precio de Venta</div>
+          <div class="header-item" role="columnheader">Acciones</div>
+        </div>
+
+        <div class="product-list" id="product-list">
+        </div>
+      </section>
+    </main>
+
+  </div>
+
+  <div id="modal-container"></div>
+  <script type="module" src="../scripts/header-actions.js"></script>
+  <script type="module" src="../scripts/inventory.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,255 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Introducción a la Arquitectura &mdash; Taller Diego - Backend API 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="intro" href="intro.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Taller Diego - Backend API
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Módulos Backend</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules/models.html">Modelos de Base de Datos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/schemas.html">Esquemas de Validación</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/repositories.html">Repositorios (Data Access)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/services.html">Servicios (Business Logic)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/routes.html">Rutas API (FastAPI Endpoints)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Información General</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">intro</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introducción a la Arquitectura</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#vision-general">Visión General</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#conceptos-clave">Conceptos Clave</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#modelos-models">Modelos (Models)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#esquemas-schemas">Esquemas (Schemas)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#servicios-services">Servicios (Services)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#repositorios-repositories">Repositorios (Repositories)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#convenciones">Convenciones</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#nombres-de-variables">Nombres de Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#respuestas-http">Respuestas HTTP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#control-de-stock">Control de Stock</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Taller Diego - Backend API</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Introducción a la Arquitectura</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/architecture.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="introduccion-a-la-arquitectura">
+<h1>Introducción a la Arquitectura<a class="headerlink" href="#introduccion-a-la-arquitectura" title="Link to this heading"></a></h1>
+<section id="vision-general">
+<h2>Visión General<a class="headerlink" href="#vision-general" title="Link to this heading"></a></h2>
+<p>El sistema de <strong>Taller Diego</strong> está organizado en capas que separan responsabilidades:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>┌─────────────────────────────────────┐
+│      Frontend (HTML/JavaScript)     │
+└──────────────┬──────────────────────┘
+               │ REST API
+               ▼
+┌─────────────────────────────────────┐
+│        Routes (FastAPI)             │
+│  - POST /productos                  │
+│  - GET /ordenes/{id}                │
+│  - DELETE /ventas/{id}              │
+└──────────────┬──────────────────────┘
+               │
+┌──────────────▼──────────────────────┐
+│      Services (Business Logic)      │
+│  - Validaciones                     │
+│  - Transacciones                    │
+│  - Control de stock                 │
+└──────────────┬──────────────────────┘
+               │
+┌──────────────▼──────────────────────┐
+│   Repositories (Data Access)        │
+│  - CRUD Operations                  │
+│  - Queries complejas                │
+│  - Row-level locking                │
+└──────────────┬──────────────────────┘
+               │
+┌──────────────▼──────────────────────┐
+│    Models (SQLAlchemy/PostgreSQL)   │
+│  - Producto                         │
+│  - Autoparte                        │
+│  - Orden                            │
+└─────────────────────────────────────┘
+</pre></div>
+</div>
+</section>
+<section id="conceptos-clave">
+<h2>Conceptos Clave<a class="headerlink" href="#conceptos-clave" title="Link to this heading"></a></h2>
+<section id="modelos-models">
+<h3>Modelos (Models)<a class="headerlink" href="#modelos-models" title="Link to this heading"></a></h3>
+<p>Los modelos representan las entidades de la base de datos:</p>
+<ul class="simple">
+<li><p><strong>Producto</strong>: Artículo base con atributos comunes</p></li>
+<li><p><strong>Autoparte</strong>: Herencia de Producto con modelo y año</p></li>
+<li><p><strong>Servicio</strong>: Servicio prestado</p></li>
+<li><p><strong>Empleado</strong>: Trabajador del taller</p></li>
+<li><p><strong>Orden</strong>: Orden de servicio con servicios y empleados</p></li>
+<li><p><strong>Venta</strong>: Venta de productos con líneas de detalle</p></li>
+</ul>
+<p>Relaciones:</p>
+<ul class="simple">
+<li><p><cite>OrdenServicio</cite>: Junction table (Orden ↔ Servicio)</p></li>
+<li><p><cite>OrdenEmpleado</cite>: Many-to-many (Orden ↔ Empleado)</p></li>
+<li><p><cite>VentaProducto</cite>: Junction table con control de stock (Venta ↔ Producto)</p></li>
+</ul>
+</section>
+<section id="esquemas-schemas">
+<h3>Esquemas (Schemas)<a class="headerlink" href="#esquemas-schemas" title="Link to this heading"></a></h3>
+<p>Schemas Pydantic para validación de entrada/salida:</p>
+<ul class="simple">
+<li><p><strong>Base</strong>: Atributos comunes (sin ID)</p></li>
+<li><p><strong>Create</strong>: Para POST requests</p></li>
+<li><p><strong>Response</strong>: Para GET requests (incluye ID)</p></li>
+</ul>
+</section>
+<section id="servicios-services">
+<h3>Servicios (Services)<a class="headerlink" href="#servicios-services" title="Link to this heading"></a></h3>
+<p>Lógica de negocio:</p>
+<ul class="simple">
+<li><p>Validación de duplicados</p></li>
+<li><p>Control de transacciones</p></li>
+<li><p>Gestión de stock</p></li>
+<li><p>Búsquedas especializadas</p></li>
+</ul>
+</section>
+<section id="repositorios-repositories">
+<h3>Repositorios (Repositories)<a class="headerlink" href="#repositorios-repositories" title="Link to this heading"></a></h3>
+<p>Acceso a datos con métodos:</p>
+<ul class="simple">
+<li><p><cite>create()</cite>: Inserción simple</p></li>
+<li><p><cite>create_with_*()</cite>: Inserción con relaciones</p></li>
+<li><p><cite>get_by_id()</cite>: Búsqueda por ID</p></li>
+<li><p><cite>get_all()</cite>: Listar todos</p></li>
+<li><p><cite>update()</cite>: Actualización</p></li>
+<li><p><cite>delete()</cite>: Eliminación</p></li>
+<li><p>Métodos especializados (ej: <cite>get_by_fecha()</cite>)</p></li>
+</ul>
+</section>
+</section>
+<section id="convenciones">
+<h2>Convenciones<a class="headerlink" href="#convenciones" title="Link to this heading"></a></h2>
+<section id="nombres-de-variables">
+<h3>Nombres de Variables<a class="headerlink" href="#nombres-de-variables" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><cite>db</cite>: Sesión SQLAlchemy</p></li>
+<li><p><cite>service</cite>: Instancia del servicio</p></li>
+<li><p><cite>data</cite>: Datos del request (esquema Pydantic)</p></li>
+<li><p><cite>id</cite>: Identificador único</p></li>
+<li><p><cite>resultado</cite>: Resultado de operación CRUD</p></li>
+</ul>
+</section>
+<section id="respuestas-http">
+<h3>Respuestas HTTP<a class="headerlink" href="#respuestas-http" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>201</strong>: Creación exitosa</p></li>
+<li><p><strong>200</strong>: Operación exitosa</p></li>
+<li><p><strong>404</strong>: Recurso no encontrado</p></li>
+<li><p><strong>400</strong>: Validación fallida</p></li>
+<li><p><strong>500</strong>: Error del servidor</p></li>
+</ul>
+</section>
+<section id="control-de-stock">
+<h3>Control de Stock<a class="headerlink" href="#control-de-stock" title="Link to this heading"></a></h3>
+<p>El sistema maneja stock con:</p>
+<ul class="simple">
+<li><p>Lock a nivel de fila (<cite>FOR UPDATE</cite>) en PostgreSQL</p></li>
+<li><p>Validación antes de crear VentaProducto</p></li>
+<li><p>Decrementación automática al vender</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="intro.html" class="btn btn-neutral float-left" title="intro" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, ESIS-DevTeam.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

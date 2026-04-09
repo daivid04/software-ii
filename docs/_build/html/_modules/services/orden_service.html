@@ -1,0 +1,248 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>services.orden_service &mdash; Taller Diego - Backend API 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Taller Diego - Backend API
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Módulos Backend</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/models.html">Modelos de Base de Datos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/schemas.html">Esquemas de Validación</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/repositories.html">Repositorios (Data Access)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/services.html">Servicios (Business Logic)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/routes.html">Rutas API (FastAPI Endpoints)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Información General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../intro.html">intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html">Introducción a la Arquitectura</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Taller Diego - Backend API</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">services.orden_service</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for services.orden_service</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Servicio de lógica de negocio para Órdenes.</span>
+
+<span class="sd">Este módulo proporciona la capa de servicio para operaciones de órdenes,</span>
+<span class="sd">incluyendo creación de órdenes simples y complejas (con servicios y empleados),</span>
+<span class="sd">búsqueda por fecha, y operaciones CRUD delegadas al repositorio.</span>
+
+<span class="sd">:author: Backend Team</span>
+<span class="sd">:version: 1.0</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.orm</span><span class="w"> </span><span class="kn">import</span> <span class="n">Session</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">repositories.orden_repo</span><span class="w"> </span><span class="kn">import</span> <span class="n">OrdenRepository</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">schemas.orden_schema</span><span class="w"> </span><span class="kn">import</span> <span class="n">OrdenCreate</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">fastapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">HTTPException</span>
+
+
+<div class="viewcode-block" id="OrdenService">
+<a class="viewcode-back" href="../../modules/services.html#services.orden_service.OrdenService">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">OrdenService</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Servicio de negocio para gestión de órdenes de servicio.</span>
+<span class="sd">    </span>
+<span class="sd">    Proporciona métodos para crear órdenes simples y complejas (con relaciones</span>
+<span class="sd">    a servicios y empleados), listar, buscar y eliminar órdenes. Maneja la</span>
+<span class="sd">    lógica de conversión de datos y delegación al repositorio.</span>
+<span class="sd">    </span>
+<span class="sd">    :ivar repo: Repositorio de órdenes para acceso a datos</span>
+<span class="sd">    :type repo: OrdenRepository</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db</span><span class="p">:</span> <span class="n">Session</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Inicializa el servicio de órdenes con una sesión de base de datos.</span>
+<span class="sd">        </span>
+<span class="sd">        :param db: Sesión de SQLAlchemy para acceso a la base de datos</span>
+<span class="sd">        :type db: Session</span>
+<span class="sd">        :ivar repo: Instancia del repositorio de órdenes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">repo</span> <span class="o">=</span> <span class="n">OrdenRepository</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
+
+<div class="viewcode-block" id="OrdenService.create_orden">
+<a class="viewcode-back" href="../../modules/services.html#services.orden_service.OrdenService.create_orden">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_orden</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">OrdenCreate</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Crea una nueva orden, simple o con relaciones a servicios y empleados.</span>
+<span class="sd">        </span>
+<span class="sd">        Si se proporcionan servicios o empleados en los datos, crea una orden</span>
+<span class="sd">        compleja con todas las relaciones. En caso contrario, crea una orden simple.</span>
+<span class="sd">        </span>
+<span class="sd">        Convierte objetos Pydantic a diccionarios para compatibilidad con el</span>
+<span class="sd">        repositorio y maneja excepciones de validación.</span>
+<span class="sd">        </span>
+<span class="sd">        :param data: Datos de la orden a crear (precio, fecha, estado, etc.)</span>
+<span class="sd">        :type data: OrdenCreate</span>
+<span class="sd">        :returns: Objeto orden creado con ID y relaciones (si aplica)</span>
+<span class="sd">        :rtype: Orden</span>
+<span class="sd">        :raises HTTPException: Si hay error de validación en los servicios/empleados</span>
+<span class="sd">                              (status_code=400)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">servicios</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s2">&quot;servicios&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">empleados</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s2">&quot;empleados&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="n">servicios_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">model_dump</span><span class="p">()</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;model_dump&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">servicios</span><span class="p">]</span> <span class="k">if</span> <span class="n">servicios</span> <span class="k">else</span> <span class="p">[]</span>
+        <span class="n">empleados_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">model_dump</span><span class="p">()</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;model_dump&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">empleados</span><span class="p">]</span> <span class="k">if</span> <span class="n">empleados</span> <span class="k">else</span> <span class="p">[]</span>
+
+        <span class="c1"># Si hay servicios o empleados asociados, crear con relaciones</span>
+        <span class="k">if</span> <span class="n">servicios_list</span> <span class="ow">or</span> <span class="n">empleados_list</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">create_with_services</span><span class="p">(</span>
+                    <span class="n">data</span><span class="o">.</span><span class="n">garantia</span><span class="p">,</span>
+                    <span class="n">data</span><span class="o">.</span><span class="n">estadoPago</span><span class="p">,</span>
+                    <span class="n">data</span><span class="o">.</span><span class="n">precio</span><span class="p">,</span>
+                    <span class="n">data</span><span class="o">.</span><span class="n">fecha</span><span class="p">,</span>
+                    <span class="n">servicios_list</span><span class="p">,</span>
+                    <span class="n">empleados_list</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+
+        <span class="c1"># Caso simple: solo la orden</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">garantia</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">estadoPago</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">precio</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">fecha</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OrdenService.list_ordens">
+<a class="viewcode-back" href="../../modules/services.html#services.orden_service.OrdenService.list_ordens">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">list_ordens</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Lista todas las órdenes registradas.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: Lista de todas las órdenes en la base de datos</span>
+<span class="sd">        :rtype: list[Orden]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">get_all</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="OrdenService.get_by_id">
+<a class="viewcode-back" href="../../modules/services.html#services.orden_service.OrdenService.get_by_id">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtiene una orden por su ID.</span>
+<span class="sd">        </span>
+<span class="sd">        :param id: Identificador único de la orden</span>
+<span class="sd">        :type id: int</span>
+<span class="sd">        :returns: Objeto orden encontrado o None si no existe</span>
+<span class="sd">        :rtype: Orden | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">get_by_id</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OrdenService.get_by_fecha">
+<a class="viewcode-back" href="../../modules/services.html#services.orden_service.OrdenService.get_by_fecha">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_by_fecha</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fecha</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Busca órdenes por fecha de creación.</span>
+<span class="sd">        </span>
+<span class="sd">        :param fecha: Fecha para filtrar órdenes</span>
+<span class="sd">        :type fecha: datetime</span>
+<span class="sd">        :returns: Lista de órdenes creadas en la fecha especificada</span>
+<span class="sd">        :rtype: list[Orden]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">get_by_fecha</span><span class="p">(</span><span class="n">fecha</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OrdenService.delete_orden">
+<a class="viewcode-back" href="../../modules/services.html#services.orden_service.OrdenService.delete_orden">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">delete_orden</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Elimina una orden existente.</span>
+<span class="sd">        </span>
+<span class="sd">        :param id: Identificador único de la orden a eliminar</span>
+<span class="sd">        :type id: int</span>
+<span class="sd">        :returns: True si la eliminación fue exitosa</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, ESIS-DevTeam.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

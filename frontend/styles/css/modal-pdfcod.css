@@ -1,0 +1,627 @@
+/**
+ * ========================================
+ * ESTILOS PARA MODAL DE DESCARGA DE CÓDIGOS DE BARRAS EN PDF
+ * ========================================
+ * 
+ * Este archivo contiene los estilos específicos para el modal
+ * que permite descargar códigos de barras en formato PDF.
+ */
+
+/* ========================================
+   OVERLAY Y CONTENEDOR DEL MODAL
+   ======================================== */
+
+#modal-pdf-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    padding: 20px;
+    box-sizing: border-box;
+    animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* ========================================
+   CONTENIDO DEL MODAL
+   ======================================== */
+
+.modal-pdf-content {
+    background: white;
+    border-radius: 16px;
+    max-width: 520px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================================
+   ENCABEZADO DEL MODAL
+   ======================================== */
+
+.modal-pdf-content .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    border-bottom: 1px solid #e9ecef;
+    background: linear-gradient(135deg, #005bb6 0%, #0077cc 100%);
+    border-radius: 16px 16px 0 0;
+}
+
+.modal-pdf-content .modal-header h2 {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+}
+
+.modal-pdf-content .modal-header h2 svg {
+    flex-shrink: 0;
+}
+
+.modal-pdf-content .modal-close-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 8px;
+    padding: 8px;
+    cursor: pointer;
+    color: white;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-pdf-content .modal-close-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+/* ========================================
+   CUERPO DEL MODAL
+   ======================================== */
+
+.modal-pdf-content .modal-body {
+    padding: 24px;
+}
+
+.modal-pdf-content .modal-description {
+    margin: 0 0 20px 0;
+    color: #6c757d;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* ========================================
+   CONTENEDOR DE OPCIONES
+   ======================================== */
+
+.pdf-options-container {
+    margin-bottom: 20px;
+}
+
+.pdf-options-container h4 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 12px 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: #2c3e50;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.pdf-options-container h4 svg {
+    color: #005bb6;
+    flex-shrink: 0;
+}
+
+.pdf-options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* ========================================
+   SECCIÓN DE FILTROS (SELECT DROPDOWNS)
+   ======================================== */
+
+.pdf-filters-section,
+.pdf-config-section {
+    background: #f8f9fa;
+    padding: 16px;
+    border-radius: 10px;
+    border: 1px solid #e9ecef;
+}
+
+.pdf-filter-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.pdf-filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.pdf-filter-group label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #495057;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.pdf-select {
+    padding: 10px 12px;
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    background: white;
+    font-size: 14px;
+    color: #495057;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23495057' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
+}
+
+.pdf-select:hover {
+    border-color: #005bb6;
+}
+
+.pdf-select:focus {
+    outline: none;
+    border-color: #005bb6;
+    box-shadow: 0 0 0 3px rgba(0, 91, 182, 0.15);
+}
+
+/* ========================================
+   OPCIONES CON CHECKBOXES
+   ======================================== */
+
+.pdf-checkbox-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid #e9ecef;
+}
+
+.pdf-checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 13px;
+    color: #495057;
+}
+
+.pdf-checkbox-item:hover {
+    border-color: #005bb6;
+    background: #f8fbff;
+}
+
+.pdf-checkbox-item input[type="checkbox"] {
+    display: none;
+}
+
+.pdf-checkbox-item .checkbox-mark {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #ced4da;
+    border-radius: 4px;
+    position: relative;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.pdf-checkbox-item .checkbox-mark::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 5px;
+    width: 5px;
+    height: 9px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg) scale(0);
+    transition: transform 0.2s ease;
+}
+
+.pdf-checkbox-item input[type="checkbox"]:checked+.checkbox-mark {
+    background: #005bb6;
+    border-color: #005bb6;
+}
+
+.pdf-checkbox-item input[type="checkbox"]:checked+.checkbox-mark::after {
+    transform: rotate(45deg) scale(1);
+}
+
+.pdf-checkbox-item:has(input[type="checkbox"]:checked) {
+    border-color: #005bb6;
+    background: #e8f4fd;
+}
+
+.pdf-checkbox-item:has(input[type="checkbox"]:checked) span:last-child {
+    color: #005bb6;
+    font-weight: 500;
+}
+
+/* ========================================
+   ITEMS DE OPCIONES (RADIO BUTTONS)
+   ======================================== */
+
+.pdf-option-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: #fafafa;
+}
+
+.pdf-option-item:hover {
+    border-color: #005bb6;
+    background: #f0f7ff;
+}
+
+.pdf-option-item input[type="radio"] {
+    display: none;
+}
+
+/* Radio button personalizado */
+.pdf-option-item .option-radio {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ced4da;
+    border-radius: 50%;
+    position: relative;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.pdf-option-item .option-radio::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 10px;
+    height: 10px;
+    background: #005bb6;
+    border-radius: 50%;
+    transition: transform 0.2s ease;
+}
+
+.pdf-option-item input[type="radio"]:checked+.option-radio {
+    border-color: #005bb6;
+}
+
+.pdf-option-item input[type="radio"]:checked+.option-radio::after {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.pdf-option-item input[type="radio"]:checked~.option-label {
+    color: #005bb6;
+    font-weight: 600;
+}
+
+/* Etiqueta de la opción */
+.pdf-option-item .option-label {
+    font-size: 15px;
+    color: #495057;
+    transition: all 0.2s ease;
+}
+
+/* Estado seleccionado del item */
+.pdf-option-item:has(input[type="radio"]:checked) {
+    border-color: #005bb6;
+    background: #e8f4fd;
+}
+
+/* ========================================
+   VISTA PREVIA DE INFORMACIÓN
+   ======================================== */
+
+.pdf-preview-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border-left: 4px solid #6c757d;
+    transition: all 0.3s ease;
+}
+
+.pdf-preview-info.success {
+    background: #e8f5e9;
+    border-left-color: #4caf50;
+}
+
+.pdf-preview-info.success .preview-icon {
+    color: #4caf50;
+}
+
+.pdf-preview-info.warning {
+    background: #fff8e1;
+    border-left-color: #ff9800;
+}
+
+.pdf-preview-info.warning .preview-icon {
+    color: #ff9800;
+}
+
+.pdf-preview-info .preview-icon {
+    color: #6c757d;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.pdf-preview-info span {
+    font-size: 14px;
+    color: #495057;
+    font-weight: 500;
+}
+
+/* ========================================
+   PIE DEL MODAL (BOTONES)
+   ======================================== */
+
+.modal-pdf-content .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 16px 24px;
+    border-top: 1px solid #e9ecef;
+    background: #f8f9fa;
+    border-radius: 0 0 16px 16px;
+}
+
+/* Botón Cancelar */
+.modal-pdf-content .btn-cancel {
+    padding: 12px 20px;
+    border: 2px solid #ced4da;
+    border-radius: 8px;
+    background: white;
+    color: #495057;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.modal-pdf-content .btn-cancel:hover {
+    border-color: #adb5bd;
+    background: #f8f9fa;
+}
+
+/* Botón Vista Previa */
+.modal-pdf-content .btn-preview {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 18px;
+    border: 2px solid #005bb6;
+    border-radius: 8px;
+    background: white;
+    color: #005bb6;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.modal-pdf-content .btn-preview:hover:not(:disabled) {
+    background: #e8f4fd;
+}
+
+.modal-pdf-content .btn-preview:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.modal-pdf-content .btn-preview .spinner {
+    animation: spin 1s linear infinite;
+}
+
+/* Botón Descargar */
+.modal-pdf-content .btn-download {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #005bb6 0%, #0077cc 100%);
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 91, 182, 0.3);
+}
+
+.modal-pdf-content .btn-download:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 91, 182, 0.4);
+}
+
+.modal-pdf-content .btn-download:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Spinner de carga */
+.modal-pdf-content .btn-download .spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ========================================
+   RESPONSIVE - TABLET Y MÓVIL
+   ======================================== */
+
+@media (max-width: 768px) {
+    #modal-pdf-overlay {
+        padding: 16px;
+        align-items: flex-end;
+    }
+
+    .modal-pdf-content {
+        max-width: 100%;
+        max-height: 85vh;
+        border-radius: 16px 16px 0 0;
+        animation: slideUpMobile 0.3s ease-out;
+    }
+
+    @keyframes slideUpMobile {
+        from {
+            opacity: 0;
+            transform: translateY(100%);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .modal-pdf-content .modal-header {
+        padding: 16px 20px;
+    }
+
+    .modal-pdf-content .modal-header h2 {
+        font-size: 16px;
+    }
+
+    .modal-pdf-content .modal-body {
+        padding: 20px;
+    }
+
+    .pdf-option-item {
+        padding: 12px 14px;
+    }
+
+    .pdf-filter-row {
+        grid-template-columns: 1fr;
+    }
+
+    .pdf-checkbox-options {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-pdf-content .modal-footer {
+        flex-direction: column-reverse;
+        padding: 16px 20px;
+        gap: 8px;
+    }
+
+    .modal-pdf-content .btn-cancel,
+    .modal-pdf-content .btn-preview,
+    .modal-pdf-content .btn-download {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* ========================================
+   RESPONSIVE - MÓVIL PEQUEÑO
+   ======================================== */
+
+@media (max-width: 480px) {
+    .modal-pdf-content .modal-header h2 {
+        font-size: 15px;
+        gap: 8px;
+    }
+
+    .modal-pdf-content .modal-header h2 svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .pdf-option-item .option-label {
+        font-size: 14px;
+    }
+
+    .pdf-preview-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .pdf-select {
+        font-size: 13px;
+        padding: 8px 10px;
+    }
+
+    .pdf-checkbox-item {
+        font-size: 12px;
+        padding: 8px 10px;
+    }
+
+    .pdf-checkbox-item .checkbox-mark {
+        width: 16px;
+        height: 16px;
+    }
+}

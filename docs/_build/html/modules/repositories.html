@@ -1,0 +1,779 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Repositorios (Data Access) &mdash; Taller Diego - Backend API 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Servicios (Business Logic)" href="services.html" />
+    <link rel="prev" title="Esquemas de Validación" href="schemas.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Taller Diego - Backend API
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Módulos Backend</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="models.html">Modelos de Base de Datos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schemas.html">Esquemas de Validación</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Repositorios (Data Access)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-repositories.producto_repo">Productos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#repositories.producto_repo.ProductoRepository"><code class="docutils literal notranslate"><span class="pre">ProductoRepository</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.producto_repo.ProductoRepository.create"><code class="docutils literal notranslate"><span class="pre">ProductoRepository.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.producto_repo.ProductoRepository.get_all"><code class="docutils literal notranslate"><span class="pre">ProductoRepository.get_all()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.producto_repo.ProductoRepository.get_by_id"><code class="docutils literal notranslate"><span class="pre">ProductoRepository.get_by_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.producto_repo.ProductoRepository.get_by_name"><code class="docutils literal notranslate"><span class="pre">ProductoRepository.get_by_name()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.producto_repo.ProductoRepository.update"><code class="docutils literal notranslate"><span class="pre">ProductoRepository.update()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.producto_repo.ProductoRepository.delete"><code class="docutils literal notranslate"><span class="pre">ProductoRepository.delete()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-repositories.autoparte_repo">Autopartes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#repositories.autoparte_repo.AutoparteRepository"><code class="docutils literal notranslate"><span class="pre">AutoparteRepository</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.autoparte_repo.AutoparteRepository.create"><code class="docutils literal notranslate"><span class="pre">AutoparteRepository.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.autoparte_repo.AutoparteRepository.get_all"><code class="docutils literal notranslate"><span class="pre">AutoparteRepository.get_all()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.autoparte_repo.AutoparteRepository.get_by_id"><code class="docutils literal notranslate"><span class="pre">AutoparteRepository.get_by_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.autoparte_repo.AutoparteRepository.get_by_name"><code class="docutils literal notranslate"><span class="pre">AutoparteRepository.get_by_name()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.autoparte_repo.AutoparteRepository.update"><code class="docutils literal notranslate"><span class="pre">AutoparteRepository.update()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.autoparte_repo.AutoparteRepository.delete"><code class="docutils literal notranslate"><span class="pre">AutoparteRepository.delete()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.autoparte_repo.AutoparteRepository.get_by_modelo"><code class="docutils literal notranslate"><span class="pre">AutoparteRepository.get_by_modelo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.autoparte_repo.AutoparteRepository.get_by_anio"><code class="docutils literal notranslate"><span class="pre">AutoparteRepository.get_by_anio()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-repositories.servicio_repo">Servicios</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#repositories.servicio_repo.ServicioRepository"><code class="docutils literal notranslate"><span class="pre">ServicioRepository</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.servicio_repo.ServicioRepository.create"><code class="docutils literal notranslate"><span class="pre">ServicioRepository.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.servicio_repo.ServicioRepository.get_all"><code class="docutils literal notranslate"><span class="pre">ServicioRepository.get_all()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.servicio_repo.ServicioRepository.get_by_id"><code class="docutils literal notranslate"><span class="pre">ServicioRepository.get_by_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.servicio_repo.ServicioRepository.get_by_name"><code class="docutils literal notranslate"><span class="pre">ServicioRepository.get_by_name()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.servicio_repo.ServicioRepository.update"><code class="docutils literal notranslate"><span class="pre">ServicioRepository.update()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.servicio_repo.ServicioRepository.delete"><code class="docutils literal notranslate"><span class="pre">ServicioRepository.delete()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-repositories.empleado_repo">Empleados</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#repositories.empleado_repo.EmpleadoRepository"><code class="docutils literal notranslate"><span class="pre">EmpleadoRepository</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.empleado_repo.EmpleadoRepository.create"><code class="docutils literal notranslate"><span class="pre">EmpleadoRepository.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.empleado_repo.EmpleadoRepository.get_all"><code class="docutils literal notranslate"><span class="pre">EmpleadoRepository.get_all()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.empleado_repo.EmpleadoRepository.get_by_id"><code class="docutils literal notranslate"><span class="pre">EmpleadoRepository.get_by_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.empleado_repo.EmpleadoRepository.get_by_name"><code class="docutils literal notranslate"><span class="pre">EmpleadoRepository.get_by_name()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.empleado_repo.EmpleadoRepository.update"><code class="docutils literal notranslate"><span class="pre">EmpleadoRepository.update()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.empleado_repo.EmpleadoRepository.delete"><code class="docutils literal notranslate"><span class="pre">EmpleadoRepository.delete()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-repositories.orden_repo">Órdenes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#repositories.orden_repo.OrdenRepository"><code class="docutils literal notranslate"><span class="pre">OrdenRepository</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.orden_repo.OrdenRepository.create"><code class="docutils literal notranslate"><span class="pre">OrdenRepository.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.orden_repo.OrdenRepository.create_with_services"><code class="docutils literal notranslate"><span class="pre">OrdenRepository.create_with_services()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.orden_repo.OrdenRepository.get_all"><code class="docutils literal notranslate"><span class="pre">OrdenRepository.get_all()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.orden_repo.OrdenRepository.get_by_id"><code class="docutils literal notranslate"><span class="pre">OrdenRepository.get_by_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.orden_repo.OrdenRepository.delete"><code class="docutils literal notranslate"><span class="pre">OrdenRepository.delete()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.orden_repo.OrdenRepository.get_by_fecha"><code class="docutils literal notranslate"><span class="pre">OrdenRepository.get_by_fecha()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-repositories.venta_repo">Ventas</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#repositories.venta_repo.VentaRepository"><code class="docutils literal notranslate"><span class="pre">VentaRepository</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.venta_repo.VentaRepository.create"><code class="docutils literal notranslate"><span class="pre">VentaRepository.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.venta_repo.VentaRepository.create_with_products"><code class="docutils literal notranslate"><span class="pre">VentaRepository.create_with_products()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.venta_repo.VentaRepository.get_all"><code class="docutils literal notranslate"><span class="pre">VentaRepository.get_all()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.venta_repo.VentaRepository.get_by_id"><code class="docutils literal notranslate"><span class="pre">VentaRepository.get_by_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.venta_repo.VentaRepository.delete"><code class="docutils literal notranslate"><span class="pre">VentaRepository.delete()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#repositories.venta_repo.VentaRepository.get_by_fecha"><code class="docutils literal notranslate"><span class="pre">VentaRepository.get_by_fecha()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="services.html">Servicios (Business Logic)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="routes.html">Rutas API (FastAPI Endpoints)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Información General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Introducción a la Arquitectura</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Taller Diego - Backend API</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Repositorios (Data Access)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/repositories.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-repositories">
+<span id="repositorios-data-access"></span><h1>Repositorios (Data Access)<a class="headerlink" href="#module-repositories" title="Link to this heading"></a></h1>
+<p>Los repositorios manejan el acceso a datos con operaciones CRUD.</p>
+<section id="module-repositories.producto_repo">
+<span id="productos"></span><h2>Productos<a class="headerlink" href="#module-repositories.producto_repo" title="Link to this heading"></a></h2>
+<p>Repositorio de acceso a datos para Producto.</p>
+<p>Implementa operaciones CRUD sobre la entidad Producto en la base de datos.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="repositories.producto_repo.ProductoRepository">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">repositories.producto_repo.</span></span><span class="sig-name descname"><span class="pre">ProductoRepository</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/producto_repo.html#ProductoRepository"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.producto_repo.ProductoRepository" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Repositorio CRUD para Producto.</p>
+<p>Encapsula la lógica de acceso a la tabla de productos.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>db</strong> – Sesión de SQLAlchemy para interactuar con la BD.</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>db</strong> (<em>Session</em>)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.producto_repo.ProductoRepository.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">producto_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/producto_repo.html#ProductoRepository.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.producto_repo.ProductoRepository.create" title="Link to this definition"></a></dt>
+<dd><p>Crea un nuevo producto.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>producto_data</strong> (<a class="reference internal" href="schemas.html#schemas.producto_schema.ProductoCreate" title="schemas.producto_schema.ProductoCreate"><em>ProductoCreate</em></a>) – Datos del producto a crear.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Instancia de Producto creada y persistida.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.producto_repo.ProductoRepository.get_all">
+<span class="sig-name descname"><span class="pre">get_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/producto_repo.html#ProductoRepository.get_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.producto_repo.ProductoRepository.get_all" title="Link to this definition"></a></dt>
+<dd><p>Obtiene todos los productos.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Lista de instancias Producto.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.producto_repo.ProductoRepository.get_by_id">
+<span class="sig-name descname"><span class="pre">get_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/producto_repo.html#ProductoRepository.get_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.producto_repo.ProductoRepository.get_by_id" title="Link to this definition"></a></dt>
+<dd><p>Obtiene un producto por su identificador.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>int</em>) – Identificador del producto.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Instancia Producto o None si no existe.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.producto_repo.ProductoRepository.get_by_name">
+<span class="sig-name descname"><span class="pre">get_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nombre</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/producto_repo.html#ProductoRepository.get_by_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.producto_repo.ProductoRepository.get_by_name" title="Link to this definition"></a></dt>
+<dd><p>Obtiene un producto por su nombre.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nombre</strong> (<em>str</em>) – Nombre del producto (búsqueda por igualdad).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Instancia Producto o None si no existe.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.producto_repo.ProductoRepository.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">producto_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/producto_repo.html#ProductoRepository.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.producto_repo.ProductoRepository.update" title="Link to this definition"></a></dt>
+<dd><p>Actualiza un producto existente.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>int</em>) – Identificador del producto a actualizar.</p></li>
+<li><p><strong>producto_data</strong> (<a class="reference internal" href="schemas.html#schemas.producto_schema.ProductoCreate" title="schemas.producto_schema.ProductoCreate"><em>ProductoCreate</em></a>) – Nuevos datos del producto.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Instancia Producto actualizada o None si no existe.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.producto_repo.ProductoRepository.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/producto_repo.html#ProductoRepository.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.producto_repo.ProductoRepository.delete" title="Link to this definition"></a></dt>
+<dd><p>Elimina un producto.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>int</em>) – Identificador del producto a eliminar.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Instancia Producto eliminada o None si no existe.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-repositories.autoparte_repo">
+<span id="autopartes"></span><h2>Autopartes<a class="headerlink" href="#module-repositories.autoparte_repo" title="Link to this heading"></a></h2>
+<p>Repositorio de acceso a datos para Autoparte.</p>
+<p>Implementa operaciones CRUD sobre la entidad Autoparte en la base de datos.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="repositories.autoparte_repo.AutoparteRepository">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">repositories.autoparte_repo.</span></span><span class="sig-name descname"><span class="pre">AutoparteRepository</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/autoparte_repo.html#AutoparteRepository"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.autoparte_repo.AutoparteRepository" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Repositorio CRUD para Autoparte.</p>
+<p>Encapsula la lógica de acceso a la tabla de autopartes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>db</strong> – Sesión de SQLAlchemy para interactuar con la BD.</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>db</strong> (<em>Session</em>)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.autoparte_repo.AutoparteRepository.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">autoparte_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/autoparte_repo.html#AutoparteRepository.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.autoparte_repo.AutoparteRepository.create" title="Link to this definition"></a></dt>
+<dd><p>Crea una nueva autoparte.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>autoparte_data</strong> (<a class="reference internal" href="schemas.html#schemas.autoparte_schema.AutoparteCreate" title="schemas.autoparte_schema.AutoparteCreate"><em>AutoparteCreate</em></a>) – Datos de la autoparte a crear.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Instancia de Autoparte creada y persistida.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.autoparte_repo.AutoparteRepository.get_all">
+<span class="sig-name descname"><span class="pre">get_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/autoparte_repo.html#AutoparteRepository.get_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.autoparte_repo.AutoparteRepository.get_all" title="Link to this definition"></a></dt>
+<dd><p>Obtiene todas las autopartes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Lista de instancias Autoparte.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.autoparte_repo.AutoparteRepository.get_by_id">
+<span class="sig-name descname"><span class="pre">get_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/autoparte_repo.html#AutoparteRepository.get_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.autoparte_repo.AutoparteRepository.get_by_id" title="Link to this definition"></a></dt>
+<dd><p>Obtiene una autoparte por su identificador.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>int</em>) – Identificador de la autoparte.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Instancia Autoparte o None si no existe.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.autoparte_repo.AutoparteRepository.get_by_name">
+<span class="sig-name descname"><span class="pre">get_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nombre</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/autoparte_repo.html#AutoparteRepository.get_by_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.autoparte_repo.AutoparteRepository.get_by_name" title="Link to this definition"></a></dt>
+<dd><p>Obtiene una autoparte por su nombre.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nombre</strong> (<em>str</em>) – Nombre de la autoparte (búsqueda por igualdad).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Instancia Autoparte o None si no existe.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.autoparte_repo.AutoparteRepository.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">autoparte_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/autoparte_repo.html#AutoparteRepository.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.autoparte_repo.AutoparteRepository.update" title="Link to this definition"></a></dt>
+<dd><p>Actualiza una autoparte existente.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>int</em>) – Identificador de la autoparte a actualizar.</p></li>
+<li><p><strong>autoparte_data</strong> (<a class="reference internal" href="schemas.html#schemas.autoparte_schema.AutoparteCreate" title="schemas.autoparte_schema.AutoparteCreate"><em>AutoparteCreate</em></a>) – Nuevos datos de la autoparte.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Instancia Autoparte actualizada o None si no existe.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.autoparte_repo.AutoparteRepository.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/autoparte_repo.html#AutoparteRepository.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.autoparte_repo.AutoparteRepository.delete" title="Link to this definition"></a></dt>
+<dd><p>Elimina una autoparte.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>int</em>) – Identificador de la autoparte a eliminar.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Instancia Autoparte eliminada o None si no existe.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.autoparte_repo.AutoparteRepository.get_by_modelo">
+<span class="sig-name descname"><span class="pre">get_by_modelo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">modelo</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/autoparte_repo.html#AutoparteRepository.get_by_modelo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.autoparte_repo.AutoparteRepository.get_by_modelo" title="Link to this definition"></a></dt>
+<dd><p>Obtiene autopartes por modelo de vehículo.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>modelo</strong> (<em>str</em>) – Modelo de vehículo.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Lista de instancias Autoparte del modelo especificado.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.autoparte_repo.AutoparteRepository.get_by_anio">
+<span class="sig-name descname"><span class="pre">get_by_anio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">anio</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/autoparte_repo.html#AutoparteRepository.get_by_anio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.autoparte_repo.AutoparteRepository.get_by_anio" title="Link to this definition"></a></dt>
+<dd><p>Obtiene autopartes por año de vehículo.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>anio</strong> (<em>int</em>) – Año del vehículo.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Lista de instancias Autoparte del año especificado.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-repositories.servicio_repo">
+<span id="servicios"></span><h2>Servicios<a class="headerlink" href="#module-repositories.servicio_repo" title="Link to this heading"></a></h2>
+<p>Repositorio de acceso a datos para Servicio.</p>
+<p>Implementa operaciones CRUD sobre la entidad Servicio en la base de datos.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="repositories.servicio_repo.ServicioRepository">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">repositories.servicio_repo.</span></span><span class="sig-name descname"><span class="pre">ServicioRepository</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/servicio_repo.html#ServicioRepository"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.servicio_repo.ServicioRepository" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Repositorio CRUD para Servicio.</p>
+<p>Encapsula la lógica de acceso a la tabla de servicios.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>db</strong> – Sesión de SQLAlchemy para interactuar con la BD.</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>db</strong> (<em>Session</em>)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.servicio_repo.ServicioRepository.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">servicio_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/servicio_repo.html#ServicioRepository.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.servicio_repo.ServicioRepository.create" title="Link to this definition"></a></dt>
+<dd><p>Crea un nuevo servicio.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>servicio_data</strong> (<a class="reference internal" href="schemas.html#schemas.servicio_schema.ServicioCreate" title="schemas.servicio_schema.ServicioCreate"><em>ServicioCreate</em></a>) – Datos del servicio a crear.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Instancia de Servicio creada y persistida.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.servicio_repo.ServicioRepository.get_all">
+<span class="sig-name descname"><span class="pre">get_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/servicio_repo.html#ServicioRepository.get_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.servicio_repo.ServicioRepository.get_all" title="Link to this definition"></a></dt>
+<dd><p>Obtiene todos los servicios.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Lista de instancias Servicio.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.servicio_repo.ServicioRepository.get_by_id">
+<span class="sig-name descname"><span class="pre">get_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/servicio_repo.html#ServicioRepository.get_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.servicio_repo.ServicioRepository.get_by_id" title="Link to this definition"></a></dt>
+<dd><p>Obtiene un servicio por su identificador.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>int</em>) – Identificador del servicio.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Instancia Servicio o None si no existe.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.servicio_repo.ServicioRepository.get_by_name">
+<span class="sig-name descname"><span class="pre">get_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nombre</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/servicio_repo.html#ServicioRepository.get_by_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.servicio_repo.ServicioRepository.get_by_name" title="Link to this definition"></a></dt>
+<dd><p>Obtiene un servicio por su nombre.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nombre</strong> (<em>str</em>) – Nombre del servicio (búsqueda por igualdad).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Instancia Servicio o None si no existe.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.servicio_repo.ServicioRepository.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">servicio_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/servicio_repo.html#ServicioRepository.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.servicio_repo.ServicioRepository.update" title="Link to this definition"></a></dt>
+<dd><p>Actualiza un servicio existente.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>int</em>) – Identificador del servicio a actualizar.</p></li>
+<li><p><strong>servicio_data</strong> (<a class="reference internal" href="schemas.html#schemas.servicio_schema.ServicioCreate" title="schemas.servicio_schema.ServicioCreate"><em>ServicioCreate</em></a>) – Nuevos datos del servicio.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Instancia Servicio actualizada o None si no existe.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.servicio_repo.ServicioRepository.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/servicio_repo.html#ServicioRepository.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.servicio_repo.ServicioRepository.delete" title="Link to this definition"></a></dt>
+<dd><p>Elimina un servicio.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>int</em>) – Identificador del servicio a eliminar.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Instancia Servicio eliminada o None si no existe.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-repositories.empleado_repo">
+<span id="empleados"></span><h2>Empleados<a class="headerlink" href="#module-repositories.empleado_repo" title="Link to this heading"></a></h2>
+<p>Repositorio de acceso a datos para Empleado.</p>
+<p>Implementa operaciones CRUD sobre la entidad Empleado en la base de datos.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="repositories.empleado_repo.EmpleadoRepository">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">repositories.empleado_repo.</span></span><span class="sig-name descname"><span class="pre">EmpleadoRepository</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/empleado_repo.html#EmpleadoRepository"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.empleado_repo.EmpleadoRepository" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Repositorio CRUD para Empleado.</p>
+<p>Encapsula la lógica de acceso a la tabla de empleados.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>db</strong> – Sesión de SQLAlchemy para interactuar con la BD.</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>db</strong> (<em>Session</em>)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.empleado_repo.EmpleadoRepository.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">empleado_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/empleado_repo.html#EmpleadoRepository.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.empleado_repo.EmpleadoRepository.create" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>empleado_data</strong> (<a class="reference internal" href="schemas.html#schemas.empleado_schema.EmpleadoCreate" title="schemas.empleado_schema.EmpleadoCreate"><em>EmpleadoCreate</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.empleado_repo.EmpleadoRepository.get_all">
+<span class="sig-name descname"><span class="pre">get_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/empleado_repo.html#EmpleadoRepository.get_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.empleado_repo.EmpleadoRepository.get_all" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.empleado_repo.EmpleadoRepository.get_by_id">
+<span class="sig-name descname"><span class="pre">get_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/empleado_repo.html#EmpleadoRepository.get_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.empleado_repo.EmpleadoRepository.get_by_id" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>int</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.empleado_repo.EmpleadoRepository.get_by_name">
+<span class="sig-name descname"><span class="pre">get_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nombres</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/empleado_repo.html#EmpleadoRepository.get_by_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.empleado_repo.EmpleadoRepository.get_by_name" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nombres</strong> (<em>str</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.empleado_repo.EmpleadoRepository.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empleado_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/empleado_repo.html#EmpleadoRepository.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.empleado_repo.EmpleadoRepository.update" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>int</em>)</p></li>
+<li><p><strong>empleado_data</strong> (<a class="reference internal" href="schemas.html#schemas.empleado_schema.EmpleadoCreate" title="schemas.empleado_schema.EmpleadoCreate"><em>EmpleadoCreate</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.empleado_repo.EmpleadoRepository.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/empleado_repo.html#EmpleadoRepository.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.empleado_repo.EmpleadoRepository.delete" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>int</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-repositories.orden_repo">
+<span id="ordenes"></span><h2>Órdenes<a class="headerlink" href="#module-repositories.orden_repo" title="Link to this heading"></a></h2>
+<p>Repositorio de acceso a datos para Orden.</p>
+<p>Implementa operaciones CRUD sobre la entidad Orden en la base de datos.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="repositories.orden_repo.OrdenRepository">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">repositories.orden_repo.</span></span><span class="sig-name descname"><span class="pre">OrdenRepository</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/orden_repo.html#OrdenRepository"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.orden_repo.OrdenRepository" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Repositorio CRUD para Orden.</p>
+<p>Encapsula la lógica de acceso a la tabla de órdenes con soporte para
+relaciones complejas con servicios y empleados.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>db</strong> – Sesión de SQLAlchemy para interactuar con la BD.</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>db</strong> (<em>Session</em>)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.orden_repo.OrdenRepository.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">garantia</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estadoPago</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fecha</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/orden_repo.html#OrdenRepository.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.orden_repo.OrdenRepository.create" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>garantia</strong> (<em>int</em>)</p></li>
+<li><p><strong>estadoPago</strong> (<em>str</em>)</p></li>
+<li><p><strong>precio</strong> (<em>int</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.orden_repo.OrdenRepository.create_with_services">
+<span class="sig-name descname"><span class="pre">create_with_services</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">garantia</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estadoPago</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fecha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">servicios</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empleados</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/orden_repo.html#OrdenRepository.create_with_services"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.orden_repo.OrdenRepository.create_with_services" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>garantia</strong> (<em>int</em>)</p></li>
+<li><p><strong>estadoPago</strong> (<em>str</em>)</p></li>
+<li><p><strong>precio</strong> (<em>int</em>)</p></li>
+<li><p><strong>servicios</strong> (<em>list</em><em>[</em><em>dict</em><em>]</em>)</p></li>
+<li><p><strong>empleados</strong> (<em>list</em><em>[</em><em>dict</em><em>] </em><em>| </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.orden_repo.OrdenRepository.get_all">
+<span class="sig-name descname"><span class="pre">get_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/orden_repo.html#OrdenRepository.get_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.orden_repo.OrdenRepository.get_all" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.orden_repo.OrdenRepository.get_by_id">
+<span class="sig-name descname"><span class="pre">get_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/orden_repo.html#OrdenRepository.get_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.orden_repo.OrdenRepository.get_by_id" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>int</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.orden_repo.OrdenRepository.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/orden_repo.html#OrdenRepository.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.orden_repo.OrdenRepository.delete" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>int</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.orden_repo.OrdenRepository.get_by_fecha">
+<span class="sig-name descname"><span class="pre">get_by_fecha</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fecha</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/orden_repo.html#OrdenRepository.get_by_fecha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.orden_repo.OrdenRepository.get_by_fecha" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-repositories.venta_repo">
+<span id="ventas"></span><h2>Ventas<a class="headerlink" href="#module-repositories.venta_repo" title="Link to this heading"></a></h2>
+<p>Repositorio de acceso a datos para Venta.</p>
+<p>Implementa operaciones CRUD sobre la entidad Venta con control de stock.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="repositories.venta_repo.VentaRepository">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">repositories.venta_repo.</span></span><span class="sig-name descname"><span class="pre">VentaRepository</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/venta_repo.html#VentaRepository"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.venta_repo.VentaRepository" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Repositorio CRUD para Venta.</p>
+<p>Encapsula la lógica de acceso a la tabla de ventas con control de stock
+de productos y transacciones complejas.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>db</strong> – Sesión de SQLAlchemy para interactuar con la BD.</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>db</strong> (<em>Session</em>)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.venta_repo.VentaRepository.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fecha</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/venta_repo.html#VentaRepository.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.venta_repo.VentaRepository.create" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fecha</strong> (<em>datetime</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.venta_repo.VentaRepository.create_with_products">
+<span class="sig-name descname"><span class="pre">create_with_products</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fecha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">productos</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/venta_repo.html#VentaRepository.create_with_products"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.venta_repo.VentaRepository.create_with_products" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fecha</strong> (<em>datetime</em>)</p></li>
+<li><p><strong>productos</strong> (<em>list</em><em>[</em><em>dict</em><em>]</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.venta_repo.VentaRepository.get_all">
+<span class="sig-name descname"><span class="pre">get_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/venta_repo.html#VentaRepository.get_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.venta_repo.VentaRepository.get_all" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.venta_repo.VentaRepository.get_by_id">
+<span class="sig-name descname"><span class="pre">get_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/venta_repo.html#VentaRepository.get_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.venta_repo.VentaRepository.get_by_id" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>int</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.venta_repo.VentaRepository.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/venta_repo.html#VentaRepository.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.venta_repo.VentaRepository.delete" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>int</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="repositories.venta_repo.VentaRepository.get_by_fecha">
+<span class="sig-name descname"><span class="pre">get_by_fecha</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fecha</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/repositories/venta_repo.html#VentaRepository.get_by_fecha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#repositories.venta_repo.VentaRepository.get_by_fecha" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fecha</strong> (<em>datetime</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="schemas.html" class="btn btn-neutral float-left" title="Esquemas de Validación" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="services.html" class="btn btn-neutral float-right" title="Servicios (Business Logic)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, ESIS-DevTeam.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,209 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Backend API Documentation &mdash; Taller Diego - Backend API 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Modelos de Base de Datos" href="modules/models.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            Taller Diego - Backend API
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Módulos Backend</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules/models.html">Modelos de Base de Datos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/schemas.html">Esquemas de Validación</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/repositories.html">Repositorios (Data Access)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/services.html">Servicios (Business Logic)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/routes.html">Rutas API (FastAPI Endpoints)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Información General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Introducción a la Arquitectura</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Taller Diego - Backend API</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Backend API Documentation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="backend-api-documentation">
+<h1>Backend API Documentation<a class="headerlink" href="#backend-api-documentation" title="Link to this heading"></a></h1>
+<section id="indice-de-contenidos">
+<h2>Índice de Contenidos<a class="headerlink" href="#indice-de-contenidos" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Módulos Backend</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules/models.html">Modelos de Base de Datos</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/models.html#module-db.models.producto">Productos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models.html#module-db.models.autoparte">Autopartes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models.html#module-db.models.servicio">Servicios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models.html#module-db.models.empleado">Empleados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models.html#module-db.models.orden">Órdenes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/models.html#module-db.models.venta">Ventas</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/schemas.html">Esquemas de Validación</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/schemas.html#module-schemas.producto_schema">Productos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/schemas.html#module-schemas.autoparte_schema">Autopartes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/schemas.html#module-schemas.servicio_schema">Servicios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/schemas.html#module-schemas.empleado_schema">Empleados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/schemas.html#module-schemas.orden_schema">Órdenes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/schemas.html#module-schemas.venta_schema">Ventas</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/repositories.html">Repositorios (Data Access)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/repositories.html#module-repositories.producto_repo">Productos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/repositories.html#module-repositories.autoparte_repo">Autopartes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/repositories.html#module-repositories.servicio_repo">Servicios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/repositories.html#module-repositories.empleado_repo">Empleados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/repositories.html#module-repositories.orden_repo">Órdenes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/repositories.html#module-repositories.venta_repo">Ventas</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/services.html">Servicios (Business Logic)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/services.html#module-services.producto_service">Productos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/services.html#module-services.autoparte_service">Autopartes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/services.html#module-services.servicio_service">Servicios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/services.html#module-services.empleado_service">Empleados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/services.html#module-services.orden_service">Órdenes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/services.html#module-services.venta_service">Ventas</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/routes.html">Rutas API (FastAPI Endpoints)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/routes.html#module-api.v1.routes.producto_routes">Productos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/routes.html#module-api.v1.routes.autoparte_routes">Autopartes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/routes.html#module-api.v1.routes.servicio_routes">Servicios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/routes.html#module-api.v1.routes.empleado_routes">Empleados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/routes.html#module-api.v1.routes.orden_routes">Órdenes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/routes.html#module-api.v1.routes.venta_routes">Ventas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/routes.html#module-api.v1.routes.status_routes">Health Check</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Información General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Introducción a la Arquitectura</a></li>
+</ul>
+</div>
+</section>
+<section id="introduccion">
+<h2>Introducción<a class="headerlink" href="#introduccion" title="Link to this heading"></a></h2>
+<p>Esta es la documentación del backend de <strong>Taller Diego</strong>, un sistema de gestión de órdenes de servicio, ventas y autopartes.</p>
+<p>El proyecto utiliza:</p>
+<ul class="simple">
+<li><p><strong>FastAPI</strong> para los endpoints REST</p></li>
+<li><p><strong>SQLAlchemy</strong> como ORM</p></li>
+<li><p><strong>PostgreSQL</strong> (Supabase) como base de datos</p></li>
+<li><p><strong>Pydantic</strong> para validación de esquemas</p></li>
+</ul>
+<section id="arquitectura">
+<h3>Arquitectura<a class="headerlink" href="#arquitectura" title="Link to this heading"></a></h3>
+<p>El proyecto sigue una arquitectura de <strong>N capas</strong>:</p>
+<ol class="arabic simple">
+<li><p><strong>Routes</strong> (API REST) → Endpoints FastAPI</p></li>
+<li><p><strong>Services</strong> (Lógica de negocio) → Validaciones y procesamiento</p></li>
+<li><p><strong>Repositories</strong> (Acceso a datos) → Operaciones CRUD</p></li>
+<li><p><strong>Models</strong> (Modelos de BD) → Entidades SQLAlchemy</p></li>
+<li><p><strong>Schemas</strong> (Validación) → Modelos Pydantic</p></li>
+</ol>
+<img alt="Arquitectura del Proyecto" class="align-center" src="../_static/architecture.png" />
+</section>
+</section>
+<section id="quick-links">
+<h2>Quick Links<a class="headerlink" href="#quick-links" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="modules/models.html"><span class="doc">Modelos de Base de Datos</span></a> - Modelos de Base de Datos</p></li>
+<li><p><a class="reference internal" href="modules/services.html"><span class="doc">Servicios (Business Logic)</span></a> - Servicios de Negocio</p></li>
+<li><p><a class="reference internal" href="modules/routes.html"><span class="doc">Rutas API (FastAPI Endpoints)</span></a> - Endpoints API</p></li>
+<li><p>GitHub: <a class="reference external" href="https://github.com/ESIS-DevTeam/Taller-Diego">https://github.com/ESIS-DevTeam/Taller-Diego</a></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules/models.html" class="btn btn-neutral float-right" title="Modelos de Base de Datos" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, ESIS-DevTeam.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

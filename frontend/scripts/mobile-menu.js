@@ -1,0 +1,20 @@
+export function loadInventoryMobileMenu() {
+  return `
+    <div class="mobile-actions-menu">
+      <ul>
+        <li>
+          <button id="inventory-mobile-btn-list">
+            <img src="../assets/icons/list.png" alt="Ver inventario">
+            <span>Ver inventario</span>
+          </button>
+        </li>
+        <li>
+          <button id="inventory-mobile-btn-add">
+            <img src="../assets/icons/add.png" alt="Agregar producto">
+            <span>Agregar producto</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+  `;
+}

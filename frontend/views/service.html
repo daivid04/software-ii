@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="../scripts/utils/auth-guard.js"></script>
+  <title>Taller de Mecánica Diego - Servicios</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+  <link rel="stylesheet" href="../styles/css/service.css">
+  <link rel="stylesheet" href="../styles/css/side_bar.css">
+  <link rel="stylesheet" href="../styles/css/header.css">
+  <link rel="stylesheet" href="../styles/css/modal-add-product.css">
+  <link rel="stylesheet" href="../styles/css/modal-confirm.css">
+  <link rel="stylesheet" href="../styles/css/notification.css">
+  <link href="https://fonts.googleapis.com/css2?family=Istok+Web:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <!-- Header dinámico: Cargado con SSI -->
+  <div id="header">
+    <!--#include virtual="/includes/header.html" -->
+  </div>
+
+  <div class="container">
+    <!-- Sidebar dinámico: Cargado con SSI -->
+    <div id="side-bar-container" class="side-bar-container sidebar-placeholder">
+      <!--#include virtual="/includes/sidebar.html" -->
+    </div>
+
+    <!-- Menú móvil dinámico -->
+    <div id="mobile-menu-container">
+      <!--#include virtual="/includes/mobile-menu-service.html" -->
+    </div>
+
+    <!-- Contenido principal: Gestión de servicios -->
+    <main class="main-content">
+      <h1>Gestión de servicios</h1>
+
+      <!-- Botón para agregar nuevo servicio -->
+      <div class="card" id="open-modal-btn">
+        <a href="#">
+          <p>+ Nuevo servicio</p>
+        </a>
+      </div>
+
+      <!-- Botón volver solo visible en móvil -->
+      <button class="mobile-back-btn" id="mobile-back-btn">
+        ← Volver al menú
+      </button>
+
+      <!-- Sección de búsqueda y tabla de servicios -->
+      <section class="service-section">
+        <!-- Búsqueda de servicios -->
+        <div class="search-box">
+          <img src="../assets/icons/search.png" alt="Buscar">
+          <input type="text" id="search-input" placeholder="Buscar servicio">
+        </div>
+
+        <!-- Tabla de servicios -->
+        <div class="service-data">
+          <!-- Encabezado de la tabla -->
+          <div class="service-header grid-layout" role="row">
+            <div class="header-item" role="columnheader">Nombre del Servicio</div>
+            <div class="header-item" role="columnheader">Descripción</div>
+            <div class="header-item" role="columnheader">Acciones</div>
+          </div>
+
+          <!-- Lista de servicios (renderizada dinámicamente) -->
+          <div class="service-list">
+            <!-- Los servicios se insertan aquí vía JavaScript -->
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Contenedor para modales dinámicos -->
+  <div id="modal-container"></div>
+
+  <!-- Script principal (tipo módulo ES6) -->
+  <script type="module" src="../scripts/header-actions.js"></script>
+  <script type="module" src="../scripts/service.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,956 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Servicios (Business Logic) &mdash; Taller Diego - Backend API 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Rutas API (FastAPI Endpoints)" href="routes.html" />
+    <link rel="prev" title="Repositorios (Data Access)" href="repositories.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Taller Diego - Backend API
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Módulos Backend</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="models.html">Modelos de Base de Datos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schemas.html">Esquemas de Validación</a></li>
+<li class="toctree-l1"><a class="reference internal" href="repositories.html">Repositorios (Data Access)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Servicios (Business Logic)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-services.producto_service">Productos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#services.producto_service.ProductoService"><code class="docutils literal notranslate"><span class="pre">ProductoService</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#services.producto_service.ProductoService.create_producto"><code class="docutils literal notranslate"><span class="pre">ProductoService.create_producto()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#services.producto_service.ProductoService.list_productos"><code class="docutils literal notranslate"><span class="pre">ProductoService.list_productos()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#services.producto_service.ProductoService.get_by_id"><code class="docutils literal notranslate"><span class="pre">ProductoService.get_by_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#services.producto_service.ProductoService.get_by_name"><code class="docutils literal notranslate"><span class="pre">ProductoService.get_by_name()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#services.producto_service.ProductoService.update_producto"><code class="docutils literal notranslate"><span class="pre">ProductoService.update_producto()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#services.producto_service.ProductoService.delete_producto"><code class="docutils literal notranslate"><span class="pre">ProductoService.delete_producto()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-services.autoparte_service">Autopartes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#services.autoparte_service.AutoparteService"><code class="docutils literal notranslate"><span class="pre">AutoparteService</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#services.autoparte_service.AutoparteService.create_autoparte"><code class="docutils literal notranslate"><span class="pre">AutoparteService.create_autoparte()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#services.autoparte_service.AutoparteService.list_autopartes"><code class="docutils literal notranslate"><span class="pre">AutoparteService.list_autopartes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#services.autoparte_service.AutoparteService.get_by_id"><code class="docutils literal notranslate"><span class="pre">AutoparteService.get_by_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#services.autoparte_service.AutoparteService.get_by_name"><code class="docutils literal notranslate"><span class="pre">AutoparteService.get_by_name()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#services.autoparte_service.AutoparteService.update_autoparte"><code class="docutils literal notranslate"><span class="pre">AutoparteService.update_autoparte()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#services.autoparte_service.AutoparteService.delete_autoparte"><code class="docutils literal notranslate"><span class="pre">AutoparteService.delete_autoparte()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#services.autoparte_service.AutoparteService.get_by_modelo"><code class="docutils literal notranslate"><span class="pre">AutoparteService.get_by_modelo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#services.autoparte_service.AutoparteService.get_by_anio"><code class="docutils literal notranslate"><span class="pre">AutoparteService.get_by_anio()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-services.servicio_service">Servicios</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#services.servicio_service.ServicioService"><code class="docutils literal notranslate"><span class="pre">ServicioService</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#services.servicio_service.ServicioService.create_servicio"><code class="docutils literal notranslate"><span class="pre">ServicioService.create_servicio()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#services.servicio_service.ServicioService.list_servicios"><code class="docutils literal notranslate"><span class="pre">ServicioService.list_servicios()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#services.servicio_service.ServicioService.get_by_id"><code class="docutils literal notranslate"><span class="pre">ServicioService.get_by_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#services.servicio_service.ServicioService.get_by_name"><code class="docutils literal notranslate"><span class="pre">ServicioService.get_by_name()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#services.servicio_service.ServicioService.update_servicio"><code class="docutils literal notranslate"><span class="pre">ServicioService.update_servicio()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#services.servicio_service.ServicioService.delete_servicio"><code class="docutils literal notranslate"><span class="pre">ServicioService.delete_servicio()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-services.empleado_service">Empleados</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#services.empleado_service.EmpleadoService"><code class="docutils literal notranslate"><span class="pre">EmpleadoService</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#services.empleado_service.EmpleadoService.create_empleado"><code class="docutils literal notranslate"><span class="pre">EmpleadoService.create_empleado()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#services.empleado_service.EmpleadoService.list_empleados"><code class="docutils literal notranslate"><span class="pre">EmpleadoService.list_empleados()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#services.empleado_service.EmpleadoService.get_by_id"><code class="docutils literal notranslate"><span class="pre">EmpleadoService.get_by_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#services.empleado_service.EmpleadoService.update_empleado"><code class="docutils literal notranslate"><span class="pre">EmpleadoService.update_empleado()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#services.empleado_service.EmpleadoService.delete_empleado"><code class="docutils literal notranslate"><span class="pre">EmpleadoService.delete_empleado()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-services.orden_service">Órdenes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#services.orden_service.OrdenService"><code class="docutils literal notranslate"><span class="pre">OrdenService</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#services.orden_service.OrdenService.create_orden"><code class="docutils literal notranslate"><span class="pre">OrdenService.create_orden()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#services.orden_service.OrdenService.list_ordens"><code class="docutils literal notranslate"><span class="pre">OrdenService.list_ordens()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#services.orden_service.OrdenService.get_by_id"><code class="docutils literal notranslate"><span class="pre">OrdenService.get_by_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#services.orden_service.OrdenService.get_by_fecha"><code class="docutils literal notranslate"><span class="pre">OrdenService.get_by_fecha()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#services.orden_service.OrdenService.delete_orden"><code class="docutils literal notranslate"><span class="pre">OrdenService.delete_orden()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-services.venta_service">Ventas</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#services.venta_service.VentaService"><code class="docutils literal notranslate"><span class="pre">VentaService</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#services.venta_service.VentaService.create_venta"><code class="docutils literal notranslate"><span class="pre">VentaService.create_venta()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#services.venta_service.VentaService.list_ventas"><code class="docutils literal notranslate"><span class="pre">VentaService.list_ventas()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#services.venta_service.VentaService.get_by_id"><code class="docutils literal notranslate"><span class="pre">VentaService.get_by_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#services.venta_service.VentaService.get_by_fecha"><code class="docutils literal notranslate"><span class="pre">VentaService.get_by_fecha()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#services.venta_service.VentaService.delete_venta"><code class="docutils literal notranslate"><span class="pre">VentaService.delete_venta()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="routes.html">Rutas API (FastAPI Endpoints)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Información General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Introducción a la Arquitectura</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Taller Diego - Backend API</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Servicios (Business Logic)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/services.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-services">
+<span id="servicios-business-logic"></span><h1>Servicios (Business Logic)<a class="headerlink" href="#module-services" title="Link to this heading"></a></h1>
+<p>Los servicios contienen la lógica de negocio y validaciones.</p>
+<section id="module-services.producto_service">
+<span id="productos"></span><h2>Productos<a class="headerlink" href="#module-services.producto_service" title="Link to this heading"></a></h2>
+<p>Servicio de negocio para Producto.</p>
+<p>Orquesta la lógica de negocio y validaciones de producto.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="services.producto_service.ProductoService">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">services.producto_service.</span></span><span class="sig-name descname"><span class="pre">ProductoService</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/producto_service.html#ProductoService"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.producto_service.ProductoService" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Servicio CRUD para Producto.</p>
+<p>Implementa reglas de negocio y validaciones específicas de producto.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>repo</strong> – Instancia de ProductoRepository.</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>db</strong> (<em>Session</em>)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="services.producto_service.ProductoService.create_producto">
+<span class="sig-name descname"><span class="pre">create_producto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/producto_service.html#ProductoService.create_producto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.producto_service.ProductoService.create_producto" title="Link to this definition"></a></dt>
+<dd><p>Crea un nuevo producto.</p>
+<p>Valida que no exista otro producto con el mismo nombre.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<a class="reference internal" href="schemas.html#schemas.producto_schema.ProductoCreate" title="schemas.producto_schema.ProductoCreate"><em>ProductoCreate</em></a>) – Datos de creación del producto.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Instancia de Producto creada.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – Si ya existe un producto con ese nombre.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="services.producto_service.ProductoService.list_productos">
+<span class="sig-name descname"><span class="pre">list_productos</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/producto_service.html#ProductoService.list_productos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.producto_service.ProductoService.list_productos" title="Link to this definition"></a></dt>
+<dd><p>Obtiene todos los productos.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Lista de instancias Producto.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="services.producto_service.ProductoService.get_by_id">
+<span class="sig-name descname"><span class="pre">get_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/producto_service.html#ProductoService.get_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.producto_service.ProductoService.get_by_id" title="Link to this definition"></a></dt>
+<dd><p>Obtiene un producto por su identificador.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>int</em>) – Identificador del producto.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Instancia Producto o None si no existe.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="services.producto_service.ProductoService.get_by_name">
+<span class="sig-name descname"><span class="pre">get_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nombre</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/producto_service.html#ProductoService.get_by_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.producto_service.ProductoService.get_by_name" title="Link to this definition"></a></dt>
+<dd><p>Obtiene un producto por su nombre.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nombre</strong> (<em>str</em>) – Nombre del producto.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Instancia Producto o None si no existe.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="services.producto_service.ProductoService.update_producto">
+<span class="sig-name descname"><span class="pre">update_producto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/producto_service.html#ProductoService.update_producto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.producto_service.ProductoService.update_producto" title="Link to this definition"></a></dt>
+<dd><p>Actualiza un producto existente.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>int</em>) – Identificador del producto a actualizar.</p></li>
+<li><p><strong>data</strong> (<a class="reference internal" href="schemas.html#schemas.producto_schema.ProductoCreate" title="schemas.producto_schema.ProductoCreate"><em>ProductoCreate</em></a>) – Nuevos datos del producto.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Instancia Producto actualizada o None si no existe.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="services.producto_service.ProductoService.delete_producto">
+<span class="sig-name descname"><span class="pre">delete_producto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/producto_service.html#ProductoService.delete_producto"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.producto_service.ProductoService.delete_producto" title="Link to this definition"></a></dt>
+<dd><p>Elimina un producto.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>int</em>) – Identificador del producto a eliminar.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Instancia Producto eliminada o None si no existe.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-services.autoparte_service">
+<span id="autopartes"></span><h2>Autopartes<a class="headerlink" href="#module-services.autoparte_service" title="Link to this heading"></a></h2>
+<p>Servicio de lógica de negocio para Autopartes.</p>
+<p>Este módulo proporciona la capa de servicio para operaciones de autopartes,
+incluyendo validación de duplicados, búsqueda por modelo y año, así como
+operaciones CRUD delegadas al repositorio.</p>
+<dl class="field-list simple">
+<dt class="field-odd">author<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Backend Team</p>
+</dd>
+<dt class="field-even">version<span class="colon">:</span></dt>
+<dd class="field-even"><p>1.0</p>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="services.autoparte_service.AutoparteService">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">services.autoparte_service.</span></span><span class="sig-name descname"><span class="pre">AutoparteService</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/autoparte_service.html#AutoparteService"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.autoparte_service.AutoparteService" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Servicio de negocio para gestión de autopartes.</p>
+<p>Proporciona métodos para crear, listar, actualizar y eliminar autopartes,
+con validaciones de duplicados y búsquedas especializadas por modelo y año.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>repo</strong> – Repositorio de autopartes para acceso a datos</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>db</strong> (<em>Session</em>)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="services.autoparte_service.AutoparteService.create_autoparte">
+<span class="sig-name descname"><span class="pre">create_autoparte</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/autoparte_service.html#AutoparteService.create_autoparte"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.autoparte_service.AutoparteService.create_autoparte" title="Link to this definition"></a></dt>
+<dd><p>Crea una nueva autoparte con validación de duplicados.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<a class="reference internal" href="schemas.html#schemas.autoparte_schema.AutoparteCreate" title="schemas.autoparte_schema.AutoparteCreate"><em>AutoparteCreate</em></a>) – Datos de la autoparte a crear (nombre, descripción, etc.)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Objeto autoparte creado con ID generado</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="models.html#db.models.autoparte.Autoparte" title="db.models.autoparte.Autoparte">Autoparte</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – Si ya existe una autoparte con ese nombre</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="services.autoparte_service.AutoparteService.list_autopartes">
+<span class="sig-name descname"><span class="pre">list_autopartes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/autoparte_service.html#AutoparteService.list_autopartes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.autoparte_service.AutoparteService.list_autopartes" title="Link to this definition"></a></dt>
+<dd><p>Lista todas las autopartes registradas.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Lista de todas las autopartes en la base de datos</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list[<a class="reference internal" href="models.html#db.models.autoparte.Autoparte" title="db.models.autoparte.Autoparte">Autoparte</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="services.autoparte_service.AutoparteService.get_by_id">
+<span class="sig-name descname"><span class="pre">get_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/autoparte_service.html#AutoparteService.get_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.autoparte_service.AutoparteService.get_by_id" title="Link to this definition"></a></dt>
+<dd><p>Obtiene una autoparte por su ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>int</em>) – Identificador único de la autoparte</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Objeto autoparte encontrado o None si no existe</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="models.html#db.models.autoparte.Autoparte" title="db.models.autoparte.Autoparte">Autoparte</a> | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="services.autoparte_service.AutoparteService.get_by_name">
+<span class="sig-name descname"><span class="pre">get_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nombre</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/autoparte_service.html#AutoparteService.get_by_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.autoparte_service.AutoparteService.get_by_name" title="Link to this definition"></a></dt>
+<dd><p>Busca una autoparte por nombre.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nombre</strong> (<em>str</em>) – Nombre de la autoparte a buscar</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Autoparte encontrada o None si no existe</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="models.html#db.models.autoparte.Autoparte" title="db.models.autoparte.Autoparte">Autoparte</a> | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="services.autoparte_service.AutoparteService.update_autoparte">
+<span class="sig-name descname"><span class="pre">update_autoparte</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/autoparte_service.html#AutoparteService.update_autoparte"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.autoparte_service.AutoparteService.update_autoparte" title="Link to this definition"></a></dt>
+<dd><p>Actualiza una autoparte existente.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>int</em>) – Identificador único de la autoparte a actualizar</p></li>
+<li><p><strong>data</strong> (<a class="reference internal" href="schemas.html#schemas.autoparte_schema.AutoparteCreate" title="schemas.autoparte_schema.AutoparteCreate"><em>AutoparteCreate</em></a>) – Nuevos datos de la autoparte</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Objeto autoparte actualizado</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="models.html#db.models.autoparte.Autoparte" title="db.models.autoparte.Autoparte">Autoparte</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – Si la autoparte no existe en la base de datos</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="services.autoparte_service.AutoparteService.delete_autoparte">
+<span class="sig-name descname"><span class="pre">delete_autoparte</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/autoparte_service.html#AutoparteService.delete_autoparte"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.autoparte_service.AutoparteService.delete_autoparte" title="Link to this definition"></a></dt>
+<dd><p>Elimina una autoparte existente.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>int</em>) – Identificador único de la autoparte a eliminar</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True si la eliminación fue exitosa</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – Si la autoparte no existe en la base de datos</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="services.autoparte_service.AutoparteService.get_by_modelo">
+<span class="sig-name descname"><span class="pre">get_by_modelo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">modelo</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/autoparte_service.html#AutoparteService.get_by_modelo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.autoparte_service.AutoparteService.get_by_modelo" title="Link to this definition"></a></dt>
+<dd><p>Busca autopartes por modelo de vehículo.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>modelo</strong> (<em>str</em>) – Modelo del vehículo para el cual buscar autopartes</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Lista de autopartes compatibles con el modelo especificado</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[<a class="reference internal" href="models.html#db.models.autoparte.Autoparte" title="db.models.autoparte.Autoparte">Autoparte</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="services.autoparte_service.AutoparteService.get_by_anio">
+<span class="sig-name descname"><span class="pre">get_by_anio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">anio</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/autoparte_service.html#AutoparteService.get_by_anio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.autoparte_service.AutoparteService.get_by_anio" title="Link to this definition"></a></dt>
+<dd><p>Busca autopartes por año de vehículo.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>anio</strong> (<em>int</em>) – Año del vehículo para el cual buscar autopartes</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Lista de autopartes compatibles con el año especificado</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[<a class="reference internal" href="models.html#db.models.autoparte.Autoparte" title="db.models.autoparte.Autoparte">Autoparte</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-services.servicio_service">
+<span id="servicios"></span><h2>Servicios<a class="headerlink" href="#module-services.servicio_service" title="Link to this heading"></a></h2>
+<p>Servicio de negocio para Servicio.</p>
+<p>Orquesta la lógica de negocio y validaciones de servicio.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="services.servicio_service.ServicioService">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">services.servicio_service.</span></span><span class="sig-name descname"><span class="pre">ServicioService</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/servicio_service.html#ServicioService"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.servicio_service.ServicioService" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Servicio CRUD para Servicio.</p>
+<p>Implementa reglas de negocio y validaciones específicas de servicio.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>repo</strong> – Instancia de ServicioRepository.</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>db</strong> (<em>Session</em>)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="services.servicio_service.ServicioService.create_servicio">
+<span class="sig-name descname"><span class="pre">create_servicio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/servicio_service.html#ServicioService.create_servicio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.servicio_service.ServicioService.create_servicio" title="Link to this definition"></a></dt>
+<dd><p>Crea un nuevo servicio.</p>
+<p>Valida que no exista otro servicio con el mismo nombre.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<a class="reference internal" href="schemas.html#schemas.servicio_schema.ServicioCreate" title="schemas.servicio_schema.ServicioCreate"><em>ServicioCreate</em></a>) – Datos de creación del servicio.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Instancia de Servicio creada.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – Si ya existe un servicio con ese nombre.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="services.servicio_service.ServicioService.list_servicios">
+<span class="sig-name descname"><span class="pre">list_servicios</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/servicio_service.html#ServicioService.list_servicios"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.servicio_service.ServicioService.list_servicios" title="Link to this definition"></a></dt>
+<dd><p>Obtiene todos los servicios.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Lista de instancias Servicio.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="services.servicio_service.ServicioService.get_by_id">
+<span class="sig-name descname"><span class="pre">get_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/servicio_service.html#ServicioService.get_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.servicio_service.ServicioService.get_by_id" title="Link to this definition"></a></dt>
+<dd><p>Obtiene un servicio por su identificador.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>int</em>) – Identificador del servicio.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Instancia Servicio o None si no existe.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="services.servicio_service.ServicioService.get_by_name">
+<span class="sig-name descname"><span class="pre">get_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nombre</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/servicio_service.html#ServicioService.get_by_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.servicio_service.ServicioService.get_by_name" title="Link to this definition"></a></dt>
+<dd><p>Obtiene un servicio por su nombre.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nombre</strong> (<em>str</em>) – Nombre del servicio.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Instancia Servicio o None si no existe.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="services.servicio_service.ServicioService.update_servicio">
+<span class="sig-name descname"><span class="pre">update_servicio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/servicio_service.html#ServicioService.update_servicio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.servicio_service.ServicioService.update_servicio" title="Link to this definition"></a></dt>
+<dd><p>Actualiza un servicio existente.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>int</em>) – Identificador del servicio a actualizar.</p></li>
+<li><p><strong>data</strong> (<a class="reference internal" href="schemas.html#schemas.servicio_schema.ServicioCreate" title="schemas.servicio_schema.ServicioCreate"><em>ServicioCreate</em></a>) – Nuevos datos del servicio.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Instancia Servicio actualizada o None si no existe.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="services.servicio_service.ServicioService.delete_servicio">
+<span class="sig-name descname"><span class="pre">delete_servicio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/servicio_service.html#ServicioService.delete_servicio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.servicio_service.ServicioService.delete_servicio" title="Link to this definition"></a></dt>
+<dd><p>Elimina un servicio.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>int</em>) – Identificador del servicio a eliminar.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Instancia Servicio eliminada o None si no existe.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-services.empleado_service">
+<span id="empleados"></span><h2>Empleados<a class="headerlink" href="#module-services.empleado_service" title="Link to this heading"></a></h2>
+<p>Servicio de lógica de negocio para Empleados.</p>
+<p>Este módulo proporciona la capa de servicio para operaciones de empleados,
+incluyendo validación de duplicados, búsqueda por nombre, así como
+operaciones CRUD delegadas al repositorio.</p>
+<dl class="field-list simple">
+<dt class="field-odd">author<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Backend Team</p>
+</dd>
+<dt class="field-even">version<span class="colon">:</span></dt>
+<dd class="field-even"><p>1.0</p>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="services.empleado_service.EmpleadoService">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">services.empleado_service.</span></span><span class="sig-name descname"><span class="pre">EmpleadoService</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/empleado_service.html#EmpleadoService"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.empleado_service.EmpleadoService" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Servicio de negocio para gestión de empleados.</p>
+<p>Proporciona métodos para crear, listar, actualizar y eliminar empleados,
+con validaciones de duplicados y búsquedas por nombre.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>repo</strong> – Repositorio de empleados para acceso a datos</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>db</strong> (<em>Session</em>)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="services.empleado_service.EmpleadoService.create_empleado">
+<span class="sig-name descname"><span class="pre">create_empleado</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/empleado_service.html#EmpleadoService.create_empleado"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.empleado_service.EmpleadoService.create_empleado" title="Link to this definition"></a></dt>
+<dd><p>Crea un nuevo empleado con validación de duplicados.</p>
+<p>Valida que no exista otro empleado con los mismos nombres
+antes de proceder con la creación.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<a class="reference internal" href="schemas.html#schemas.empleado_schema.EmpleadoCreate" title="schemas.empleado_schema.EmpleadoCreate"><em>EmpleadoCreate</em></a>) – Datos del empleado a crear (nombres, apellidos, etc.)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Objeto empleado creado con ID generado</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="models.html#db.models.empleado.Empleado" title="db.models.empleado.Empleado">Empleado</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – Si ya existe un empleado con ese nombre</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="services.empleado_service.EmpleadoService.list_empleados">
+<span class="sig-name descname"><span class="pre">list_empleados</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/empleado_service.html#EmpleadoService.list_empleados"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.empleado_service.EmpleadoService.list_empleados" title="Link to this definition"></a></dt>
+<dd><p>Lista todos los empleados registrados.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Lista de todos los empleados en la base de datos</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list[<a class="reference internal" href="models.html#db.models.empleado.Empleado" title="db.models.empleado.Empleado">Empleado</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="services.empleado_service.EmpleadoService.get_by_id">
+<span class="sig-name descname"><span class="pre">get_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/empleado_service.html#EmpleadoService.get_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.empleado_service.EmpleadoService.get_by_id" title="Link to this definition"></a></dt>
+<dd><p>Obtiene un empleado por su ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>int</em>) – Identificador único del empleado</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Objeto empleado encontrado o None si no existe</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="models.html#db.models.empleado.Empleado" title="db.models.empleado.Empleado">Empleado</a> | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="services.empleado_service.EmpleadoService.update_empleado">
+<span class="sig-name descname"><span class="pre">update_empleado</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/empleado_service.html#EmpleadoService.update_empleado"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.empleado_service.EmpleadoService.update_empleado" title="Link to this definition"></a></dt>
+<dd><p>Actualiza un empleado existente.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>int</em>) – Identificador único del empleado a actualizar</p></li>
+<li><p><strong>data</strong> (<a class="reference internal" href="schemas.html#schemas.empleado_schema.EmpleadoCreate" title="schemas.empleado_schema.EmpleadoCreate"><em>EmpleadoCreate</em></a>) – Nuevos datos del empleado</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Objeto empleado actualizado</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="models.html#db.models.empleado.Empleado" title="db.models.empleado.Empleado">Empleado</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="services.empleado_service.EmpleadoService.delete_empleado">
+<span class="sig-name descname"><span class="pre">delete_empleado</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/empleado_service.html#EmpleadoService.delete_empleado"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.empleado_service.EmpleadoService.delete_empleado" title="Link to this definition"></a></dt>
+<dd><p>Elimina un empleado existente.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>int</em>) – Identificador único del empleado a eliminar</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True si la eliminación fue exitosa</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-services.orden_service">
+<span id="ordenes"></span><h2>Órdenes<a class="headerlink" href="#module-services.orden_service" title="Link to this heading"></a></h2>
+<p>Servicio de lógica de negocio para Órdenes.</p>
+<p>Este módulo proporciona la capa de servicio para operaciones de órdenes,
+incluyendo creación de órdenes simples y complejas (con servicios y empleados),
+búsqueda por fecha, y operaciones CRUD delegadas al repositorio.</p>
+<dl class="field-list simple">
+<dt class="field-odd">author<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Backend Team</p>
+</dd>
+<dt class="field-even">version<span class="colon">:</span></dt>
+<dd class="field-even"><p>1.0</p>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="services.orden_service.OrdenService">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">services.orden_service.</span></span><span class="sig-name descname"><span class="pre">OrdenService</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/orden_service.html#OrdenService"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.orden_service.OrdenService" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Servicio de negocio para gestión de órdenes de servicio.</p>
+<p>Proporciona métodos para crear órdenes simples y complejas (con relaciones
+a servicios y empleados), listar, buscar y eliminar órdenes. Maneja la
+lógica de conversión de datos y delegación al repositorio.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>repo</strong> – Repositorio de órdenes para acceso a datos</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>db</strong> (<em>Session</em>)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="services.orden_service.OrdenService.create_orden">
+<span class="sig-name descname"><span class="pre">create_orden</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/orden_service.html#OrdenService.create_orden"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.orden_service.OrdenService.create_orden" title="Link to this definition"></a></dt>
+<dd><p>Crea una nueva orden, simple o con relaciones a servicios y empleados.</p>
+<p>Si se proporcionan servicios o empleados en los datos, crea una orden
+compleja con todas las relaciones. En caso contrario, crea una orden simple.</p>
+<p>Convierte objetos Pydantic a diccionarios para compatibilidad con el
+repositorio y maneja excepciones de validación.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<a class="reference internal" href="schemas.html#schemas.orden_schema.OrdenCreate" title="schemas.orden_schema.OrdenCreate"><em>OrdenCreate</em></a>) – Datos de la orden a crear (precio, fecha, estado, etc.)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Objeto orden creado con ID y relaciones (si aplica)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="models.html#db.models.orden.Orden" title="db.models.orden.Orden">Orden</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>HTTPException</strong> – Si hay error de validación en los servicios/empleados
+(status_code=400)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="services.orden_service.OrdenService.list_ordens">
+<span class="sig-name descname"><span class="pre">list_ordens</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/orden_service.html#OrdenService.list_ordens"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.orden_service.OrdenService.list_ordens" title="Link to this definition"></a></dt>
+<dd><p>Lista todas las órdenes registradas.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Lista de todas las órdenes en la base de datos</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list[<a class="reference internal" href="models.html#db.models.orden.Orden" title="db.models.orden.Orden">Orden</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="services.orden_service.OrdenService.get_by_id">
+<span class="sig-name descname"><span class="pre">get_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/orden_service.html#OrdenService.get_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.orden_service.OrdenService.get_by_id" title="Link to this definition"></a></dt>
+<dd><p>Obtiene una orden por su ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>int</em>) – Identificador único de la orden</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Objeto orden encontrado o None si no existe</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="models.html#db.models.orden.Orden" title="db.models.orden.Orden">Orden</a> | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="services.orden_service.OrdenService.get_by_fecha">
+<span class="sig-name descname"><span class="pre">get_by_fecha</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fecha</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/orden_service.html#OrdenService.get_by_fecha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.orden_service.OrdenService.get_by_fecha" title="Link to this definition"></a></dt>
+<dd><p>Busca órdenes por fecha de creación.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fecha</strong> (<em>datetime</em>) – Fecha para filtrar órdenes</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Lista de órdenes creadas en la fecha especificada</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[<a class="reference internal" href="models.html#db.models.orden.Orden" title="db.models.orden.Orden">Orden</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="services.orden_service.OrdenService.delete_orden">
+<span class="sig-name descname"><span class="pre">delete_orden</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/orden_service.html#OrdenService.delete_orden"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.orden_service.OrdenService.delete_orden" title="Link to this definition"></a></dt>
+<dd><p>Elimina una orden existente.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>int</em>) – Identificador único de la orden a eliminar</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True si la eliminación fue exitosa</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-services.venta_service">
+<span id="ventas"></span><h2>Ventas<a class="headerlink" href="#module-services.venta_service" title="Link to this heading"></a></h2>
+<p>Servicio de lógica de negocio para Ventas.</p>
+<p>Este módulo proporciona la capa de servicio para operaciones de ventas,
+incluyendo creación de ventas simples y complejas (con productos asociados),
+búsqueda por fecha, manejo de stock, y operaciones CRUD delegadas al repositorio.</p>
+<dl class="field-list simple">
+<dt class="field-odd">author<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Backend Team</p>
+</dd>
+<dt class="field-even">version<span class="colon">:</span></dt>
+<dd class="field-even"><p>1.0</p>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="services.venta_service.VentaService">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">services.venta_service.</span></span><span class="sig-name descname"><span class="pre">VentaService</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/venta_service.html#VentaService"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.venta_service.VentaService" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Servicio de negocio para gestión de ventas.</p>
+<p>Proporciona métodos para crear ventas simples y complejas (con productos),
+listar, buscar por fecha y eliminar ventas. Maneja la lógica de transacciones
+y control de stock mediante delegación al repositorio.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>repo</strong> – Repositorio de ventas para acceso a datos y transacciones</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>db</strong> (<em>Session</em>)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="services.venta_service.VentaService.create_venta">
+<span class="sig-name descname"><span class="pre">create_venta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/venta_service.html#VentaService.create_venta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.venta_service.VentaService.create_venta" title="Link to this definition"></a></dt>
+<dd><p>Crea una nueva venta, simple o con productos asociados.</p>
+<p>Si se proporcionan productos en los datos, crea una venta compleja
+con líneas de venta (VentaProducto) y gestión de stock. En caso contrario,
+crea una venta simple sin productos.</p>
+<p>Convierte objetos Pydantic a diccionarios y maneja excepciones de
+validación y disponibilidad de stock.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<a class="reference internal" href="schemas.html#schemas.venta_schema.VentaCreate" title="schemas.venta_schema.VentaCreate"><em>VentaCreate</em></a>) – Datos de la venta a crear (fecha, productos, etc.)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Objeto venta creado con ID y líneas de productos (si aplica)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="models.html#db.models.venta.Venta" title="db.models.venta.Venta">Venta</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>HTTPException</strong> – Si hay error de validación, stock insuficiente
+o problemas con transacciones (status_code=400)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="services.venta_service.VentaService.list_ventas">
+<span class="sig-name descname"><span class="pre">list_ventas</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/venta_service.html#VentaService.list_ventas"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.venta_service.VentaService.list_ventas" title="Link to this definition"></a></dt>
+<dd><p>Lista todas las ventas registradas.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Lista de todas las ventas en la base de datos</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list[<a class="reference internal" href="models.html#db.models.venta.Venta" title="db.models.venta.Venta">Venta</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="services.venta_service.VentaService.get_by_id">
+<span class="sig-name descname"><span class="pre">get_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/venta_service.html#VentaService.get_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.venta_service.VentaService.get_by_id" title="Link to this definition"></a></dt>
+<dd><p>Obtiene una venta por su ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>int</em>) – Identificador único de la venta</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Objeto venta encontrado o None si no existe</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="models.html#db.models.venta.Venta" title="db.models.venta.Venta">Venta</a> | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="services.venta_service.VentaService.get_by_fecha">
+<span class="sig-name descname"><span class="pre">get_by_fecha</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fecha</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/venta_service.html#VentaService.get_by_fecha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.venta_service.VentaService.get_by_fecha" title="Link to this definition"></a></dt>
+<dd><p>Busca ventas por fecha de creación.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fecha</strong> (<em>datetime</em>) – Fecha para filtrar ventas</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Lista de ventas realizadas en la fecha especificada</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[<a class="reference internal" href="models.html#db.models.venta.Venta" title="db.models.venta.Venta">Venta</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="services.venta_service.VentaService.delete_venta">
+<span class="sig-name descname"><span class="pre">delete_venta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/services/venta_service.html#VentaService.delete_venta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.venta_service.VentaService.delete_venta" title="Link to this definition"></a></dt>
+<dd><p>Elimina una venta existente.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>int</em>) – Identificador único de la venta a eliminar</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True si la eliminación fue exitosa</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="repositories.html" class="btn btn-neutral float-left" title="Repositorios (Data Access)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="routes.html" class="btn btn-neutral float-right" title="Rutas API (FastAPI Endpoints)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, ESIS-DevTeam.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

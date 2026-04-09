@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="../scripts/utils/auth-guard.js"></script>
+  <title>Taller de Mecánica Diego</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+  <!-- Hojas de estilo CSS -->
+  <link rel="stylesheet" href="../styles/css/main.css"> <!-- Estilos del dashboard -->
+  <link rel="stylesheet" href="../styles/css/side_bar.css"> <!-- Estilos del menú lateral -->
+  <link rel="stylesheet" href="../styles/css/header.css"> <!-- Estilos del encabezado -->
+</head>
+
+<body>
+  <!-- Menú lateral de navegación (Cargado con SSI) -->
+  <aside id="side-bar" class="side-bar-container sidebar-placeholder">
+    <!--#include virtual="/includes/sidebar.html" -->
+  </aside>
+
+  <!-- Encabezado superior (Cargado con SSI) -->
+  <header id="header">
+    <!--#include virtual="/includes/header.html" -->
+  </header>
+
+  <!-- Contenedor principal del dashboard -->
+  <div class="main-content">
+    <div class="content">
+      <!-- Sección de bienvenida y alertas -->
+      <section class="welcome-alert">
+        <h2>¡Bienvenido Diego!</h2>
+        <!-- Alerta de productos con bajo stock (se carga dinámicamente) -->
+        <div class="alert-content">
+          <!-- Los datos se cargan dinámicamente desde main.js -->
+        </div>
+      </section>
+
+      <!-- Grid de tarjetas con estadísticas principales -->
+      <section class="dashboard-card-grid">
+        <!-- Tarjeta: Total de productos en inventario (se carga dinámicamente) -->
+        <article class="card">
+          <h3>Productos en inventario</h3>
+          <p><!-- Los datos se cargan dinámicamente desde main.js --></p>
+          <a href="#">Ver inventario <img src="../assets/icons/right-arrow.png" alt="" class="arrow"></a>
+        </article>
+
+        <!-- Tarjeta: Total de ventas recientes -->
+        <article class="card">
+          <h3>Ventas recientes</h3>
+          <p>$250.000</p>
+          <a href="#">Ver reporte <img src="../assets/icons/right-arrow.png" alt="" class="arrow"></a>
+        </article>
+
+        <!-- Tarjeta: Servicios activos (se carga dinámicamente) -->
+        <article class="card">
+          <h3>Servicios activos</h3>
+          <p><!-- Los datos se cargan dinámicamente desde main.js --></p>
+          <a href="#">Gestionar <img src="../assets/icons/right-arrow.png" alt="" class="arrow"></a>
+        </article>
+      </section>
+
+      <!-- Sección inferior con acciones rápidas y actividades recientes -->
+      <section class="botton-actions">
+        <!-- Sección izquierda: Acciones rápidas -->
+        <section class="quick-actions">
+          <h3 class="title-h3">Acciones rápidas</h3>
+          <ul class="list-action">
+            <!-- Botones de acciones principales -->
+            <li class="card-action"><a href="service.html"><span>+ Nuevo servicio</span></a></li>
+            <li class="card-action" id="open-modal-btn"><a href="inventory.html?open=new-product"><span>+ Agregar
+                  producto</span></a></li>
+            <li class="card-action"><a href="orden.html"><span>+ Orden de servicio</span></a></li>
+            <li class="card-action"><a href="#"><span>+ Registrar personal</span></a></li>
+            <li class="card-action"><a href="#"><span>📄 Generar reporte</span></a></li>
+          </ul>
+        </section>
+
+        <!-- Sección derecha: Actividades recientes -->
+        <section class="recent-activities">
+          <h3 class="title-h3">Actividades recientes</h3>
+          <ul class="list-recent-activities">
+            <!-- Actividad 1: Servicio completado -->
+            <li class="item-recent-activities">
+              <img src="../assets/icons/checked.svg" alt="" class="checked">
+              <div class="item-recent-activities-text">
+                <p>Se completó el servicio de "Cambio de Frenos" para Juan Pérez.</p>
+                <time datetime="2025-11-03T12:00">Hace 2 horas</time>
+              </div>
+            </li>
+
+            <!-- Actividad 2: Producto añadido al inventario -->
+            <li class="item-recent-activities">
+              <img src="../assets/icons/checked.svg" alt="" class="checked">
+              <div class="item-recent-activities-text">
+                <p>Se añadió "Aceite Sintético 5W-30" al inventario.</p>
+                <time datetime="2025-11-03T07:00">Hace 5 horas</time>
+              </div>
+            </li>
+
+            <!-- Actividad 3: Nuevo servicio programado -->
+            <li class="item-recent-activities">
+              <img src="../assets/icons/checked.svg" alt="" class="checked">
+              <div class="item-recent-activities-text">
+                <p>Nuevo servicio programado para María López: "Revisión de motor".</p>
+                <time datetime="2025-11-02">Ayer</time>
+              </div>
+            </li>
+          </ul>
+        </section>
+      </section>
+    </div>
+  </div>
+
+  <!-- Script principal: maneja DOM y carga datos dinámicos desde data-manager.js -->
+  <script type="module" src="../scripts/header-actions.js"></script>
+  <script type="module" src="../scripts/main.js"></script>
+</body>
+
+</html>

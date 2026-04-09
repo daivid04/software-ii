@@ -1,0 +1,222 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>intro &mdash; Taller Diego - Backend API 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Introducción a la Arquitectura" href="architecture.html" />
+    <link rel="prev" title="Rutas API (FastAPI Endpoints)" href="modules/routes.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Taller Diego - Backend API
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Módulos Backend</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules/models.html">Modelos de Base de Datos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/schemas.html">Esquemas de Validación</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/repositories.html">Repositorios (Data Access)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/services.html">Servicios (Business Logic)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/routes.html">Rutas API (FastAPI Endpoints)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Información General</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">intro</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduccion-general">Introducción General</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#requisitos">Requisitos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#instalacion">Instalación</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#documentacion-interactiva">Documentación Interactiva</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#endpoints-principales">Endpoints Principales</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#productos">Productos</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ordenes">Órdenes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ventas">Ventas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#health-check">Health Check</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#generacion-de-documentacion-html">Generación de Documentación HTML</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Introducción a la Arquitectura</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Taller Diego - Backend API</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">intro</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/intro.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="intro">
+<h1>intro<a class="headerlink" href="#intro" title="Link to this heading"></a></h1>
+<section id="introduccion-general">
+<h2>Introducción General<a class="headerlink" href="#introduccion-general" title="Link to this heading"></a></h2>
+<p>Este proyecto es un sistema completo de gestión para un taller mecánico.</p>
+<p>Características principales:</p>
+<ul class="simple">
+<li><p>Gestión de productos y autopartes</p></li>
+<li><p>Control de órdenes de servicio</p></li>
+<li><p>Registro de ventas</p></li>
+<li><p>Control de empleados</p></li>
+<li><p>Gestión de stock</p></li>
+<li><p>API REST con FastAPI</p></li>
+</ul>
+</section>
+<section id="requisitos">
+<h2>Requisitos<a class="headerlink" href="#requisitos" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Python 3.9+</p></li>
+<li><p>PostgreSQL 13+</p></li>
+<li><p>pip o poetry</p></li>
+</ul>
+</section>
+<section id="instalacion">
+<h2>Instalación<a class="headerlink" href="#instalacion" title="Link to this heading"></a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Clonar repositorio</span>
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/ESIS-DevTeam/Taller-Diego.git
+<span class="nb">cd</span><span class="w"> </span>Taller-Diego
+
+<span class="c1"># Instalar dependencias</span>
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+
+<span class="c1"># Ejecutar servidor</span>
+python<span class="w"> </span>backend/main.py
+</pre></div>
+</div>
+<p>La API estará disponible en <code class="docutils literal notranslate"><span class="pre">http://localhost:8000</span></code></p>
+<section id="documentacion-interactiva">
+<h3>Documentación Interactiva<a class="headerlink" href="#documentacion-interactiva" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Swagger UI: <a class="reference external" href="http://localhost:8000/docs">http://localhost:8000/docs</a></p></li>
+<li><p>ReDoc: <a class="reference external" href="http://localhost:8000/redoc">http://localhost:8000/redoc</a></p></li>
+</ul>
+</section>
+</section>
+<section id="endpoints-principales">
+<h2>Endpoints Principales<a class="headerlink" href="#endpoints-principales" title="Link to this heading"></a></h2>
+<section id="productos">
+<h3>Productos<a class="headerlink" href="#productos" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/productos</span></code> - Crear producto</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/productos</span></code> - Listar productos</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/productos/{id}</span></code> - Obtener producto</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PUT</span> <span class="pre">/productos/{id}</span></code> - Actualizar producto</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DELETE</span> <span class="pre">/productos/{id}</span></code> - Eliminar producto</p></li>
+</ul>
+</section>
+<section id="ordenes">
+<h3>Órdenes<a class="headerlink" href="#ordenes" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/ordenes</span></code> - Crear orden</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/ordenes</span></code> - Listar órdenes</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/ordenes/{id}</span></code> - Obtener orden</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DELETE</span> <span class="pre">/ordenes/{id}</span></code> - Eliminar orden</p></li>
+</ul>
+</section>
+<section id="ventas">
+<h3>Ventas<a class="headerlink" href="#ventas" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/ventas</span></code> - Crear venta</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/ventas</span></code> - Listar ventas</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/ventas/{id}</span></code> - Obtener venta</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DELETE</span> <span class="pre">/ventas/{id}</span></code> - Eliminar venta</p></li>
+</ul>
+</section>
+<section id="health-check">
+<h3>Health Check<a class="headerlink" href="#health-check" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/</span></code> - Valida conectividad Backend ↔ Database</p></li>
+</ul>
+</section>
+</section>
+<section id="generacion-de-documentacion-html">
+<h2>Generación de Documentación HTML<a class="headerlink" href="#generacion-de-documentacion-html" title="Link to this heading"></a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>docs
+sphinx-build<span class="w"> </span>-b<span class="w"> </span>html<span class="w"> </span>.<span class="w"> </span>_build/html
+</pre></div>
+</div>
+<p>La documentación estará en <code class="docutils literal notranslate"><span class="pre">docs/_build/html/index.html</span></code></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules/routes.html" class="btn btn-neutral float-left" title="Rutas API (FastAPI Endpoints)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="architecture.html" class="btn btn-neutral float-right" title="Introducción a la Arquitectura" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, ESIS-DevTeam.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,98 @@
+// ========================================
+// NOTIFICACIONES FLOTANTES
+// ========================================
+
+#notification-container {
+  position: fixed;
+  z-index: 9999;
+  right: 20px;
+  top: 20px;
+  gap: 15px;
+  display: flex;
+  flex-direction: column;
+
+  .notification {
+    color: black;
+    padding: 14px 20px;
+    border-radius: 8px;
+    border-left: 4px solid;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    font-size: 18px;
+    min-width: 300px;
+    animation: slideIn 0.3s ease;
+
+    &.success {
+      background-color: #ecf8ee;
+      border-left-color: #3fb950;
+    }
+
+    &.warning {
+      background-color: #fcf5e8;
+      border-left-color: #d29922;
+    }
+
+    &.error {
+      background-color: #ffefee;
+      border-left-color: #f85149;
+    }
+
+    &.info {
+      background-color: #e3ecfd;
+      border-left-color: #1951b9;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    &.hiding {
+      animation: slideOut 0.3s ease forwards;
+    }
+  }
+}
+
+// ========================================
+// ANIMACIONES
+// ========================================
+
+@keyframes slideIn {
+  from {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  to {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+}
+
+// ========================================
+// RESPONSIVE
+// ========================================
+
+@media (max-width: 600px) {
+  #notification-container {
+    right: 10px;
+    top: 10px;
+    align-items: center;
+  }
+
+  .notification {
+    font-size: 16px;
+    max-width: calc(100vw - 20px);
+  }
+}

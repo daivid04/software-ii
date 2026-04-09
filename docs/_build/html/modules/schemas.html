@@ -1,0 +1,1349 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Esquemas de Validación &mdash; Taller Diego - Backend API 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Repositorios (Data Access)" href="repositories.html" />
+    <link rel="prev" title="Modelos de Base de Datos" href="models.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Taller Diego - Backend API
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Módulos Backend</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="models.html">Modelos de Base de Datos</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Esquemas de Validación</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-schemas.producto_schema">Productos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#schemas.producto_schema.ProductoBase"><code class="docutils literal notranslate"><span class="pre">ProductoBase</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.producto_schema.ProductoBase.nombre"><code class="docutils literal notranslate"><span class="pre">ProductoBase.nombre</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.producto_schema.ProductoBase.descripcion"><code class="docutils literal notranslate"><span class="pre">ProductoBase.descripcion</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.producto_schema.ProductoBase.precioCompra"><code class="docutils literal notranslate"><span class="pre">ProductoBase.precioCompra</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.producto_schema.ProductoBase.precioVenta"><code class="docutils literal notranslate"><span class="pre">ProductoBase.precioVenta</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.producto_schema.ProductoBase.marca"><code class="docutils literal notranslate"><span class="pre">ProductoBase.marca</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.producto_schema.ProductoBase.categoria"><code class="docutils literal notranslate"><span class="pre">ProductoBase.categoria</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.producto_schema.ProductoBase.stock"><code class="docutils literal notranslate"><span class="pre">ProductoBase.stock</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.producto_schema.ProductoBase.stockMin"><code class="docutils literal notranslate"><span class="pre">ProductoBase.stockMin</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.producto_schema.ProductoBase.model_config"><code class="docutils literal notranslate"><span class="pre">ProductoBase.model_config</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#schemas.producto_schema.ProductoCreate"><code class="docutils literal notranslate"><span class="pre">ProductoCreate</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.producto_schema.ProductoCreate.codBarras"><code class="docutils literal notranslate"><span class="pre">ProductoCreate.codBarras</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.producto_schema.ProductoCreate.img"><code class="docutils literal notranslate"><span class="pre">ProductoCreate.img</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.producto_schema.ProductoCreate.model_config"><code class="docutils literal notranslate"><span class="pre">ProductoCreate.model_config</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#schemas.producto_schema.ProductoResponse"><code class="docutils literal notranslate"><span class="pre">ProductoResponse</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.producto_schema.ProductoResponse.id"><code class="docutils literal notranslate"><span class="pre">ProductoResponse.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.producto_schema.ProductoResponse.codBarras"><code class="docutils literal notranslate"><span class="pre">ProductoResponse.codBarras</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.producto_schema.ProductoResponse.img"><code class="docutils literal notranslate"><span class="pre">ProductoResponse.img</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.producto_schema.ProductoResponse.tipo"><code class="docutils literal notranslate"><span class="pre">ProductoResponse.tipo</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.producto_schema.ProductoResponse.Config"><code class="docutils literal notranslate"><span class="pre">ProductoResponse.Config</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.producto_schema.ProductoResponse.model_config"><code class="docutils literal notranslate"><span class="pre">ProductoResponse.model_config</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-schemas.autoparte_schema">Autopartes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#schemas.autoparte_schema.AutoparteBase"><code class="docutils literal notranslate"><span class="pre">AutoparteBase</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.autoparte_schema.AutoparteBase.modelo"><code class="docutils literal notranslate"><span class="pre">AutoparteBase.modelo</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.autoparte_schema.AutoparteBase.anio"><code class="docutils literal notranslate"><span class="pre">AutoparteBase.anio</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.autoparte_schema.AutoparteBase.model_config"><code class="docutils literal notranslate"><span class="pre">AutoparteBase.model_config</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#schemas.autoparte_schema.AutoparteCreate"><code class="docutils literal notranslate"><span class="pre">AutoparteCreate</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.autoparte_schema.AutoparteCreate.codBarras"><code class="docutils literal notranslate"><span class="pre">AutoparteCreate.codBarras</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.autoparte_schema.AutoparteCreate.img"><code class="docutils literal notranslate"><span class="pre">AutoparteCreate.img</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.autoparte_schema.AutoparteCreate.model_config"><code class="docutils literal notranslate"><span class="pre">AutoparteCreate.model_config</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#schemas.autoparte_schema.AutoparteResponse"><code class="docutils literal notranslate"><span class="pre">AutoparteResponse</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.autoparte_schema.AutoparteResponse.id"><code class="docutils literal notranslate"><span class="pre">AutoparteResponse.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.autoparte_schema.AutoparteResponse.codBarras"><code class="docutils literal notranslate"><span class="pre">AutoparteResponse.codBarras</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.autoparte_schema.AutoparteResponse.img"><code class="docutils literal notranslate"><span class="pre">AutoparteResponse.img</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.autoparte_schema.AutoparteResponse.Config"><code class="docutils literal notranslate"><span class="pre">AutoparteResponse.Config</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.autoparte_schema.AutoparteResponse.model_config"><code class="docutils literal notranslate"><span class="pre">AutoparteResponse.model_config</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-schemas.servicio_schema">Servicios</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#schemas.servicio_schema.ServicioBase"><code class="docutils literal notranslate"><span class="pre">ServicioBase</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.servicio_schema.ServicioBase.nombre"><code class="docutils literal notranslate"><span class="pre">ServicioBase.nombre</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.servicio_schema.ServicioBase.descripcion"><code class="docutils literal notranslate"><span class="pre">ServicioBase.descripcion</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.servicio_schema.ServicioBase.model_config"><code class="docutils literal notranslate"><span class="pre">ServicioBase.model_config</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#schemas.servicio_schema.ServicioCreate"><code class="docutils literal notranslate"><span class="pre">ServicioCreate</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.servicio_schema.ServicioCreate.model_config"><code class="docutils literal notranslate"><span class="pre">ServicioCreate.model_config</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#schemas.servicio_schema.ServicioResponse"><code class="docutils literal notranslate"><span class="pre">ServicioResponse</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.servicio_schema.ServicioResponse.id"><code class="docutils literal notranslate"><span class="pre">ServicioResponse.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.servicio_schema.ServicioResponse.model_config"><code class="docutils literal notranslate"><span class="pre">ServicioResponse.model_config</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-schemas.empleado_schema">Empleados</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#schemas.empleado_schema.EmpleadoBase"><code class="docutils literal notranslate"><span class="pre">EmpleadoBase</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.empleado_schema.EmpleadoBase.nombres"><code class="docutils literal notranslate"><span class="pre">EmpleadoBase.nombres</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.empleado_schema.EmpleadoBase.apellidos"><code class="docutils literal notranslate"><span class="pre">EmpleadoBase.apellidos</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.empleado_schema.EmpleadoBase.estado"><code class="docutils literal notranslate"><span class="pre">EmpleadoBase.estado</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.empleado_schema.EmpleadoBase.especialidad"><code class="docutils literal notranslate"><span class="pre">EmpleadoBase.especialidad</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.empleado_schema.EmpleadoBase.model_config"><code class="docutils literal notranslate"><span class="pre">EmpleadoBase.model_config</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#schemas.empleado_schema.EmpleadoCreate"><code class="docutils literal notranslate"><span class="pre">EmpleadoCreate</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.empleado_schema.EmpleadoCreate.model_config"><code class="docutils literal notranslate"><span class="pre">EmpleadoCreate.model_config</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#schemas.empleado_schema.EmpleadoResponse"><code class="docutils literal notranslate"><span class="pre">EmpleadoResponse</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.empleado_schema.EmpleadoResponse.id"><code class="docutils literal notranslate"><span class="pre">EmpleadoResponse.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.empleado_schema.EmpleadoResponse.model_config"><code class="docutils literal notranslate"><span class="pre">EmpleadoResponse.model_config</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-schemas.orden_schema">Órdenes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#schemas.orden_schema.OrdenBase"><code class="docutils literal notranslate"><span class="pre">OrdenBase</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.orden_schema.OrdenBase.garantia"><code class="docutils literal notranslate"><span class="pre">OrdenBase.garantia</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.orden_schema.OrdenBase.estadoPago"><code class="docutils literal notranslate"><span class="pre">OrdenBase.estadoPago</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.orden_schema.OrdenBase.precio"><code class="docutils literal notranslate"><span class="pre">OrdenBase.precio</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.orden_schema.OrdenBase.fecha"><code class="docutils literal notranslate"><span class="pre">OrdenBase.fecha</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.orden_schema.OrdenBase.model_config"><code class="docutils literal notranslate"><span class="pre">OrdenBase.model_config</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#schemas.orden_schema.OrdenServicioBase"><code class="docutils literal notranslate"><span class="pre">OrdenServicioBase</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.orden_schema.OrdenServicioBase.servicio_id"><code class="docutils literal notranslate"><span class="pre">OrdenServicioBase.servicio_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.orden_schema.OrdenServicioBase.precio_servicio"><code class="docutils literal notranslate"><span class="pre">OrdenServicioBase.precio_servicio</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.orden_schema.OrdenServicioBase.model_config"><code class="docutils literal notranslate"><span class="pre">OrdenServicioBase.model_config</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#schemas.orden_schema.OrdenServicioResponse"><code class="docutils literal notranslate"><span class="pre">OrdenServicioResponse</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.orden_schema.OrdenServicioResponse.servicio"><code class="docutils literal notranslate"><span class="pre">OrdenServicioResponse.servicio</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.orden_schema.OrdenServicioResponse.Config"><code class="docutils literal notranslate"><span class="pre">OrdenServicioResponse.Config</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.orden_schema.OrdenServicioResponse.model_config"><code class="docutils literal notranslate"><span class="pre">OrdenServicioResponse.model_config</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#schemas.orden_schema.OrdenEmpleadoBase"><code class="docutils literal notranslate"><span class="pre">OrdenEmpleadoBase</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.orden_schema.OrdenEmpleadoBase.empleado_id"><code class="docutils literal notranslate"><span class="pre">OrdenEmpleadoBase.empleado_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.orden_schema.OrdenEmpleadoBase.model_config"><code class="docutils literal notranslate"><span class="pre">OrdenEmpleadoBase.model_config</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#schemas.orden_schema.OrdenEmpleadoResponse"><code class="docutils literal notranslate"><span class="pre">OrdenEmpleadoResponse</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.orden_schema.OrdenEmpleadoResponse.empleado"><code class="docutils literal notranslate"><span class="pre">OrdenEmpleadoResponse.empleado</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.orden_schema.OrdenEmpleadoResponse.Config"><code class="docutils literal notranslate"><span class="pre">OrdenEmpleadoResponse.Config</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.orden_schema.OrdenEmpleadoResponse.model_config"><code class="docutils literal notranslate"><span class="pre">OrdenEmpleadoResponse.model_config</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#schemas.orden_schema.OrdenCreate"><code class="docutils literal notranslate"><span class="pre">OrdenCreate</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.orden_schema.OrdenCreate.servicios"><code class="docutils literal notranslate"><span class="pre">OrdenCreate.servicios</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.orden_schema.OrdenCreate.empleados"><code class="docutils literal notranslate"><span class="pre">OrdenCreate.empleados</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.orden_schema.OrdenCreate.model_config"><code class="docutils literal notranslate"><span class="pre">OrdenCreate.model_config</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#schemas.orden_schema.OrdenResponse"><code class="docutils literal notranslate"><span class="pre">OrdenResponse</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.orden_schema.OrdenResponse.id"><code class="docutils literal notranslate"><span class="pre">OrdenResponse.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.orden_schema.OrdenResponse.servicios"><code class="docutils literal notranslate"><span class="pre">OrdenResponse.servicios</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.orden_schema.OrdenResponse.empleados"><code class="docutils literal notranslate"><span class="pre">OrdenResponse.empleados</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.orden_schema.OrdenResponse.Config"><code class="docutils literal notranslate"><span class="pre">OrdenResponse.Config</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.orden_schema.OrdenResponse.model_config"><code class="docutils literal notranslate"><span class="pre">OrdenResponse.model_config</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-schemas.venta_schema">Ventas</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#schemas.venta_schema.VentaBase"><code class="docutils literal notranslate"><span class="pre">VentaBase</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.venta_schema.VentaBase.fecha"><code class="docutils literal notranslate"><span class="pre">VentaBase.fecha</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.venta_schema.VentaBase.model_config"><code class="docutils literal notranslate"><span class="pre">VentaBase.model_config</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#schemas.venta_schema.VentaProductoBase"><code class="docutils literal notranslate"><span class="pre">VentaProductoBase</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.venta_schema.VentaProductoBase.producto_id"><code class="docutils literal notranslate"><span class="pre">VentaProductoBase.producto_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.venta_schema.VentaProductoBase.cantidad"><code class="docutils literal notranslate"><span class="pre">VentaProductoBase.cantidad</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.venta_schema.VentaProductoBase.model_config"><code class="docutils literal notranslate"><span class="pre">VentaProductoBase.model_config</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#schemas.venta_schema.VentaProductoResponse"><code class="docutils literal notranslate"><span class="pre">VentaProductoResponse</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.venta_schema.VentaProductoResponse.producto"><code class="docutils literal notranslate"><span class="pre">VentaProductoResponse.producto</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.venta_schema.VentaProductoResponse.Config"><code class="docutils literal notranslate"><span class="pre">VentaProductoResponse.Config</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.venta_schema.VentaProductoResponse.model_config"><code class="docutils literal notranslate"><span class="pre">VentaProductoResponse.model_config</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#schemas.venta_schema.VentaCreate"><code class="docutils literal notranslate"><span class="pre">VentaCreate</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.venta_schema.VentaCreate.productos"><code class="docutils literal notranslate"><span class="pre">VentaCreate.productos</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.venta_schema.VentaCreate.model_config"><code class="docutils literal notranslate"><span class="pre">VentaCreate.model_config</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#schemas.venta_schema.VentaResponse"><code class="docutils literal notranslate"><span class="pre">VentaResponse</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.venta_schema.VentaResponse.id"><code class="docutils literal notranslate"><span class="pre">VentaResponse.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.venta_schema.VentaResponse.productos"><code class="docutils literal notranslate"><span class="pre">VentaResponse.productos</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.venta_schema.VentaResponse.Config"><code class="docutils literal notranslate"><span class="pre">VentaResponse.Config</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#schemas.venta_schema.VentaResponse.model_config"><code class="docutils literal notranslate"><span class="pre">VentaResponse.model_config</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="repositories.html">Repositorios (Data Access)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="services.html">Servicios (Business Logic)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="routes.html">Rutas API (FastAPI Endpoints)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Información General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Introducción a la Arquitectura</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Taller Diego - Backend API</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Esquemas de Validación</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/schemas.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-schemas">
+<span id="esquemas-de-validacion"></span><h1>Esquemas de Validación<a class="headerlink" href="#module-schemas" title="Link to this heading"></a></h1>
+<p>Los esquemas Pydantic validan los datos de entrada y salida.</p>
+<section id="module-schemas.producto_schema">
+<span id="productos"></span><h2>Productos<a class="headerlink" href="#module-schemas.producto_schema" title="Link to this heading"></a></h2>
+<p>Esquemas Pydantic para Producto.</p>
+<p>Define modelos de validación y serialización para operaciones de producto.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="schemas.producto_schema.ProductoBase">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">schemas.producto_schema.</span></span><span class="sig-name descname"><span class="pre">ProductoBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">nombre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">descripcion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precioCompra</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precioVenta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marca</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categoria</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stock</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stockMin</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/schemas/producto_schema.html#ProductoBase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#schemas.producto_schema.ProductoBase" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Datos comunes de un producto.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nombre</strong> – Nombre único del producto.</p></li>
+<li><p><strong>descripcion</strong> – Descripción detallada del producto.</p></li>
+<li><p><strong>precioCompra</strong> – Precio de adquisición.</p></li>
+<li><p><strong>precioVenta</strong> – Precio de venta.</p></li>
+<li><p><strong>marca</strong> – Marca o fabricante.</p></li>
+<li><p><strong>categoria</strong> – Categoría de clasificación.</p></li>
+<li><p><strong>stock</strong> – Cantidad en existencia.</p></li>
+<li><p><strong>stockMin</strong> – Cantidad mínima para alertas.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>nombre</strong> (<em>str</em>)</p></li>
+<li><p><strong>descripcion</strong> (<em>str</em>)</p></li>
+<li><p><strong>precioCompra</strong> (<em>float</em>)</p></li>
+<li><p><strong>precioVenta</strong> (<em>float</em>)</p></li>
+<li><p><strong>marca</strong> (<em>str</em>)</p></li>
+<li><p><strong>categoria</strong> (<em>str</em>)</p></li>
+<li><p><strong>stock</strong> (<em>int</em>)</p></li>
+<li><p><strong>stockMin</strong> (<em>int</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.producto_schema.ProductoBase.nombre">
+<span class="sig-name descname"><span class="pre">nombre</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#schemas.producto_schema.ProductoBase.nombre" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.producto_schema.ProductoBase.descripcion">
+<span class="sig-name descname"><span class="pre">descripcion</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#schemas.producto_schema.ProductoBase.descripcion" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.producto_schema.ProductoBase.precioCompra">
+<span class="sig-name descname"><span class="pre">precioCompra</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#schemas.producto_schema.ProductoBase.precioCompra" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.producto_schema.ProductoBase.precioVenta">
+<span class="sig-name descname"><span class="pre">precioVenta</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#schemas.producto_schema.ProductoBase.precioVenta" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.producto_schema.ProductoBase.marca">
+<span class="sig-name descname"><span class="pre">marca</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#schemas.producto_schema.ProductoBase.marca" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.producto_schema.ProductoBase.categoria">
+<span class="sig-name descname"><span class="pre">categoria</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#schemas.producto_schema.ProductoBase.categoria" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.producto_schema.ProductoBase.stock">
+<span class="sig-name descname"><span class="pre">stock</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#schemas.producto_schema.ProductoBase.stock" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.producto_schema.ProductoBase.stockMin">
+<span class="sig-name descname"><span class="pre">stockMin</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#schemas.producto_schema.ProductoBase.stockMin" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.producto_schema.ProductoBase.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#schemas.producto_schema.ProductoBase.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="schemas.producto_schema.ProductoCreate">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">schemas.producto_schema.</span></span><span class="sig-name descname"><span class="pre">ProductoCreate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">nombre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">descripcion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precioCompra</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precioVenta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marca</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categoria</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stock</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stockMin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">codBarras</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">img</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/schemas/producto_schema.html#ProductoCreate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#schemas.producto_schema.ProductoCreate" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#schemas.producto_schema.ProductoBase" title="schemas.producto_schema.ProductoBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">ProductoBase</span></code></a></p>
+<p>Payload de creación/actualización de producto.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>codBarras</strong> – Código de barras (opcional, único).</p></li>
+<li><p><strong>img</strong> – URL o ruta de imagen (opcional).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>nombre</strong> (<em>str</em>)</p></li>
+<li><p><strong>descripcion</strong> (<em>str</em>)</p></li>
+<li><p><strong>precioCompra</strong> (<em>float</em>)</p></li>
+<li><p><strong>precioVenta</strong> (<em>float</em>)</p></li>
+<li><p><strong>marca</strong> (<em>str</em>)</p></li>
+<li><p><strong>categoria</strong> (<em>str</em>)</p></li>
+<li><p><strong>stock</strong> (<em>int</em>)</p></li>
+<li><p><strong>stockMin</strong> (<em>int</em>)</p></li>
+<li><p><strong>codBarras</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>img</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.producto_schema.ProductoCreate.codBarras">
+<span class="sig-name descname"><span class="pre">codBarras</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#schemas.producto_schema.ProductoCreate.codBarras" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.producto_schema.ProductoCreate.img">
+<span class="sig-name descname"><span class="pre">img</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#schemas.producto_schema.ProductoCreate.img" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.producto_schema.ProductoCreate.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#schemas.producto_schema.ProductoCreate.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="schemas.producto_schema.ProductoResponse">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">schemas.producto_schema.</span></span><span class="sig-name descname"><span class="pre">ProductoResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">nombre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">descripcion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precioCompra</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precioVenta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marca</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categoria</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stock</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stockMin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">codBarras</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">img</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tipo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/schemas/producto_schema.html#ProductoResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#schemas.producto_schema.ProductoResponse" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#schemas.producto_schema.ProductoBase" title="schemas.producto_schema.ProductoBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">ProductoBase</span></code></a></p>
+<p>Modelo de respuesta para producto.</p>
+<p>Incluye identificador y campos heredados de ProductoBase.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> – Identificador único del producto.</p></li>
+<li><p><strong>codBarras</strong> – Código de barras si aplica.</p></li>
+<li><p><strong>img</strong> – URL o ruta de imagen.</p></li>
+<li><p><strong>tipo</strong> – Tipo de producto (discriminador de herencia).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>nombre</strong> (<em>str</em>)</p></li>
+<li><p><strong>descripcion</strong> (<em>str</em>)</p></li>
+<li><p><strong>precioCompra</strong> (<em>float</em>)</p></li>
+<li><p><strong>precioVenta</strong> (<em>float</em>)</p></li>
+<li><p><strong>marca</strong> (<em>str</em>)</p></li>
+<li><p><strong>categoria</strong> (<em>str</em>)</p></li>
+<li><p><strong>stock</strong> (<em>int</em>)</p></li>
+<li><p><strong>stockMin</strong> (<em>int</em>)</p></li>
+<li><p><strong>id</strong> (<em>int</em>)</p></li>
+<li><p><strong>codBarras</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>img</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>tipo</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.producto_schema.ProductoResponse.id">
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#schemas.producto_schema.ProductoResponse.id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.producto_schema.ProductoResponse.codBarras">
+<span class="sig-name descname"><span class="pre">codBarras</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#schemas.producto_schema.ProductoResponse.codBarras" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.producto_schema.ProductoResponse.img">
+<span class="sig-name descname"><span class="pre">img</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#schemas.producto_schema.ProductoResponse.img" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.producto_schema.ProductoResponse.tipo">
+<span class="sig-name descname"><span class="pre">tipo</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#schemas.producto_schema.ProductoResponse.tipo" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="schemas.producto_schema.ProductoResponse.Config">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Config</span></span><a class="reference internal" href="../_modules/schemas/producto_schema.html#ProductoResponse.Config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#schemas.producto_schema.ProductoResponse.Config" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.producto_schema.ProductoResponse.Config.from_attributes">
+<span class="sig-name descname"><span class="pre">from_attributes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#schemas.producto_schema.ProductoResponse.Config.from_attributes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.producto_schema.ProductoResponse.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'from_attributes':</span> <span class="pre">True}</span></em><a class="headerlink" href="#schemas.producto_schema.ProductoResponse.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-schemas.autoparte_schema">
+<span id="autopartes"></span><h2>Autopartes<a class="headerlink" href="#module-schemas.autoparte_schema" title="Link to this heading"></a></h2>
+<p>Esquemas Pydantic para Autoparte.</p>
+<p>Define modelos de validación y serialización para operaciones de autoparte.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="schemas.autoparte_schema.AutoparteBase">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">schemas.autoparte_schema.</span></span><span class="sig-name descname"><span class="pre">AutoparteBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">nombre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">descripcion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precioCompra</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precioVenta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marca</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categoria</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stock</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stockMin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modelo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">anio</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/schemas/autoparte_schema.html#AutoparteBase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#schemas.autoparte_schema.AutoparteBase" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#schemas.producto_schema.ProductoBase" title="schemas.producto_schema.ProductoBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">ProductoBase</span></code></a></p>
+<p>Datos comunes de una autoparte.</p>
+<p>Extiende ProductoBase con campos específicos de autopartes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>modelo</strong> – Modelo de vehículo compatible.</p></li>
+<li><p><strong>anio</strong> – Año del modelo de vehículo.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>nombre</strong> (<em>str</em>)</p></li>
+<li><p><strong>descripcion</strong> (<em>str</em>)</p></li>
+<li><p><strong>precioCompra</strong> (<em>float</em>)</p></li>
+<li><p><strong>precioVenta</strong> (<em>float</em>)</p></li>
+<li><p><strong>marca</strong> (<em>str</em>)</p></li>
+<li><p><strong>categoria</strong> (<em>str</em>)</p></li>
+<li><p><strong>stock</strong> (<em>int</em>)</p></li>
+<li><p><strong>stockMin</strong> (<em>int</em>)</p></li>
+<li><p><strong>modelo</strong> (<em>str</em>)</p></li>
+<li><p><strong>anio</strong> (<em>int</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.autoparte_schema.AutoparteBase.modelo">
+<span class="sig-name descname"><span class="pre">modelo</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#schemas.autoparte_schema.AutoparteBase.modelo" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.autoparte_schema.AutoparteBase.anio">
+<span class="sig-name descname"><span class="pre">anio</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#schemas.autoparte_schema.AutoparteBase.anio" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.autoparte_schema.AutoparteBase.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#schemas.autoparte_schema.AutoparteBase.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="schemas.autoparte_schema.AutoparteCreate">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">schemas.autoparte_schema.</span></span><span class="sig-name descname"><span class="pre">AutoparteCreate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">nombre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">descripcion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precioCompra</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precioVenta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marca</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categoria</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stock</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stockMin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modelo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">anio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">codBarras</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">img</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/schemas/autoparte_schema.html#AutoparteCreate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#schemas.autoparte_schema.AutoparteCreate" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#schemas.autoparte_schema.AutoparteBase" title="schemas.autoparte_schema.AutoparteBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">AutoparteBase</span></code></a></p>
+<p>Payload de creación/actualización de autoparte.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cod_barras</strong> – Código de barras (opcional, único si se provee).</p></li>
+<li><p><strong>img</strong> – URL o ruta de imagen (opcional).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>nombre</strong> (<em>str</em>)</p></li>
+<li><p><strong>descripcion</strong> (<em>str</em>)</p></li>
+<li><p><strong>precioCompra</strong> (<em>float</em>)</p></li>
+<li><p><strong>precioVenta</strong> (<em>float</em>)</p></li>
+<li><p><strong>marca</strong> (<em>str</em>)</p></li>
+<li><p><strong>categoria</strong> (<em>str</em>)</p></li>
+<li><p><strong>stock</strong> (<em>int</em>)</p></li>
+<li><p><strong>stockMin</strong> (<em>int</em>)</p></li>
+<li><p><strong>modelo</strong> (<em>str</em>)</p></li>
+<li><p><strong>anio</strong> (<em>int</em>)</p></li>
+<li><p><strong>codBarras</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>img</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.autoparte_schema.AutoparteCreate.codBarras">
+<span class="sig-name descname"><span class="pre">codBarras</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#schemas.autoparte_schema.AutoparteCreate.codBarras" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.autoparte_schema.AutoparteCreate.img">
+<span class="sig-name descname"><span class="pre">img</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#schemas.autoparte_schema.AutoparteCreate.img" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.autoparte_schema.AutoparteCreate.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#schemas.autoparte_schema.AutoparteCreate.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="schemas.autoparte_schema.AutoparteResponse">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">schemas.autoparte_schema.</span></span><span class="sig-name descname"><span class="pre">AutoparteResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">nombre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">descripcion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precioCompra</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precioVenta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marca</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categoria</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stock</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stockMin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modelo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">anio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">codBarras</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">img</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/schemas/autoparte_schema.html#AutoparteResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#schemas.autoparte_schema.AutoparteResponse" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#schemas.autoparte_schema.AutoparteBase" title="schemas.autoparte_schema.AutoparteBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">AutoparteBase</span></code></a></p>
+<p>Modelo de respuesta para autoparte.</p>
+<p>Incluye identificador y campos heredados de Producto.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> – Identificador único de la autoparte.</p></li>
+<li><p><strong>cod_barras</strong> – Código de barras si aplica.</p></li>
+<li><p><strong>img</strong> – URL o ruta de imagen.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>nombre</strong> (<em>str</em>)</p></li>
+<li><p><strong>descripcion</strong> (<em>str</em>)</p></li>
+<li><p><strong>precioCompra</strong> (<em>float</em>)</p></li>
+<li><p><strong>precioVenta</strong> (<em>float</em>)</p></li>
+<li><p><strong>marca</strong> (<em>str</em>)</p></li>
+<li><p><strong>categoria</strong> (<em>str</em>)</p></li>
+<li><p><strong>stock</strong> (<em>int</em>)</p></li>
+<li><p><strong>stockMin</strong> (<em>int</em>)</p></li>
+<li><p><strong>modelo</strong> (<em>str</em>)</p></li>
+<li><p><strong>anio</strong> (<em>int</em>)</p></li>
+<li><p><strong>id</strong> (<em>int</em>)</p></li>
+<li><p><strong>codBarras</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+<li><p><strong>img</strong> (<em>str</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.autoparte_schema.AutoparteResponse.id">
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#schemas.autoparte_schema.AutoparteResponse.id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.autoparte_schema.AutoparteResponse.codBarras">
+<span class="sig-name descname"><span class="pre">codBarras</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#schemas.autoparte_schema.AutoparteResponse.codBarras" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.autoparte_schema.AutoparteResponse.img">
+<span class="sig-name descname"><span class="pre">img</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#schemas.autoparte_schema.AutoparteResponse.img" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="schemas.autoparte_schema.AutoparteResponse.Config">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Config</span></span><a class="reference internal" href="../_modules/schemas/autoparte_schema.html#AutoparteResponse.Config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#schemas.autoparte_schema.AutoparteResponse.Config" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.autoparte_schema.AutoparteResponse.Config.from_attributes">
+<span class="sig-name descname"><span class="pre">from_attributes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#schemas.autoparte_schema.AutoparteResponse.Config.from_attributes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.autoparte_schema.AutoparteResponse.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'from_attributes':</span> <span class="pre">True}</span></em><a class="headerlink" href="#schemas.autoparte_schema.AutoparteResponse.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-schemas.servicio_schema">
+<span id="servicios"></span><h2>Servicios<a class="headerlink" href="#module-schemas.servicio_schema" title="Link to this heading"></a></h2>
+<p>Esquemas Pydantic para Servicio.</p>
+<p>Define modelos de validación y serialización para operaciones de servicio.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="schemas.servicio_schema.ServicioBase">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">schemas.servicio_schema.</span></span><span class="sig-name descname"><span class="pre">ServicioBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">nombre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">descripcion</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/schemas/servicio_schema.html#ServicioBase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#schemas.servicio_schema.ServicioBase" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Datos comunes de un servicio.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nombre</strong> – Nombre único del servicio.</p></li>
+<li><p><strong>descripcion</strong> – Descripción detallada del servicio.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>nombre</strong> (<em>str</em>)</p></li>
+<li><p><strong>descripcion</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.servicio_schema.ServicioBase.nombre">
+<span class="sig-name descname"><span class="pre">nombre</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#schemas.servicio_schema.ServicioBase.nombre" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.servicio_schema.ServicioBase.descripcion">
+<span class="sig-name descname"><span class="pre">descripcion</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#schemas.servicio_schema.ServicioBase.descripcion" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.servicio_schema.ServicioBase.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#schemas.servicio_schema.ServicioBase.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="schemas.servicio_schema.ServicioCreate">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">schemas.servicio_schema.</span></span><span class="sig-name descname"><span class="pre">ServicioCreate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">nombre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">descripcion</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/schemas/servicio_schema.html#ServicioCreate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#schemas.servicio_schema.ServicioCreate" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#schemas.servicio_schema.ServicioBase" title="schemas.servicio_schema.ServicioBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">ServicioBase</span></code></a></p>
+<p>Payload de creación/actualización de servicio.</p>
+<p>Hereda todos los campos de ServicioBase.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nombre</strong> (<em>str</em>)</p></li>
+<li><p><strong>descripcion</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.servicio_schema.ServicioCreate.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#schemas.servicio_schema.ServicioCreate.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="schemas.servicio_schema.ServicioResponse">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">schemas.servicio_schema.</span></span><span class="sig-name descname"><span class="pre">ServicioResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">nombre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">descripcion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/schemas/servicio_schema.html#ServicioResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#schemas.servicio_schema.ServicioResponse" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#schemas.servicio_schema.ServicioBase" title="schemas.servicio_schema.ServicioBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">ServicioBase</span></code></a></p>
+<p>Modelo de respuesta para servicio.</p>
+<p>Incluye identificador único.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> – Identificador único del servicio.</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>nombre</strong> (<em>str</em>)</p></li>
+<li><p><strong>descripcion</strong> (<em>str</em>)</p></li>
+<li><p><strong>id</strong> (<em>int</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.servicio_schema.ServicioResponse.id">
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#schemas.servicio_schema.ServicioResponse.id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.servicio_schema.ServicioResponse.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'from_attributes':</span> <span class="pre">True}</span></em><a class="headerlink" href="#schemas.servicio_schema.ServicioResponse.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-schemas.empleado_schema">
+<span id="empleados"></span><h2>Empleados<a class="headerlink" href="#module-schemas.empleado_schema" title="Link to this heading"></a></h2>
+<p>Esquemas Pydantic para Empleado.</p>
+<p>Define modelos de validación y serialización para operaciones de empleado.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="schemas.empleado_schema.EmpleadoBase">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">schemas.empleado_schema.</span></span><span class="sig-name descname"><span class="pre">EmpleadoBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">nombres</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apellidos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estado</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">especialidad</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/schemas/empleado_schema.html#EmpleadoBase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#schemas.empleado_schema.EmpleadoBase" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Datos comunes de un empleado.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nombres</strong> – Nombre del empleado.</p></li>
+<li><p><strong>apellidos</strong> – Apellido del empleado.</p></li>
+<li><p><strong>estado</strong> – Estado laboral (activo/inactivo).</p></li>
+<li><p><strong>especialidad</strong> – Especialidad técnica del empleado.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>nombres</strong> (<em>str</em>)</p></li>
+<li><p><strong>apellidos</strong> (<em>str</em>)</p></li>
+<li><p><strong>estado</strong> (<em>str</em>)</p></li>
+<li><p><strong>especialidad</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.empleado_schema.EmpleadoBase.nombres">
+<span class="sig-name descname"><span class="pre">nombres</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#schemas.empleado_schema.EmpleadoBase.nombres" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.empleado_schema.EmpleadoBase.apellidos">
+<span class="sig-name descname"><span class="pre">apellidos</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#schemas.empleado_schema.EmpleadoBase.apellidos" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.empleado_schema.EmpleadoBase.estado">
+<span class="sig-name descname"><span class="pre">estado</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#schemas.empleado_schema.EmpleadoBase.estado" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.empleado_schema.EmpleadoBase.especialidad">
+<span class="sig-name descname"><span class="pre">especialidad</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#schemas.empleado_schema.EmpleadoBase.especialidad" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.empleado_schema.EmpleadoBase.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#schemas.empleado_schema.EmpleadoBase.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="schemas.empleado_schema.EmpleadoCreate">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">schemas.empleado_schema.</span></span><span class="sig-name descname"><span class="pre">EmpleadoCreate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">nombres</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apellidos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estado</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">especialidad</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/schemas/empleado_schema.html#EmpleadoCreate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#schemas.empleado_schema.EmpleadoCreate" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#schemas.empleado_schema.EmpleadoBase" title="schemas.empleado_schema.EmpleadoBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">EmpleadoBase</span></code></a></p>
+<p>Payload de creación/actualización de empleado.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nombres</strong> (<em>str</em>)</p></li>
+<li><p><strong>apellidos</strong> (<em>str</em>)</p></li>
+<li><p><strong>estado</strong> (<em>str</em>)</p></li>
+<li><p><strong>especialidad</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.empleado_schema.EmpleadoCreate.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#schemas.empleado_schema.EmpleadoCreate.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="schemas.empleado_schema.EmpleadoResponse">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">schemas.empleado_schema.</span></span><span class="sig-name descname"><span class="pre">EmpleadoResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">nombres</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apellidos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estado</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">especialidad</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/schemas/empleado_schema.html#EmpleadoResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#schemas.empleado_schema.EmpleadoResponse" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#schemas.empleado_schema.EmpleadoBase" title="schemas.empleado_schema.EmpleadoBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">EmpleadoBase</span></code></a></p>
+<p>Modelo de respuesta para empleado.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> – Identificador único del empleado.</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>nombres</strong> (<em>str</em>)</p></li>
+<li><p><strong>apellidos</strong> (<em>str</em>)</p></li>
+<li><p><strong>estado</strong> (<em>str</em>)</p></li>
+<li><p><strong>especialidad</strong> (<em>str</em>)</p></li>
+<li><p><strong>id</strong> (<em>int</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.empleado_schema.EmpleadoResponse.id">
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#schemas.empleado_schema.EmpleadoResponse.id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.empleado_schema.EmpleadoResponse.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'from_attributes':</span> <span class="pre">True}</span></em><a class="headerlink" href="#schemas.empleado_schema.EmpleadoResponse.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-schemas.orden_schema">
+<span id="ordenes"></span><h2>Órdenes<a class="headerlink" href="#module-schemas.orden_schema" title="Link to this heading"></a></h2>
+<p>Esquemas Pydantic para Orden.</p>
+<p>Define modelos de validación y serialización para operaciones de orden.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="schemas.orden_schema.OrdenBase">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">schemas.orden_schema.</span></span><span class="sig-name descname"><span class="pre">OrdenBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">garantia</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estadoPago</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fecha</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/schemas/orden_schema.html#OrdenBase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#schemas.orden_schema.OrdenBase" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Datos comunes de una orden.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>garantia</strong> – Período de garantía en días.</p></li>
+<li><p><strong>estadoPago</strong> – Estado del pago.</p></li>
+<li><p><strong>precio</strong> – Precio total de la orden.</p></li>
+<li><p><strong>fecha</strong> – Fecha de la orden.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>garantia</strong> (<em>int</em>)</p></li>
+<li><p><strong>estadoPago</strong> (<em>str</em>)</p></li>
+<li><p><strong>precio</strong> (<em>int</em>)</p></li>
+<li><p><strong>fecha</strong> (<em>date</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.orden_schema.OrdenBase.garantia">
+<span class="sig-name descname"><span class="pre">garantia</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#schemas.orden_schema.OrdenBase.garantia" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.orden_schema.OrdenBase.estadoPago">
+<span class="sig-name descname"><span class="pre">estadoPago</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#schemas.orden_schema.OrdenBase.estadoPago" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.orden_schema.OrdenBase.precio">
+<span class="sig-name descname"><span class="pre">precio</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#schemas.orden_schema.OrdenBase.precio" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.orden_schema.OrdenBase.fecha">
+<span class="sig-name descname"><span class="pre">fecha</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">date</span></em><a class="headerlink" href="#schemas.orden_schema.OrdenBase.fecha" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.orden_schema.OrdenBase.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#schemas.orden_schema.OrdenBase.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="schemas.orden_schema.OrdenServicioBase">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">schemas.orden_schema.</span></span><span class="sig-name descname"><span class="pre">OrdenServicioBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">servicio_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precio_servicio</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/schemas/orden_schema.html#OrdenServicioBase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#schemas.orden_schema.OrdenServicioBase" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Datos de un servicio en una orden.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>servicio_id</strong> – Identificador del servicio.</p></li>
+<li><p><strong>precio_servicio</strong> – Precio del servicio en la orden.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>servicio_id</strong> (<em>int</em>)</p></li>
+<li><p><strong>precio_servicio</strong> (<em>int</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.orden_schema.OrdenServicioBase.servicio_id">
+<span class="sig-name descname"><span class="pre">servicio_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#schemas.orden_schema.OrdenServicioBase.servicio_id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.orden_schema.OrdenServicioBase.precio_servicio">
+<span class="sig-name descname"><span class="pre">precio_servicio</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#schemas.orden_schema.OrdenServicioBase.precio_servicio" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.orden_schema.OrdenServicioBase.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#schemas.orden_schema.OrdenServicioBase.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="schemas.orden_schema.OrdenServicioResponse">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">schemas.orden_schema.</span></span><span class="sig-name descname"><span class="pre">OrdenServicioResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">servicio_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precio_servicio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">servicio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/schemas/orden_schema.html#OrdenServicioResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#schemas.orden_schema.OrdenServicioResponse" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#schemas.orden_schema.OrdenServicioBase" title="schemas.orden_schema.OrdenServicioBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">OrdenServicioBase</span></code></a></p>
+<p>Respuesta de servicio en orden con detalles.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>servicio</strong> – Detalles del servicio.</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>servicio_id</strong> (<em>int</em>)</p></li>
+<li><p><strong>precio_servicio</strong> (<em>int</em>)</p></li>
+<li><p><strong>servicio</strong> (<a class="reference internal" href="#schemas.servicio_schema.ServicioResponse" title="schemas.servicio_schema.ServicioResponse"><em>ServicioResponse</em></a><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.orden_schema.OrdenServicioResponse.servicio">
+<span class="sig-name descname"><span class="pre">servicio</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#schemas.servicio_schema.ServicioResponse" title="schemas.servicio_schema.ServicioResponse"><span class="pre">ServicioResponse</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#schemas.orden_schema.OrdenServicioResponse.servicio" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="schemas.orden_schema.OrdenServicioResponse.Config">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Config</span></span><a class="reference internal" href="../_modules/schemas/orden_schema.html#OrdenServicioResponse.Config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#schemas.orden_schema.OrdenServicioResponse.Config" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.orden_schema.OrdenServicioResponse.Config.from_attributes">
+<span class="sig-name descname"><span class="pre">from_attributes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#schemas.orden_schema.OrdenServicioResponse.Config.from_attributes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.orden_schema.OrdenServicioResponse.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'from_attributes':</span> <span class="pre">True}</span></em><a class="headerlink" href="#schemas.orden_schema.OrdenServicioResponse.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="schemas.orden_schema.OrdenEmpleadoBase">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">schemas.orden_schema.</span></span><span class="sig-name descname"><span class="pre">OrdenEmpleadoBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">empleado_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/schemas/orden_schema.html#OrdenEmpleadoBase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#schemas.orden_schema.OrdenEmpleadoBase" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Datos de un empleado asignado a una orden.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>empleado_id</strong> – Identificador del empleado.</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>empleado_id</strong> (<em>int</em>)</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.orden_schema.OrdenEmpleadoBase.empleado_id">
+<span class="sig-name descname"><span class="pre">empleado_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#schemas.orden_schema.OrdenEmpleadoBase.empleado_id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.orden_schema.OrdenEmpleadoBase.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#schemas.orden_schema.OrdenEmpleadoBase.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="schemas.orden_schema.OrdenEmpleadoResponse">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">schemas.orden_schema.</span></span><span class="sig-name descname"><span class="pre">OrdenEmpleadoResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">empleado_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empleado</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/schemas/orden_schema.html#OrdenEmpleadoResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#schemas.orden_schema.OrdenEmpleadoResponse" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#schemas.orden_schema.OrdenEmpleadoBase" title="schemas.orden_schema.OrdenEmpleadoBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">OrdenEmpleadoBase</span></code></a></p>
+<p>Respuesta de empleado en orden con detalles.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>empleado</strong> – Detalles del empleado.</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>empleado_id</strong> (<em>int</em>)</p></li>
+<li><p><strong>empleado</strong> (<a class="reference internal" href="#schemas.empleado_schema.EmpleadoResponse" title="schemas.empleado_schema.EmpleadoResponse"><em>EmpleadoResponse</em></a><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.orden_schema.OrdenEmpleadoResponse.empleado">
+<span class="sig-name descname"><span class="pre">empleado</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#schemas.empleado_schema.EmpleadoResponse" title="schemas.empleado_schema.EmpleadoResponse"><span class="pre">EmpleadoResponse</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#schemas.orden_schema.OrdenEmpleadoResponse.empleado" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="schemas.orden_schema.OrdenEmpleadoResponse.Config">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Config</span></span><a class="reference internal" href="../_modules/schemas/orden_schema.html#OrdenEmpleadoResponse.Config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#schemas.orden_schema.OrdenEmpleadoResponse.Config" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.orden_schema.OrdenEmpleadoResponse.Config.from_attributes">
+<span class="sig-name descname"><span class="pre">from_attributes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#schemas.orden_schema.OrdenEmpleadoResponse.Config.from_attributes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.orden_schema.OrdenEmpleadoResponse.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'from_attributes':</span> <span class="pre">True}</span></em><a class="headerlink" href="#schemas.orden_schema.OrdenEmpleadoResponse.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="schemas.orden_schema.OrdenCreate">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">schemas.orden_schema.</span></span><span class="sig-name descname"><span class="pre">OrdenCreate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">garantia</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estadoPago</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fecha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">servicios</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empleados</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/schemas/orden_schema.html#OrdenCreate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#schemas.orden_schema.OrdenCreate" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#schemas.orden_schema.OrdenBase" title="schemas.orden_schema.OrdenBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">OrdenBase</span></code></a></p>
+<p>Payload de creación de orden.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>servicios</strong> – Lista de servicios a incluir.</p></li>
+<li><p><strong>empleados</strong> – Lista de empleados a asignar.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>garantia</strong> (<em>int</em>)</p></li>
+<li><p><strong>estadoPago</strong> (<em>str</em>)</p></li>
+<li><p><strong>precio</strong> (<em>int</em>)</p></li>
+<li><p><strong>fecha</strong> (<em>date</em>)</p></li>
+<li><p><strong>servicios</strong> (<em>list</em><em>[</em><a class="reference internal" href="#schemas.orden_schema.OrdenServicioBase" title="schemas.orden_schema.OrdenServicioBase"><em>OrdenServicioBase</em></a><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>empleados</strong> (<em>list</em><em>[</em><a class="reference internal" href="#schemas.orden_schema.OrdenEmpleadoBase" title="schemas.orden_schema.OrdenEmpleadoBase"><em>OrdenEmpleadoBase</em></a><em>] </em><em>| </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.orden_schema.OrdenCreate.servicios">
+<span class="sig-name descname"><span class="pre">servicios</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#schemas.orden_schema.OrdenServicioBase" title="schemas.orden_schema.OrdenServicioBase"><span class="pre">OrdenServicioBase</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#schemas.orden_schema.OrdenCreate.servicios" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.orden_schema.OrdenCreate.empleados">
+<span class="sig-name descname"><span class="pre">empleados</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#schemas.orden_schema.OrdenEmpleadoBase" title="schemas.orden_schema.OrdenEmpleadoBase"><span class="pre">OrdenEmpleadoBase</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#schemas.orden_schema.OrdenCreate.empleados" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.orden_schema.OrdenCreate.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#schemas.orden_schema.OrdenCreate.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="schemas.orden_schema.OrdenResponse">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">schemas.orden_schema.</span></span><span class="sig-name descname"><span class="pre">OrdenResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">garantia</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estadoPago</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fecha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">servicios</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empleados</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/schemas/orden_schema.html#OrdenResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#schemas.orden_schema.OrdenResponse" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#schemas.orden_schema.OrdenBase" title="schemas.orden_schema.OrdenBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">OrdenBase</span></code></a></p>
+<p>Modelo de respuesta para orden.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> – Identificador único de la orden.</p></li>
+<li><p><strong>servicios</strong> – Servicios incluidos en la orden.</p></li>
+<li><p><strong>empleados</strong> – Empleados asignados a la orden.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>garantia</strong> (<em>int</em>)</p></li>
+<li><p><strong>estadoPago</strong> (<em>str</em>)</p></li>
+<li><p><strong>precio</strong> (<em>int</em>)</p></li>
+<li><p><strong>fecha</strong> (<em>date</em>)</p></li>
+<li><p><strong>id</strong> (<em>int</em>)</p></li>
+<li><p><strong>servicios</strong> (<em>list</em><em>[</em><a class="reference internal" href="#schemas.orden_schema.OrdenServicioResponse" title="schemas.orden_schema.OrdenServicioResponse"><em>OrdenServicioResponse</em></a><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>empleados</strong> (<em>list</em><em>[</em><a class="reference internal" href="#schemas.orden_schema.OrdenEmpleadoResponse" title="schemas.orden_schema.OrdenEmpleadoResponse"><em>OrdenEmpleadoResponse</em></a><em>] </em><em>| </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.orden_schema.OrdenResponse.id">
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#schemas.orden_schema.OrdenResponse.id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.orden_schema.OrdenResponse.servicios">
+<span class="sig-name descname"><span class="pre">servicios</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#schemas.orden_schema.OrdenServicioResponse" title="schemas.orden_schema.OrdenServicioResponse"><span class="pre">OrdenServicioResponse</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#schemas.orden_schema.OrdenResponse.servicios" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.orden_schema.OrdenResponse.empleados">
+<span class="sig-name descname"><span class="pre">empleados</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#schemas.orden_schema.OrdenEmpleadoResponse" title="schemas.orden_schema.OrdenEmpleadoResponse"><span class="pre">OrdenEmpleadoResponse</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#schemas.orden_schema.OrdenResponse.empleados" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="schemas.orden_schema.OrdenResponse.Config">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Config</span></span><a class="reference internal" href="../_modules/schemas/orden_schema.html#OrdenResponse.Config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#schemas.orden_schema.OrdenResponse.Config" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.orden_schema.OrdenResponse.Config.from_attributes">
+<span class="sig-name descname"><span class="pre">from_attributes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#schemas.orden_schema.OrdenResponse.Config.from_attributes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.orden_schema.OrdenResponse.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'from_attributes':</span> <span class="pre">True}</span></em><a class="headerlink" href="#schemas.orden_schema.OrdenResponse.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-schemas.venta_schema">
+<span id="ventas"></span><h2>Ventas<a class="headerlink" href="#module-schemas.venta_schema" title="Link to this heading"></a></h2>
+<p>Esquemas Pydantic para Venta.</p>
+<p>Define modelos de validación y serialización para operaciones de venta.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="schemas.venta_schema.VentaBase">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">schemas.venta_schema.</span></span><span class="sig-name descname"><span class="pre">VentaBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">fecha</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/schemas/venta_schema.html#VentaBase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#schemas.venta_schema.VentaBase" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Datos comunes de una venta.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fecha</strong> – Fecha y hora de la venta.</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>fecha</strong> (<em>datetime</em>)</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.venta_schema.VentaBase.fecha">
+<span class="sig-name descname"><span class="pre">fecha</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">datetime</span></em><a class="headerlink" href="#schemas.venta_schema.VentaBase.fecha" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.venta_schema.VentaBase.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#schemas.venta_schema.VentaBase.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="schemas.venta_schema.VentaProductoBase">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">schemas.venta_schema.</span></span><span class="sig-name descname"><span class="pre">VentaProductoBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">producto_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cantidad</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/schemas/venta_schema.html#VentaProductoBase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#schemas.venta_schema.VentaProductoBase" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Datos de un producto en una venta.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>producto_id</strong> – Identificador del producto.</p></li>
+<li><p><strong>cantidad</strong> – Cantidad vendida del producto.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>producto_id</strong> (<em>int</em>)</p></li>
+<li><p><strong>cantidad</strong> (<em>int</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.venta_schema.VentaProductoBase.producto_id">
+<span class="sig-name descname"><span class="pre">producto_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#schemas.venta_schema.VentaProductoBase.producto_id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.venta_schema.VentaProductoBase.cantidad">
+<span class="sig-name descname"><span class="pre">cantidad</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#schemas.venta_schema.VentaProductoBase.cantidad" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.venta_schema.VentaProductoBase.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#schemas.venta_schema.VentaProductoBase.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="schemas.venta_schema.VentaProductoResponse">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">schemas.venta_schema.</span></span><span class="sig-name descname"><span class="pre">VentaProductoResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">producto_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cantidad</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">producto</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/schemas/venta_schema.html#VentaProductoResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#schemas.venta_schema.VentaProductoResponse" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#schemas.venta_schema.VentaProductoBase" title="schemas.venta_schema.VentaProductoBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">VentaProductoBase</span></code></a></p>
+<p>Respuesta de producto en venta con detalles.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>producto</strong> – Detalles del producto.</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>producto_id</strong> (<em>int</em>)</p></li>
+<li><p><strong>cantidad</strong> (<em>int</em>)</p></li>
+<li><p><strong>producto</strong> (<a class="reference internal" href="#schemas.producto_schema.ProductoResponse" title="schemas.producto_schema.ProductoResponse"><em>ProductoResponse</em></a><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.venta_schema.VentaProductoResponse.producto">
+<span class="sig-name descname"><span class="pre">producto</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#schemas.producto_schema.ProductoResponse" title="schemas.producto_schema.ProductoResponse"><span class="pre">ProductoResponse</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#schemas.venta_schema.VentaProductoResponse.producto" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="schemas.venta_schema.VentaProductoResponse.Config">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Config</span></span><a class="reference internal" href="../_modules/schemas/venta_schema.html#VentaProductoResponse.Config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#schemas.venta_schema.VentaProductoResponse.Config" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.venta_schema.VentaProductoResponse.Config.from_attributes">
+<span class="sig-name descname"><span class="pre">from_attributes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#schemas.venta_schema.VentaProductoResponse.Config.from_attributes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.venta_schema.VentaProductoResponse.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'from_attributes':</span> <span class="pre">True}</span></em><a class="headerlink" href="#schemas.venta_schema.VentaProductoResponse.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="schemas.venta_schema.VentaCreate">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">schemas.venta_schema.</span></span><span class="sig-name descname"><span class="pre">VentaCreate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">fecha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">productos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/schemas/venta_schema.html#VentaCreate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#schemas.venta_schema.VentaCreate" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#schemas.venta_schema.VentaBase" title="schemas.venta_schema.VentaBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">VentaBase</span></code></a></p>
+<p>Payload de creación de venta.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>productos</strong> – Lista de productos a vender.</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>fecha</strong> (<em>datetime</em>)</p></li>
+<li><p><strong>productos</strong> (<em>list</em><em>[</em><a class="reference internal" href="#schemas.venta_schema.VentaProductoBase" title="schemas.venta_schema.VentaProductoBase"><em>VentaProductoBase</em></a><em>] </em><em>| </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.venta_schema.VentaCreate.productos">
+<span class="sig-name descname"><span class="pre">productos</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#schemas.venta_schema.VentaProductoBase" title="schemas.venta_schema.VentaProductoBase"><span class="pre">VentaProductoBase</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#schemas.venta_schema.VentaCreate.productos" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.venta_schema.VentaCreate.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#schemas.venta_schema.VentaCreate.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="schemas.venta_schema.VentaResponse">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">schemas.venta_schema.</span></span><span class="sig-name descname"><span class="pre">VentaResponse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">fecha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">productos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/schemas/venta_schema.html#VentaResponse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#schemas.venta_schema.VentaResponse" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#schemas.venta_schema.VentaBase" title="schemas.venta_schema.VentaBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">VentaBase</span></code></a></p>
+<p>Modelo de respuesta para venta.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> – Identificador único de la venta.</p></li>
+<li><p><strong>productos</strong> – Productos incluidos en la venta.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>fecha</strong> (<em>datetime</em>)</p></li>
+<li><p><strong>id</strong> (<em>int</em>)</p></li>
+<li><p><strong>productos</strong> (<em>list</em><em>[</em><a class="reference internal" href="#schemas.venta_schema.VentaProductoResponse" title="schemas.venta_schema.VentaProductoResponse"><em>VentaProductoResponse</em></a><em>] </em><em>| </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.venta_schema.VentaResponse.id">
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#schemas.venta_schema.VentaResponse.id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.venta_schema.VentaResponse.productos">
+<span class="sig-name descname"><span class="pre">productos</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#schemas.venta_schema.VentaProductoResponse" title="schemas.venta_schema.VentaProductoResponse"><span class="pre">VentaProductoResponse</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#schemas.venta_schema.VentaResponse.productos" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="schemas.venta_schema.VentaResponse.Config">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Config</span></span><a class="reference internal" href="../_modules/schemas/venta_schema.html#VentaResponse.Config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#schemas.venta_schema.VentaResponse.Config" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.venta_schema.VentaResponse.Config.from_attributes">
+<span class="sig-name descname"><span class="pre">from_attributes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#schemas.venta_schema.VentaResponse.Config.from_attributes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="schemas.venta_schema.VentaResponse.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'from_attributes':</span> <span class="pre">True}</span></em><a class="headerlink" href="#schemas.venta_schema.VentaResponse.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="models.html" class="btn btn-neutral float-left" title="Modelos de Base de Datos" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="repositories.html" class="btn btn-neutral float-right" title="Repositorios (Data Access)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, ESIS-DevTeam.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

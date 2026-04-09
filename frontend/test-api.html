@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test API - Verificación de Base de Datos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .count-display {
+            font-size: 48px;
+            font-weight: bold;
+            color: #2196F3;
+            margin: 10px 0;
+        }
+
+        button {
+            background: #2196F3;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #1976D2;
+        }
+
+        pre {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            max-height: 400px;
+        }
+
+        .status {
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: inline-block;
+            margin: 10px 0;
+        }
+
+        .status.success {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .status.error {
+            background: #f44336;
+            color: white;
+        }
+
+        .loading {
+            color: #FF9800;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🔍 Test de API - Verificación de Base de Datos</h1>
+
+    <div class="test-section">
+        <h2>📦 Productos en Base de Datos</h2>
+        <div id="productos-status" class="status loading">Cargando...</div>
+        <div class="count-display" id="productos-count">-</div>
+        <button onclick="testProductos()">🔄 Recargar Productos</button>
+        <button onclick="verDetalleProductos()">👁️ Ver Detalle</button>
+        <pre id="productos-detail" style="display:none;"></pre>
+    </div>
+
+    <div class="test-section">
+        <h2>🔧 Servicios Activos en Base de Datos</h2>
+        <div id="servicios-status" class="status loading">Cargando...</div>
+        <div class="count-display" id="servicios-count">-</div>
+        <button onclick="testServicios()">🔄 Recargar Servicios</button>
+        <button onclick="verDetalleServicios()">👁️ Ver Detalle</button>
+        <pre id="servicios-detail" style="display:none;"></pre>
+    </div>
+
+    <div class="test-section">
+        <h2>⚠️ Productos con Bajo Stock</h2>
+        <div id="lowstock-status" class="status loading">Cargando...</div>
+        <div class="count-display" id="lowstock-count">-</div>
+        <button onclick="testLowStock()">🔄 Recargar</button>
+    </div>
+
+    <script type="module">
+        import { fetchFromApi, countFromApi, productUnderStock } from './scripts/data-manager.js';
+
+        let productosData = [];
+        let serviciosData = [];
+
+        // Test Productos
+        window.testProductos = async function () {
+            const statusEl = document.getElementById('productos-status');
+            const countEl = document.getElementById('productos-count');
+
+            try {
+                statusEl.textContent = 'Cargando...';
+                statusEl.className = 'status loading';
+
+                console.log('=== TEST PRODUCTOS ===');
+                productosData = await fetchFromApi('productos');
+                const count = await countFromApi('productos');
+
+                console.log('Productos recibidos:', productosData);
+                console.log('Total de productos:', count);
+
+                countEl.textContent = count;
+                statusEl.textContent = `✓ ${count} productos encontrados`;
+                statusEl.className = 'status success';
+            } catch (error) {
+                console.error('Error en test productos:', error);
+                countEl.textContent = '⚠️';
+                statusEl.textContent = `✗ Error: ${error.message}`;
+                statusEl.className = 'status error';
+            }
+        }
+
+        // Ver detalle productos
+        window.verDetalleProductos = function () {
+            const detailEl = document.getElementById('productos-detail');
+            if (detailEl.style.display === 'none') {
+                detailEl.textContent = JSON.stringify(productosData, null, 2);
+                detailEl.style.display = 'block';
+            } else {
+                detailEl.style.display = 'none';
+            }
+        }
+
+        // Test Servicios
+        window.testServicios = async function () {
+            const statusEl = document.getElementById('servicios-status');
+            const countEl = document.getElementById('servicios-count');
+
+            try {
+                statusEl.textContent = 'Cargando...';
+                statusEl.className = 'status loading';
+
+                console.log('=== TEST SERVICIOS ===');
+                serviciosData = await fetchFromApi('servicios');
+                const count = await countFromApi('servicios');
+
+                console.log('Servicios recibidos:', serviciosData);
+                console.log('Total de servicios:', count);
+
+                countEl.textContent = count;
+                statusEl.textContent = `✓ ${count} servicios encontrados`;
+                statusEl.className = 'status success';
+            } catch (error) {
+                console.error('Error en test servicios:', error);
+                countEl.textContent = '⚠️';
+                statusEl.textContent = `✗ Error: ${error.message}`;
+                statusEl.className = 'status error';
+            }
+        }
+
+        // Ver detalle servicios
+        window.verDetalleServicios = function () {
+            const detailEl = document.getElementById('servicios-detail');
+            if (detailEl.style.display === 'none') {
+                detailEl.textContent = JSON.stringify(serviciosData, null, 2);
+                detailEl.style.display = 'block';
+            } else {
+                detailEl.style.display = 'none';
+            }
+        }
+
+        // Test Low Stock
+        window.testLowStock = async function () {
+            const statusEl = document.getElementById('lowstock-status');
+            const countEl = document.getElementById('lowstock-count');
+
+            try {
+                statusEl.textContent = 'Cargando...';
+                statusEl.className = 'status loading';
+
+                console.log('=== TEST PRODUCTOS CON BAJO STOCK ===');
+                const count = await productUnderStock();
+
+                console.log('Productos con bajo stock:', count);
+
+                countEl.textContent = count;
+                statusEl.textContent = `✓ ${count} productos con bajo stock`;
+                statusEl.className = 'status success';
+            } catch (error) {
+                console.error('Error en test low stock:', error);
+                countEl.textContent = '⚠️';
+                statusEl.textContent = `✗ Error: ${error.message}`;
+                statusEl.className = 'status error';
+            }
+        }
+
+        // Ejecutar todos los tests al cargar la página
+        async function runAllTests() {
+            console.log('🚀 Ejecutando todos los tests...');
+            await testProductos();
+            await testServicios();
+            await testLowStock();
+            console.log('✅ Tests completados');
+        }
+
+        // Ejecutar al cargar la página
+        document.addEventListener('DOMContentLoaded', runAllTests);
+    </script>
+</body>
+
+</html>

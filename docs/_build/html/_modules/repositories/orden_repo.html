@@ -1,0 +1,344 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>repositories.orden_repo &mdash; Taller Diego - Backend API 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Taller Diego - Backend API
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Módulos Backend</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/models.html">Modelos de Base de Datos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/schemas.html">Esquemas de Validación</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/repositories.html">Repositorios (Data Access)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/services.html">Servicios (Business Logic)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/routes.html">Rutas API (FastAPI Endpoints)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Información General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../intro.html">intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html">Introducción a la Arquitectura</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Taller Diego - Backend API</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">repositories.orden_repo</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for repositories.orden_repo</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Repositorio de acceso a datos para Orden.</span>
+
+<span class="sd">Implementa operaciones CRUD sobre la entidad Orden en la base de datos.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy.orm</span><span class="w"> </span><span class="kn">import</span> <span class="n">Session</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">db.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Orden</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="kn">import</span> <span class="n">Date</span><span class="p">,</span> <span class="n">cast</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">db.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">OrdenServicio</span><span class="p">,</span> <span class="n">Servicio</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">db.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">OrdenEmpleado</span><span class="p">,</span> <span class="n">Empleado</span>
+
+
+<div class="viewcode-block" id="OrdenRepository">
+<a class="viewcode-back" href="../../modules/repositories.html#repositories.orden_repo.OrdenRepository">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">OrdenRepository</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Repositorio CRUD para Orden.</span>
+
+<span class="sd">    Encapsula la lógica de acceso a la tabla de órdenes con soporte para</span>
+<span class="sd">    relaciones complejas con servicios y empleados.</span>
+
+<span class="sd">    :ivar db: Sesión de SQLAlchemy para interactuar con la BD.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db</span><span class="p">:</span> <span class="n">Session</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Inicializa el repositorio con una sesión de BD.</span>
+
+<span class="sd">        :param db: Sesión de SQLAlchemy.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">db</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">garantia</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estadoPago</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">precio</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">fecha</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Crea una nueva orden simple sin servicios ni empleados.</span>
+
+<span class="sd">        :param garantia: Período de garantía en días.</span>
+<span class="sd">        :param estadoPago: Estado del pago.</span>
+<span class="sd">        :param precio: Precio total de la orden.</span>
+<span class="sd">        :param fecha: Fecha de la orden.</span>
+<span class="sd">        :returns: Instancia de Orden creada.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">orden</span> <span class="o">=</span> <span class="n">Orden</span><span class="p">(</span><span class="n">garantia</span><span class="o">=</span><span class="n">garantia</span><span class="p">,</span> <span class="n">estadoPago</span><span class="o">=</span><span class="n">estadoPago</span><span class="p">,</span> <span class="n">precio</span><span class="o">=</span><span class="n">precio</span><span class="p">,</span> <span class="n">fecha</span><span class="o">=</span><span class="n">fecha</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">orden</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">refresh</span><span class="p">(</span><span class="n">orden</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">orden</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_with_services</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">garantia</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estadoPago</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">precio</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">fecha</span><span class="p">,</span> <span class="n">servicios</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">],</span> <span class="n">empleados</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Crea una orden con servicios y empleados asociados.</span>
+
+<span class="sd">        Realiza una transacción completa creando la orden y asociando servicios y empleados.</span>
+<span class="sd">        Si hay error, realiza rollback completo.</span>
+
+<span class="sd">        :param garantia: Período de garantía en días.</span>
+<span class="sd">        :param estadoPago: Estado del pago.</span>
+<span class="sd">        :param precio: Precio total de la orden.</span>
+<span class="sd">        :param fecha: Fecha de la orden.</span>
+<span class="sd">        :param servicios: Lista de dicts con servicio_id y precio_servicio.</span>
+<span class="sd">        :param empleados: Lista de dicts con empleado_id (opcional).</span>
+<span class="sd">        :returns: Instancia de Orden creada con relaciones.</span>
+<span class="sd">        :raises ValueError: Si hay datos inválidos o referencias inexistentes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">orden</span> <span class="o">=</span> <span class="n">Orden</span><span class="p">(</span><span class="n">garantia</span><span class="o">=</span><span class="n">garantia</span><span class="p">,</span> <span class="n">estadoPago</span><span class="o">=</span><span class="n">estadoPago</span><span class="p">,</span> <span class="n">precio</span><span class="o">=</span><span class="n">precio</span><span class="p">,</span> <span class="n">fecha</span><span class="o">=</span><span class="n">fecha</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">orden</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># flush to get orden.id without committing</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">servicios</span><span class="p">:</span>
+                <span class="n">sid</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;servicio_id&quot;</span><span class="p">)</span>
+                <span class="n">precio_servicio</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;precio_servicio&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">sid</span> <span class="ow">or</span> <span class="n">precio_servicio</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Servicio o precio_servicio inválido&quot;</span><span class="p">)</span>
+
+                <span class="n">servicio</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Servicio</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Servicio</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">sid</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">servicio</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Servicio con id </span><span class="si">{</span><span class="n">sid</span><span class="si">}</span><span class="s2"> no existe&quot;</span><span class="p">)</span>
+
+                <span class="c1"># create relation orden-servicio</span>
+                <span class="n">os</span> <span class="o">=</span> <span class="n">OrdenServicio</span><span class="p">(</span><span class="n">orden_id</span><span class="o">=</span><span class="n">orden</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">servicio_id</span><span class="o">=</span><span class="n">sid</span><span class="p">,</span> <span class="n">precio_servicio</span><span class="o">=</span><span class="n">precio_servicio</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">os</span><span class="p">)</span>
+
+            <span class="c1"># asociar empleados si vienen</span>
+            <span class="k">if</span> <span class="n">empleados</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">empleados</span><span class="p">:</span>
+                    <span class="n">eid</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;empleado_id&quot;</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">eid</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;empleado_id inválido&quot;</span><span class="p">)</span>
+                    <span class="n">empleado</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Empleado</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Empleado</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">eid</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">empleado</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Empleado con id </span><span class="si">{</span><span class="n">eid</span><span class="si">}</span><span class="s2"> no existe&quot;</span><span class="p">)</span>
+
+                    <span class="n">oe</span> <span class="o">=</span> <span class="n">OrdenEmpleado</span><span class="p">(</span><span class="n">orden_id</span><span class="o">=</span><span class="n">orden</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">empleado_id</span><span class="o">=</span><span class="n">eid</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">oe</span><span class="p">)</span>
+
+            <span class="c1"># commit everything</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+            <span class="c1"># refresh to load relationships</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">refresh</span><span class="p">(</span><span class="n">orden</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">orden</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+            <span class="k">raise</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_all</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Obtiene todas las órdenes.</span>
+
+<span class="sd">        :returns: Lista de instancias Orden.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Orden</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Obtiene una orden por su identificador.</span>
+
+<span class="sd">        :param id: Identificador de la orden.</span>
+<span class="sd">        :returns: Instancia Orden o None si no existe.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Orden</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Orden</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="nb">id</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Elimina una orden.</span>
+
+<span class="sd">        :param id: Identificador de la orden a eliminar.</span>
+<span class="sd">        :returns: True si se eliminó, False si no existe.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">orden</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_by_id</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">orden</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">orden</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_by_fecha</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fecha</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Obtiene órdenes por fecha.</span>
+
+<span class="sd">        :param fecha: Fecha de búsqueda.</span>
+<span class="sd">        :returns: Lista de órdenes de esa fecha.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Orden</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">cast</span><span class="p">(</span><span class="n">Orden</span><span class="o">.</span><span class="n">fecha</span><span class="p">,</span> <span class="n">Date</span><span class="p">)</span> <span class="o">==</span> <span class="n">fecha</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+<div class="viewcode-block" id="OrdenRepository.create">
+<a class="viewcode-back" href="../../modules/repositories.html#repositories.orden_repo.OrdenRepository.create">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">garantia</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estadoPago</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">precio</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">fecha</span><span class="p">):</span>
+        <span class="n">orden</span> <span class="o">=</span> <span class="n">Orden</span><span class="p">(</span><span class="n">garantia</span><span class="o">=</span><span class="n">garantia</span><span class="p">,</span> <span class="n">estadoPago</span><span class="o">=</span><span class="n">estadoPago</span><span class="p">,</span> <span class="n">precio</span><span class="o">=</span><span class="n">precio</span><span class="p">,</span> <span class="n">fecha</span><span class="o">=</span><span class="n">fecha</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">orden</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">refresh</span><span class="p">(</span><span class="n">orden</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">orden</span></div>
+
+
+<div class="viewcode-block" id="OrdenRepository.create_with_services">
+<a class="viewcode-back" href="../../modules/repositories.html#repositories.orden_repo.OrdenRepository.create_with_services">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_with_services</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">garantia</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estadoPago</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">precio</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">fecha</span><span class="p">,</span> <span class="n">servicios</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">],</span> <span class="n">empleados</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="n">orden</span> <span class="o">=</span> <span class="n">Orden</span><span class="p">(</span><span class="n">garantia</span><span class="o">=</span><span class="n">garantia</span><span class="p">,</span> <span class="n">estadoPago</span><span class="o">=</span><span class="n">estadoPago</span><span class="p">,</span> <span class="n">precio</span><span class="o">=</span><span class="n">precio</span><span class="p">,</span> <span class="n">fecha</span><span class="o">=</span><span class="n">fecha</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">orden</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># flush to get orden.id without committing</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">servicios</span><span class="p">:</span>
+                <span class="n">sid</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;servicio_id&quot;</span><span class="p">)</span>
+                <span class="n">precio_servicio</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;precio_servicio&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">sid</span> <span class="ow">or</span> <span class="n">precio_servicio</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Servicio o precio_servicio inválido&quot;</span><span class="p">)</span>
+
+                <span class="n">servicio</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Servicio</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Servicio</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">sid</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">servicio</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Servicio con id </span><span class="si">{</span><span class="n">sid</span><span class="si">}</span><span class="s2"> no existe&quot;</span><span class="p">)</span>
+
+                <span class="c1"># create relation orden-servicio</span>
+                <span class="n">os</span> <span class="o">=</span> <span class="n">OrdenServicio</span><span class="p">(</span><span class="n">orden_id</span><span class="o">=</span><span class="n">orden</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">servicio_id</span><span class="o">=</span><span class="n">sid</span><span class="p">,</span> <span class="n">precio_servicio</span><span class="o">=</span><span class="n">precio_servicio</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">os</span><span class="p">)</span>
+
+            <span class="c1"># asociar empleados si vienen</span>
+            <span class="k">if</span> <span class="n">empleados</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">empleados</span><span class="p">:</span>
+                    <span class="n">eid</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;empleado_id&quot;</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">eid</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;empleado_id inválido&quot;</span><span class="p">)</span>
+                    <span class="n">empleado</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Empleado</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Empleado</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">eid</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">empleado</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Empleado con id </span><span class="si">{</span><span class="n">eid</span><span class="si">}</span><span class="s2"> no existe&quot;</span><span class="p">)</span>
+
+                    <span class="n">oe</span> <span class="o">=</span> <span class="n">OrdenEmpleado</span><span class="p">(</span><span class="n">orden_id</span><span class="o">=</span><span class="n">orden</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">empleado_id</span><span class="o">=</span><span class="n">eid</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">oe</span><span class="p">)</span>
+
+            <span class="c1"># commit everything</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+            <span class="c1"># refresh to load relationships</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">refresh</span><span class="p">(</span><span class="n">orden</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">orden</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+            <span class="k">raise</span></div>
+
+
+<div class="viewcode-block" id="OrdenRepository.get_all">
+<a class="viewcode-back" href="../../modules/repositories.html#repositories.orden_repo.OrdenRepository.get_all">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_all</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Orden</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="OrdenRepository.get_by_id">
+<a class="viewcode-back" href="../../modules/repositories.html#repositories.orden_repo.OrdenRepository.get_by_id">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Orden</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Orden</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="nb">id</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="OrdenRepository.delete">
+<a class="viewcode-back" href="../../modules/repositories.html#repositories.orden_repo.OrdenRepository.delete">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">orden</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_by_id</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">orden</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">orden</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="OrdenRepository.get_by_fecha">
+<a class="viewcode-back" href="../../modules/repositories.html#repositories.orden_repo.OrdenRepository.get_by_fecha">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_by_fecha</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fecha</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Orden</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">cast</span><span class="p">(</span><span class="n">Orden</span><span class="o">.</span><span class="n">fecha</span><span class="p">,</span> <span class="n">Date</span><span class="p">)</span> <span class="o">==</span> <span class="n">fecha</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, ESIS-DevTeam.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
