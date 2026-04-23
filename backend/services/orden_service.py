@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 from repositories.orden_repo import OrdenRepository
 from schemas.orden_schema import OrdenCreate
 from fastapi import HTTPException
+from db.models.orden import Orden
 
 class OrdenService:
     
@@ -9,6 +10,9 @@ class OrdenService:
         self.repo = OrdenRepository(db)
 
     def create_orden(self, data: OrdenCreate):
+        # Mover validación de precio al modelo
+        Orden.validate_precio(float(data.precio))
+
         servicios = getattr(data, "servicios", None)
         empleados = getattr(data, "empleados", None)
 
