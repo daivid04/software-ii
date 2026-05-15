@@ -4,6 +4,7 @@ from sqlalchemy.orm import relationship
 
 class OrdenServicio(Base):
     __tablename__ = "orden_servicio"
+    __table_args__ = {'extend_existing': True}
 
     id = Column(Integer, primary_key=True)
     orden_id = Column(Integer, ForeignKey("ordenes.id"), nullable=False)

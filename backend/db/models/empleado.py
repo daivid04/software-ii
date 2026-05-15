@@ -4,6 +4,7 @@ from sqlalchemy.orm import relationship
 
 class Empleado(Base):
     __tablename__ = "empleados"
+    __table_args__ = {'extend_existing': True}
 
     id = Column(Integer, primary_key=True)
     nombres = Column(String, nullable=False, unique=True)

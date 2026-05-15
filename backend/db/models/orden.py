@@ -6,6 +6,7 @@ from core.value_objects import Precio, EstadoPago, Garantia
 
 class Orden(Base):
     __tablename__ = "ordenes"
+    __table_args__ = {'extend_existing': True}
 
     id = Column(Integer, primary_key=True)
     garantia = Column(Integer, nullable=False)

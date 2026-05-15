@@ -42,6 +42,8 @@ class EstadoPago:
     ESTADOS_VALIDOS = {"pendiente", "parcial", "completado"}
     
     def __init__(self, value: str):
+        if not isinstance(value, str):
+            raise TypeError("Estado de pago debe ser una cadena")
         if value.lower() not in self.ESTADOS_VALIDOS:
             raise ValueError(f"Estado de pago inválido. Debe ser uno de: {', '.join(self.ESTADOS_VALIDOS)}")
         self._value: Final[str] = value.lower()
