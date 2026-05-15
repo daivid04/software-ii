@@ -7,6 +7,7 @@ from .email import Email
 from .especialidad import Especialidad
 from .codigo_barras import CodigoBarra
 from .estado import Estado
+from .cantidad import Cantidad
 
 __all__ = [
     "Precio",
@@ -16,5 +17,6 @@ __all__ = [
     "Email",
     "Especialidad",
     "CodigoBarra",
-    "Estado"
+    "Estado",
+    "Cantidad"
 ]
