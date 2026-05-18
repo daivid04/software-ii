@@ -201,6 +201,8 @@ async function handleDeleteService(serviceId) {
 }
 
 // ========== ADJUNTAR EVENTOS A LA LISTA - EVENT DELEGATION ==========
+// Event delegation pattern: single listener on container instead of O(n) listeners on each button
+// Improves performance, simplifies event management, and works with dynamically added elements
 function attachServiceEvents() {
   const serviceList = document.querySelector('.service-list');
   if (!serviceList) return;
