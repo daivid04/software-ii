@@ -82,6 +82,8 @@ function setupSearch() {
 }
 
 // ========== MODALES - USANDO MODALFACTORY ==========
+// ModalFactory consolidates 150+ lines of duplicate modal boilerplate
+// into reusable, configurable modal creation methods (form, confirm, alert)
 function openAddServiceModal() {
   ModalFactory.createFormModal({
     title: 'Agregar servicio',
