@@ -107,7 +107,7 @@ def create_producto(
     Requiere token JWT en header: `Authorization: Bearer <token>`
     """
     try:
-        return service.create_producto(data)
+        return service.registrar_nuevo_producto(data)
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
 
@@ -168,18 +168,18 @@ def list_productos(
     **Autenticación:
     No requiere autenticación (público)
     """
-    return service.list_productos()
+    return service.obtener_catalogo_completo()
 
 
-@router.get("/barcode/{codBarras}", response_model=ProductoResponse, summary="Buscar producto por código de barras")
-def get_producto_by_barcode(codBarras: str, service: ProductoService = Depends(get_producto_service)):
+@router.get("/codigo-barras/{codigo_barras}", response_model=ProductoResponse, summary="Buscar producto por código de barras")
+def escanear_codigo_barras(codigo_barras: str, service: ProductoService = Depends(get_producto_service)):
     """
-    Busca un producto usando su código de barras.
+    Escanea un código de barras para obtener el producto.
     
     Endpoint útil para lectores de código de barras en el punto de venta.
     
     **Parámetros:**
-    - **codBarras** (path): Código de barras del producto (ej: "T-P001-FIL")
+    - **codigo_barras** (path): Código de barras del producto (ej: "T-P001-FIL")
     
     **Response EXITOSA:
     ```json
@@ -191,8 +191,8 @@ def get_producto_by_barcode(codBarras: str, service: ProductoService = Depends(g
         "precio_compra": 150.00,
         "precio_venta": 250.00,
         "stock": 25,
-        "imagen_url": "https://example.com/filtro.jpg",
-        "cod_barras": "T-P001-FIL",
+        "img": "https://example.com/filtro.jpg",
+        "codigo_barras": "T-P001-FIL",
         "tipo": "producto"
     }
     ```
@@ -208,7 +208,7 @@ def get_producto_by_barcode(codBarras: str, service: ProductoService = Depends(g
     **Autenticación:
     No requiere autenticación (público)
     """
-    producto = service.get_by_barcode(codBarras)
+    producto = service.escanear_codigo_barras(codigo_barras)
     if not producto:
         raise HTTPException(status_code=404, detail="Producto no encontrado")
     return producto
@@ -249,20 +249,20 @@ def get_producto(id: int, service: ProductoService = Depends(get_producto_servic
     **Autenticación:
     No requiere autenticación (público)
     """
-    producto = service.get_by_id(id)
+    producto = service.consultar_producto_disponible(id)
     if not producto:
         raise HTTPException(status_code=404, detail="Producto no encontrado")
     return producto
 
 
-@router.put("/{id}", response_model=ProductoResponse, dependencies=[Depends(require_supabase_user)], summary="Actualizar producto")
-def update_producto(
+@router.put("/{id}", response_model=ProductoResponse, dependencies=[Depends(require_supabase_user)], summary="Actualizar inventario del producto")
+def actualizar_stock_y_precios(
     id: int,
     data: ProductoCreate,
     service: ProductoService = Depends(get_producto_service)
 ):
     """
-    Actualiza la información de un producto existente.
+    Actualiza el stock y precios de un producto.
     
     **Parámetros:**
     - id: ID del producto a actualizar
@@ -278,24 +278,24 @@ def update_producto(
     **Autenticación:**
     Requiere token JWT en header: `Authorization: Bearer <token>`
     """
-    producto = service.update_producto(id, data)
+    producto = service.actualizar_stock_y_precios(id, data)
     if not producto:
         raise HTTPException(status_code=404, detail="Producto no encontrado")
     return producto
 
 
-@router.delete("/{id}", dependencies=[Depends(require_supabase_user)], summary="Eliminar producto")
-def delete_producto(id: int, service: ProductoService = Depends(get_producto_service)):
+@router.delete("/{id}", dependencies=[Depends(require_supabase_user)], summary="Dar de baja producto")
+def dar_de_baja_producto(id: int, service: ProductoService = Depends(get_producto_service)):
     """
-    Elimina un producto del sistema.
+    Da de baja un producto del sistema.
     
     **Parámetros:**
-    - id: ID del producto a eliminar
+    - id: ID del producto a dar de baja
     
     **Response exitosa:**
     ```json
     {
-        "detail": "Producto eliminado"
+        "detail": "Producto dado de baja"
     }
     ```
     
@@ -307,9 +307,9 @@ def delete_producto(id: int, service: ProductoService = Depends(get_producto_ser
     Requiere token JWT en header: `Authorization: Bearer <token>`
     """
     try:
-        producto = service.delete_producto(id)
+        producto = service.dar_de_baja_producto(id)
         if not producto:
             raise HTTPException(status_code=404, detail="Producto no encontrado")
-        return {"detail": "Producto eliminado"}
+        return {"detail": "Producto dado de baja"}
     except ValueError as e:
         raise HTTPException(status_code=409, detail=str(e))

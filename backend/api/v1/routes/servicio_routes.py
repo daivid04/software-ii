@@ -18,7 +18,7 @@ def get_servicio_service(db: Session = Depends(get_db)) -> ServicioService:
     return ServicioService(db)
 
 @router.post("/", response_model=ServicioResponse, dependencies=[Depends(require_supabase_user)], summary="Crear nuevo servicio")
-def create_servicio(
+def registrar_nuevo_servicio(
     data: ServicioCreate,
     service: ServicioService = Depends(get_servicio_service)
 ):
@@ -55,12 +55,12 @@ def create_servicio(
     Requiere token JWT en header: `Authorization: Bearer <token>`
     """
     try:
-        return service.create_servicio(data)
+        return service.registrar_nuevo_servicio(data)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
 @router.get("/", response_model=list[ServicioResponse], summary="Listar todos los servicios")
-def list_servicios(
+def obtener_catalogo_completo(
     service: ServicioService = Depends(get_servicio_service)
 ):
     """
@@ -89,10 +89,10 @@ def list_servicios(
     **Autenticación:**
     No requiere autenticación (público)
     """
-    return service.list_servicios()
+    return service.obtener_catalogo_completo()
 
 @router.get("/{id}", response_model=ServicioResponse, summary="Obtener servicio por ID")
-def get_servicio(id: int, service: ServicioService = Depends(get_servicio_service)):
+def consultar_servicio_disponible(id: int, service: ServicioService = Depends(get_servicio_service)):
     """
     Obtiene un servicio específico por su ID.
     
@@ -120,13 +120,13 @@ def get_servicio(id: int, service: ServicioService = Depends(get_servicio_servic
     **Autenticación:**
     No requiere autenticación (público)
     """
-    servicio = service.get_by_id(id)
+    servicio = service.consultar_servicio_disponible(id)
     if not servicio:
         raise HTTPException(status_code=404, detail="Servicio no encontrado")
     return servicio
 
 @router.put("/{id}", response_model=ServicioResponse, dependencies=[Depends(require_supabase_user)], summary="Actualizar servicio")
-def update_servicio(
+def actualizar_informacion_servicio(
     id: int,
     data: ServicioCreate,
     service: ServicioService = Depends(get_servicio_service)
@@ -149,7 +149,7 @@ def update_servicio(
     Requiere token JWT en header: `Authorization: Bearer <token>`
     """
     try:
-        servicio = service.update_servicio(id, data)
+        servicio = service.actualizar_informacion_servicio(id, data)
         if not servicio:
             raise HTTPException(status_code=404, detail="Servicio no encontrado")
         return servicio
@@ -157,7 +157,7 @@ def update_servicio(
         raise HTTPException(status_code=400, detail=str(e))
 
 @router.delete("/{id}", dependencies=[Depends(require_supabase_user)], summary="Eliminar servicio", description="Elimina un servicio del sistema.")
-def delete_servicio(id: int, service: ServicioService = Depends(get_servicio_service)):
+def dar_de_baja_servicio(id: int, service: ServicioService = Depends(get_servicio_service)):
     """
     Elimina un servicio por su ID.
 
@@ -172,7 +172,7 @@ def delete_servicio(id: int, service: ServicioService = Depends(get_servicio_ser
         HTTPException(409): Si no se puede eliminar (ej. tiene dependencias).
     """
     try:
-        servicio = service.delete_servicio(id)
+        servicio = service.dar_de_baja_servicio(id)
         if not servicio:
             raise HTTPException(status_code=404, detail="Servicio no encontrado")
         return {"detail": "Servicio eliminado"}

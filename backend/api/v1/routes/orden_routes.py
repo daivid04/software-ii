@@ -18,8 +18,8 @@ def get_db():
 def get_orden_service(db: Session = Depends(get_db)) -> OrdenService:
     return OrdenService(db)
 
-@router.post("/", response_model=OrdenResponse, dependencies=[Depends(require_supabase_user)], summary="Crear nueva orden de trabajo")
-def create_orden(
+@router.post("/", response_model=OrdenResponse, dependencies=[Depends(require_supabase_user)], summary="Registrar nueva orden de trabajo")
+def registrar_nueva_orden(
     data: OrdenCreate,
     service: OrdenService = Depends(get_orden_service)
 ):
@@ -144,10 +144,10 @@ def create_orden(
     **Autenticación:
     Requiere token JWT en header: `Authorization: Bearer <token>`
     """
-    return service.create_orden(data)
+    return service.registrar_nueva_orden(data)
 
-@router.get("/", response_model=list[OrdenResponse], summary="Listar todas las órdenes de trabajo")
-def list_ordens(
+@router.get("/", response_model=list[OrdenResponse], summary="Obtener catálogo completo de órdenes")
+def obtener_catalogo_completo(
     service: OrdenService = Depends(get_orden_service)
 ):
     """
@@ -199,10 +199,10 @@ def list_ordens(
     **Autenticación:
     No requiere autenticación (público)
     """
-    return service.list_ordens()
+    return service.obtener_catalogo_completo()
 
-@router.get("/{id}", response_model=OrdenResponse, summary="Obtener orden por ID", description="Busca una orden específica usando su ID único.")
-def get_orden_by_id(id: int, service: OrdenService = Depends(get_orden_service)):
+@router.get("/{id}", response_model=OrdenResponse, summary="Consultar orden por ID", description="Busca una orden específica usando su ID único.")
+def consultar_orden(id: int, service: OrdenService = Depends(get_orden_service)):
     """
     Obtiene los detalles de una orden por su ID.
 
@@ -215,13 +215,13 @@ def get_orden_by_id(id: int, service: OrdenService = Depends(get_orden_service))
     Raises:
         HTTPException(404): Si la orden no existe.
     """
-    orden = service.get_by_id(id)
+    orden = service.consultar_orden(id)
     if not orden:
         raise HTTPException(status_code=404, detail="Orden no encontrada")
     return orden
 
-@router.get("/fecha/{fecha}", response_model=list[OrdenResponse], summary="Buscar órdenes por fecha", description="Busca todas las órdenes registradas en una fecha específica.")
-def get_ordens_by_fecha(fecha: date, service: OrdenService = Depends(get_orden_service)):
+@router.get("/fecha/{fecha}", response_model=list[OrdenResponse], summary="Consultar órdenes por fecha", description="Busca todas las órdenes registradas en una fecha específica.")
+def consultar_ordenes_por_fecha(fecha: date, service: OrdenService = Depends(get_orden_service)):
     """
     Busca órdenes por fecha.
 
@@ -231,10 +231,10 @@ def get_ordens_by_fecha(fecha: date, service: OrdenService = Depends(get_orden_s
     Returns:
         list[OrdenResponse]: Lista de órdenes de esa fecha.
     """
-    return service.get_by_fecha(fecha)
+    return service.consultar_ordenes_por_fecha(fecha)
 
-@router.delete("/{id}", dependencies=[Depends(require_supabase_user)], summary="Eliminar orden", description="Elimina una orden del sistema.")
-def delete_orden(id: int, service: OrdenService = Depends(get_orden_service)):
+@router.delete("/{id}", dependencies=[Depends(require_supabase_user)], summary="Dar de baja orden", description="Da de baja una orden del sistema.")
+def dar_de_baja_orden(id: int, service: OrdenService = Depends(get_orden_service)):
     """
     Elimina una orden por su ID.
 
@@ -247,7 +247,7 @@ def delete_orden(id: int, service: OrdenService = Depends(get_orden_service)):
     Raises:
         HTTPException(404): Si la orden no existe.
     """
-    result = service.delete_orden(id)
+    result = service.dar_de_baja_orden(id)
     if not result:
         raise HTTPException(status_code=404, detail="Orden no encontrada")
     return {"detail": "Orden eliminada"}

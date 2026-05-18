@@ -380,9 +380,9 @@ function setupFormSubmit(form, autopartCheckbox, type = 'add', productId = null)
       marca: sanitizeText(rawMarca),
       categoria: sanitizeText(rawCategoria),
       stock: parseInt(form['product-stock'].value, 10) || 0,
-      stockMin: parseInt(form['product-min-stock'].value, 10) || 0,
-      precioCompra: parseFloat(form['product-purchase-price'].value) || 0,
-      precioVenta: parseFloat(form['product-selling-price'].value) || 0,
+      stock_minimo: parseInt(form['product-min-stock'].value, 10) || 0,
+      precio_compra: parseFloat(form['product-purchase-price'].value) || 0,
+      precio_venta: parseFloat(form['product-selling-price'].value) || 0,
       descripcion: sanitizeText(rawDescripcion, { allowNewLines: true }),
     };
 
@@ -402,7 +402,7 @@ function setupFormSubmit(form, autopartCheckbox, type = 'add', productId = null)
         const barcode = generateBarcode(formData.categoria, lastId, existingBarcodes);
 
         // Paso 4: Asignar al producto
-        formData.codBarras = barcode;
+        formData.codigo_barras = barcode;
       } catch (error) {
         showNotification('Error al generar código de barras único', 'error');
         return; // Detener el envío si falla la generación
@@ -629,21 +629,21 @@ async function setupBarcodeDisplay(productId) {
     }
 
     const producto = await fetchFromApi('productos', productId);
-    if (!producto || !producto.codBarras) return;
+    if (!producto || !producto.codigo_barras) return;
 
 
-    if (!isValidBarcode(producto.codBarras)) {
+    if (!isValidBarcode(producto.codigo_barras)) {
       return;
     }
 
-    generateBarcodeImage('product-barcode', producto.codBarras, producto.nombre);
+    generateBarcodeImage('product-barcode', producto.codigo_barras, producto.nombre);
 
     const container = document.getElementById('barcode-container');
     if (container) {
       container.addEventListener('click', async () => {
-        const downloaded = await downloadBarcodeImage(producto.codBarras, producto.nombre);
+        const downloaded = await downloadBarcodeImage(producto.codigo_barras, producto.nombre);
         if (downloaded) {
-          showNotification(`Código descargado: ${producto.codBarras}`, 'success');
+          showNotification(`Código descargado: ${producto.codigo_barras}`, 'success');
         }
       });
     }

@@ -234,7 +234,7 @@ async function processScannedProduct(barCode, reader) {
     // Llenar datos
     reader.value = producto.nombre;
     reader.dataset.selectedId = producto.id;
-    reader.dataset.precio = producto.precioVenta;
+    reader.dataset.precio = producto.precio_venta;
     reader.dataset.stock = producto.stock;
 
     // Asegurar que el dropdown esté cerrado (ya que es una selección automática)
@@ -259,7 +259,7 @@ async function processScannedProduct(barCode, reader) {
 function displayProductos(productos) {
   const dropdown = document.getElementById('producto-dropdown');
   const itemsHTML = productos.map(p => `
-    <div class="dropdown-item" data-id="${escapeHtml(p.id)}" data-precio="${escapeHtml(p.precioVenta)}" data-stock="${escapeHtml(p.stock)}" data-nombre="${escapeHtml(p.nombre)}">
+    <div class="dropdown-item" data-id="${escapeHtml(p.id)}" data-precio="${escapeHtml(p.precio_venta)}" data-stock="${escapeHtml(p.stock)}" data-nombre="${escapeHtml(p.nombre)}">
       ${escapeHtml(p.nombre)} ${p.marca ? `- ${escapeHtml(p.marca)}` : ''} (Stock: ${escapeHtml(p.stock)})
     </div>
   `).join('');

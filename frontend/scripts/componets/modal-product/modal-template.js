@@ -26,9 +26,9 @@ export async function generateModalHTML(type = 'add', id = null) {
     marca: '',
     categoria: '',
     stock: '',
-    stockMin: '',
-    precioCompra: '',
-    precioVenta: '',
+    stock_minimo: '',
+    precio_compra: '',
+    precio_venta: '',
     descripcion: '',
     modelo: '',
     anio: '',
@@ -85,20 +85,20 @@ export async function generateModalHTML(type = 'add', id = null) {
               <div class="form-group">
                   <label for="product-min-stock" class="form-label">Stock mínimo</label>
                   <input type="number" id="product-min-stock" name="product-min-stock" 
-                         placeholder="${isEdit || isView ? data.stockMin : 'Ej: 5'}"
-                         value="${data.stockMin}" ${required} min="0" ${readonly}>
+                         placeholder="${isEdit || isView ? data.stock_minimo : 'Ej: 5'}"
+                         value="${data.stock_minimo}" ${required} min="0" ${readonly}>
               </div>
               <div class="form-group">
                   <label for="product-purchase-price" class="form-label">Precio de compra</label>
                   <input type="number" id="product-purchase-price" name="product-purchase-price" 
-                         step="0.01" placeholder="${isEdit || isView ? data.precioCompra : 'Ej: 150.00'}"
-                         value="${data.precioCompra}" ${required} min="0" ${readonly}>
+                         step="0.01" placeholder="${isEdit || isView ? data.precio_compra : 'Ej: 150.00'}"
+                         value="${data.precio_compra}" ${required} min="0" ${readonly}>
               </div>
               <div class="form-group">
                   <label for="product-selling-price" class="form-label">Precio de venta</label>
                   <input type="number" id="product-selling-price" name="product-selling-price" 
-                         step="0.01" placeholder="${isEdit || isView ? data.precioVenta : 'Ej: 200.00'}"
-                         value="${data.precioVenta}" ${required} min="0" ${readonly}>
+                         step="0.01" placeholder="${isEdit || isView ? data.precio_venta : 'Ej: 200.00'}"
+                         value="${data.precio_venta}" ${required} min="0" ${readonly}>
               </div>
 
               <div class="form-group">
@@ -154,7 +154,7 @@ export async function generateModalHTML(type = 'add', id = null) {
               </div>
               
               <! -- Código de barras -->
-              ${(isEdit || isView) && data.codBarras ? `
+              ${(isEdit || isView) && data.codigo_barras ? `
               <div class="form-group barcode-group">
                   <label class="form-label">Código de barras</label>
                   <div class="barcode-container" id="barcode-container" 

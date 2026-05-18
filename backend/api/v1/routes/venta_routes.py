@@ -25,7 +25,7 @@ def get_venta_service(db: Session = Depends(get_db)) -> VentaService:
     return VentaService(db)
 
 @router.post("/", response_model=VentaResponse, dependencies=[Depends(require_supabase_user)], summary="Registrar nueva venta")
-def create_venta(
+def registrar_nueva_venta(
     data: VentaCreate,
     service: VentaService = Depends(get_venta_service)
 ):
@@ -134,11 +134,11 @@ def create_venta(
     **Autenticación:
     Requiere token JWT en header: `Authorization: Bearer <token>`
     """
-    return service.create_venta(data)
+    return service.registrar_nueva_venta(data)
 
 
 @router.get("/", response_model=list[VentaResponse], summary="Listar todas las ventas")
-def list_ventas(
+def obtener_registro_completo_ventas(
     service: VentaService = Depends(get_venta_service)
 ):
     """
@@ -188,11 +188,11 @@ def list_ventas(
     **Autenticación:
     No requiere autenticación (público)
     """
-    return service.list_ventas()
+    return service.obtener_registro_completo_ventas()
 
 
 @router.get("/{id}", response_model=VentaResponse, summary="Obtener venta por ID", description="Busca una venta específica usando su ID único.")
-def get_venta_by_id(id: int, service: VentaService = Depends(get_venta_service)):
+def consultar_venta(id: int, service: VentaService = Depends(get_venta_service)):
     """
     Obtiene los detalles de una venta por su ID.
 
@@ -205,14 +205,14 @@ def get_venta_by_id(id: int, service: VentaService = Depends(get_venta_service))
     Raises:
         HTTPException(404): Si la venta no existe.
     """
-    venta = service.get_by_id(id)
+    venta = service.consultar_venta(id)
     if not venta:
         raise HTTPException(status_code=404, detail="Venta no encontrada")
     return venta
 
 
 @router.get("/fecha/{fecha}", response_model=list[VentaResponse], summary="Buscar ventas por fecha", description="Busca todas las ventas registradas en una fecha específica.")
-def get_ventas_by_fecha(fecha: datetime, service: VentaService = Depends(get_venta_service)):
+def consultar_ventas_por_fecha(fecha: datetime, service: VentaService = Depends(get_venta_service)):
     """
     Busca ventas por fecha.
 
@@ -222,11 +222,11 @@ def get_ventas_by_fecha(fecha: datetime, service: VentaService = Depends(get_ven
     Returns:
         list[VentaResponse]: Lista de ventas de esa fecha.
     """
-    return service.get_by_fecha(fecha)
+    return service.consultar_ventas_por_fecha(fecha)
 
 
 @router.delete("/{id}", dependencies=[Depends(require_supabase_user)], summary="Eliminar venta", description="Elimina una venta del sistema.")
-def delete_venta(id: int, service: VentaService = Depends(get_venta_service)):
+def dar_de_baja_venta(id: int, service: VentaService = Depends(get_venta_service)):
     """
     Elimina una venta por su ID.
 
@@ -239,7 +239,7 @@ def delete_venta(id: int, service: VentaService = Depends(get_venta_service)):
     Raises:
         HTTPException(404): Si la venta no existe.
     """
-    result = service.delete_venta(id)
+    result = service.dar_de_baja_venta(id)
     if not result:
         raise HTTPException(status_code=404, detail="Venta no encontrada")
     return {"detail": "Venta eliminada"}
