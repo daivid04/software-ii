@@ -12,7 +12,7 @@
 
 | Intento de registro de atención sin especificar un servicio válido | `registrar_orden_servicio(servicio_id=None)` → validación de contrato | **Caja Negra**: Validación de campo obligatorio |
 
-## 🚀 Cómo ejecutar los tests con Behave
+## Cómo ejecutar los tests con Behave
 
 ### Prerequisitos
 ```bash
