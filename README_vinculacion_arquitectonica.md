@@ -1,18 +1,13 @@
 | Nombre de Escenario Gherkin | Puerto Primario / Caso de Uso | Técnica SWEBOK Aplicada |
 |-----------------------------|-------------------------------|-------------------------|
 | Registro exitoso dentro de la capacidad operativa | `registrar_producto(marca, modelo, año)` → ProductoService.create_producto() | **Caja Blanca**: Partición de Equivalencia |
-
 | El registro está bloqueado debido al límite máximo de capacidad | `registrar_producto(marca, modelo, año)` → validación de límite | **Caja Blanca**: Valores Límite |
-
 | Identificación exitosa de un producto para su gestión o venta | `buscar_producto_por_barcode(codigo_barras)` → ProductoService.get_by_barcode() | **Caja Blanca**: Partición de Equivalencia |
-
 | Intento de escaneo de un código inexistente o lectura defectuosa | `buscar_producto_por_barcode(codigo_barras)` → validación de formato/existencia | **Caja Negra**: Manejo de excepciones |
-
 | Autocompletado y personalización de la descripción de un servicio | `registrar_orden_servicio(servicio_id, descripcion_adicional)` → OrdenService.create() | **Caja Blanca**: Partición de Equivalencia |
-
 | Intento de registro de atención sin especificar un servicio válido | `registrar_orden_servicio(servicio_id=None)` → validación de contrato | **Caja Negra**: Validación de campo obligatorio |
 
-## Cómo ejecutar los tests con Behave
+##  Cómo ejecutar los tests con Behave
 
 ### Prerequisitos
 ```bash
