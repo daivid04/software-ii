@@ -7,3 +7,5 @@ sqlalchemy
 python-multipart
 psycopg2-binary
 httpx
+behave
+python-dotenv
