@@ -1,4 +1,5 @@
 // Cargar componentes dinámicamente
+// Cargar componentes dinámicamente
 import { loadComponent } from './utils/component-loader.js';
 import { resetBodyDefaults } from './utils/state-manager.js';
 import { OrdenController } from './modules/orden-controller.js';

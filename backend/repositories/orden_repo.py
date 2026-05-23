@@ -8,14 +8,14 @@ class OrdenRepository:
     def __init__(self, db: Session):
         self.db = db
 
-    def create(self, garantia: int, estadoPago: str, precio: int, fecha):
+    def registrar_orden(self, garantia: int, estadoPago: str, precio: int, fecha):
         orden = Orden(garantia=garantia, estadoPago=estadoPago, precio=precio, fecha=fecha)
         self.db.add(orden)
         self.db.commit()
         self.db.refresh(orden)
         return orden
 
-    def create_with_services(self, garantia: int, estadoPago: str, precio: int, fecha, servicios: list[dict], empleados: list[dict] | None = None):
+    def registrar_orden_con_servicios(self, garantia: int, estadoPago: str, precio: int, fecha, servicios: list[dict], empleados: list[dict] | None = None):
         orden = Orden(garantia=garantia, estadoPago=estadoPago, precio=precio, fecha=fecha)
         self.db.add(orden)
         try:
@@ -58,21 +58,21 @@ class OrdenRepository:
             self.db.rollback()
             raise
 
-    def get_all(self):
+    def listar_catalogo_ordenes(self):
         return self.db.query(Orden).all()
 
-    def get_by_id(self, id: int):
+    def consultar_orden(self, id: int):
         return self.db.query(Orden).filter(Orden.id == id).first()
 
-    def delete(self, id: int):
-        orden = self.get_by_id(id)
+    def dar_de_baja_orden(self, id: int):
+        orden = self.consultar_orden(id)
         if orden:
             self.db.delete(orden)
             self.db.commit()
             return True
         return False
 
-    def get_by_fecha(self, fecha):
+    def consultar_ordenes_por_fecha(self, fecha):
         return self.db.query(Orden).filter(
             cast(Orden.fecha, Date) == fecha
         ).all()

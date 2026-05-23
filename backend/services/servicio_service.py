@@ -8,54 +8,58 @@ class ServicioService:
     def __init__(self, db: Session):
         self.repo = ServicioRepository(db)
     
-    def create_servicio(self, data: ServicioCreate):
-        if self.repo.get_by_name(data.nombre):
+    def registrar_nuevo_servicio(self, data: ServicioCreate):
+        """Registra un nuevo servicio en el sistema"""
+        if self.repo.buscar_servicio_por_nombre(data.nombre):
             raise ValueError("Ya existe un servicio con ese nombre")
-        servicio_data = data
-        servicio = self.repo.create(servicio_data)
+        servicio = self.repo.registrar_servicio(data)
         
         # Invalidar caché
         cache.invalidate_pattern('servicios')
         
         return servicio
     
-    def list_servicios(self):
+    def obtener_catalogo_completo(self):
+        """Obtiene el catálogo completo de servicios"""
         # Intentar obtener del caché
         cached = cache.get('servicios_list')
         if cached is not None:
             return cached
         
         # Si no está en caché, obtener de la BD
-        servicios = self.repo.get_all()
+        servicios = self.repo.listar_catalogo_servicios()
         
         # Guardar en caché por 5 minutos
         cache.set('servicios_list', servicios, ttl_seconds=300)
         
         return servicios
     
-    def get_by_id(self, id: int):
+    def consultar_servicio_disponible(self, id: int):
+        """Consulta si un servicio está disponible"""
         cache_key = f'servicio_{id}'
         cached = cache.get(cache_key)
         if cached is not None:
             return cached
         
-        servicio = self.repo.get_by_id(id)
+        servicio = self.repo.consultar_servicio(id)
         
         if servicio:
             cache.set(cache_key, servicio, ttl_seconds=300)
         
         return servicio
     
-    def get_by_name(self, nombre: str):
-        return self.repo.get_by_name(nombre)
+    def buscar_servicio_por_nombre(self, nombre: str):
+        """Busca un servicio por nombre"""
+        return self.repo.buscar_servicio_por_nombre(nombre)
     
-    def update_servicio(self, id: int, data: ServicioCreate):
+    def actualizar_informacion_servicio(self, id: int, data: ServicioCreate):
+        """Actualiza la información de un servicio"""
         # Verificar si existe otro servicio con el mismo nombre
-        existing = self.repo.get_by_name(data.nombre)
+        existing = self.repo.buscar_servicio_por_nombre(data.nombre)
         if existing and existing.id != id:
             raise ValueError("Ya existe un servicio con ese nombre")
         
-        servicio = self.repo.update(id, data)
+        servicio = self.repo.actualizar_servicio(id, data)
         
         # Invalidar caché
         cache.delete(f'servicio_{id}')
@@ -63,9 +67,10 @@ class ServicioService:
         
         return servicio
     
-    def delete_servicio(self, id: int):
+    def dar_de_baja_servicio(self, id: int):
+        """Da de baja un servicio"""
         try:
-            result = self.repo.delete(id)
+            result = self.repo.dar_de_baja_servicio(id)
             
             # Invalidar caché
             cache.delete(f'servicio_{id}')

@@ -14,13 +14,13 @@ function formatCurrency(value) {
 
 export function generateProductCard(product) {
   const stock = Number(product?.stock ?? 0);
-  const stockMin = Number(product?.stockMin ?? 0);
+  const stockMin = Number(product?.stock_minimo ?? 0);
   const classStock = `product-stock ${stockMin > stock ? 'low-stock' : 'normal-stock'}`;
 
   const safeName = escapeHtml(product?.nombre);
   const safeDescription = escapeHtml(product?.descripcion || 'Sin descripción');
-  const safePurchasePrice = formatCurrency(product?.precioCompra);
-  const safeSellingPrice = formatCurrency(product?.precioVenta);
+  const safePurchasePrice = formatCurrency(product?.precio_compra);
+  const safeSellingPrice = formatCurrency(product?.precio_venta);
 
   return `
   <div class="product-item" data-product-id="${escapeHtml(product?.id)}">

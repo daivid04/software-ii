@@ -143,24 +143,24 @@ function validateNumbers(form, formData) {
   }
 
   // Validar stock mínimo
-  if (isNaN(formData.stockMin) || formData.stockMin < 0) {
+  if (isNaN(formData.stock_minimo) || formData.stock_minimo < 0) {
     validateField(form['product-min-stock'], "El stock mínimo debe ser un número positivo");
     isValid = false;
   }
 
   // Validar precios
-  if (isNaN(formData.precioCompra) || formData.precioCompra <= 0) {
+  if (isNaN(formData.precio_compra) || formData.precio_compra <= 0) {
     validateField(form['product-purchase-price'], "El precio de compra debe ser mayor a 0");
     isValid = false;
   }
 
-  if (isNaN(formData.precioVenta) || formData.precioVenta <= 0) {
+  if (isNaN(formData.precio_venta) || formData.precio_venta <= 0) {
     validateField(form['product-selling-price'], "El precio de venta debe ser mayor a 0");
     isValid = false;
   }
 
   // Validar lógica de precios
-  if (formData.precioVenta <= formData.precioCompra) {
+  if (formData.precio_venta <= formData.precio_compra) {
     validateField(form['product-selling-price'], "El precio de venta debe ser mayor al de compra");
     isValid = false;
   }

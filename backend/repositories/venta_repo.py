@@ -13,7 +13,8 @@ class VentaRepository:
     def __init__(self, db: Session):
         self.db = db
 
-    def create(self, fecha: datetime):
+    def registrar_venta(self, fecha: datetime):
+        """Registra una nueva venta simple sin productos"""
         # Backwards-compatible create (no products)
         venta = Venta(fecha=fecha)
         self.db.add(venta)
@@ -21,8 +22,8 @@ class VentaRepository:
         self.db.refresh(venta)
         return venta
 
-    def create_with_products(self, fecha: datetime, productos: list[dict]):
-
+    def registrar_venta_con_productos(self, fecha: datetime, productos: list[dict]):
+        """Registra una venta con múltiples productos y actualiza inventario"""
         venta = Venta(fecha=fecha)
         self.db.add(venta)
         try:
@@ -57,21 +58,25 @@ class VentaRepository:
             self.db.rollback()
             raise
 
-    def get_all(self):
+    def listar_registro_ventas(self):
+        """Lista todas las ventas registradas"""
         return self.db.query(Venta).all()
 
-    def get_by_id(self, id: int):
+    def consultar_venta(self, id: int):
+        """Consulta una venta por su ID"""
         return self.db.query(Venta).filter(Venta.id == id).first()
 
-    def delete(self, id: int):
-        venta = self.get_by_id(id)
+    def dar_de_baja_venta(self, id: int):
+        """Da de baja una venta del sistema"""
+        venta = self.consultar_venta(id)
         if venta:
             self.db.delete(venta)
             self.db.commit()
             return True
         return False
 
-    def get_by_fecha(self, fecha: datetime):
+    def consultar_ventas_por_fecha(self, fecha: datetime):
+        """Consulta ventas por fecha específica"""
         return self.db.query(Venta).filter(
             cast(Venta.fecha, Date) == fecha.date()
         ).all()

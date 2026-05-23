@@ -17,8 +17,8 @@ def get_db():
 def get_empleado_service(db: Session = Depends(get_db)) -> EmpleadoService:
     return EmpleadoService(db)
 
-@router.post("/", response_model=EmpleadoResponse, dependencies=[Depends(require_supabase_user)], summary="Crear nuevo empleado")
-def create_empleado(
+@router.post("/", response_model=EmpleadoResponse, dependencies=[Depends(require_supabase_user)], summary="Registrar nuevo empleado")
+def registrar_nuevo_empleado(
     data: EmpleadoCreate,
     service: EmpleadoService = Depends(get_empleado_service)
 ):
@@ -57,10 +57,10 @@ def create_empleado(
     **Autenticación:**
     Requiere token JWT en header: `Authorization: Bearer <token>`
     """
-    return service.create_empleado(data)
+    return service.registrar_nuevo_empleado(data)
 
-@router.get("/", response_model=list[EmpleadoResponse], summary="Listar todos los empleados")
-def list_empleados(
+@router.get("/", response_model=list[EmpleadoResponse], summary="Obtener catálogo completo de empleados")
+def obtener_catalogo_completo(
     service: EmpleadoService = Depends(get_empleado_service)
 ):
     """
@@ -89,12 +89,12 @@ def list_empleados(
     **Autenticación:**
     No requiere autenticación (público)
     """
-    return service.list_empleados()
+    return service.obtener_catalogo_completo()
 
-@router.get("/{id}", response_model=EmpleadoResponse, summary="Obtener empleado por ID")
-def get_empleado(id: int, service: EmpleadoService = Depends(get_empleado_service)):
+@router.get("/{id}", response_model=EmpleadoResponse, summary="Consultar empleado activo")
+def consultar_empleado_activo(id: int, service: EmpleadoService = Depends(get_empleado_service)):
     """
-    Obtiene un empleado específico por su ID.
+    Obtiene un empleado específico activo por su ID.
     
     **Parámetros:**
     - id: ID único del empleado
@@ -121,13 +121,13 @@ def get_empleado(id: int, service: EmpleadoService = Depends(get_empleado_servic
     **Autenticación:**
     No requiere autenticación (público)
     """
-    empleado = service.get_by_id(id)
+    empleado = service.consultar_empleado_activo(id)
     if not empleado:
         raise HTTPException(status_code=404, detail="Empleado no encontrado")
     return empleado
 
-@router.put("/{id}", response_model=EmpleadoResponse, dependencies=[Depends(require_supabase_user)], summary="Actualizar empleado")
-def update_empleado(
+@router.put("/{id}", response_model=EmpleadoResponse, dependencies=[Depends(require_supabase_user)], summary="Actualizar información de empleado")
+def actualizar_empleado(
     id: int,
     data: EmpleadoCreate,
     service: EmpleadoService = Depends(get_empleado_service)
@@ -148,15 +148,15 @@ def update_empleado(
     **Autenticación:**
     Requiere token JWT en header: `Authorization: Bearer <token>`
     """
-    empleado = service.update_empleado(id, data)
+    empleado = service.actualizar_empleado(id, data)
     if not empleado:
         raise HTTPException(status_code=404, detail="Empleado no encontrado")
     return empleado
 
-@router.delete("/{id}", dependencies=[Depends(require_supabase_user)], summary="Eliminar empleado")
-def delete_empleado(id: int, service: EmpleadoService = Depends(get_empleado_service)):
+@router.delete("/{id}", dependencies=[Depends(require_supabase_user)], summary="Dar de baja empleado")
+def dar_de_baja_empleado(id: int, service: EmpleadoService = Depends(get_empleado_service)):
     """
-    Elimina un empleado del sistema.
+    Da de baja un empleado del sistema.
     
     **Parámetros:**
     - id: ID del empleado a eliminar
@@ -178,7 +178,7 @@ def delete_empleado(id: int, service: EmpleadoService = Depends(get_empleado_ser
     Raises:
         HTTPException(404): Si el empleado no existe.
     """
-    empleado = service.delete_empleado(id)
+    empleado = service.dar_de_baja_empleado(id)
     if not empleado:
         raise HTTPException(status_code=404, detail="Empleado no encontrado")
     return {"detail": "Empleado eliminado"}

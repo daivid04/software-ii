@@ -117,7 +117,7 @@ def create_autoparte(
     **Autenticación:
     Requiere token JWT en header: `Authorization: Bearer <token>`
     """
-    return service.create_autoparte(data)
+    return service.registrar_nueva_autoparte(data)
 
 
 @router.get("/", response_model=list[AutoparteResponse], summary="Listar todas las autopartes")
@@ -178,11 +178,11 @@ def list_autopartes(
     **Autenticación:
     No requiere autenticación (público)
     """
-    return service.list_autopartes()
+    return service.obtener_catalogo_completo()
 
 
 @router.get("/{id}", response_model=AutoparteResponse, summary="Obtener autoparte por ID", description="Busca una autoparte específica usando su ID único.")
-def get_autoparte(id: int, service: AutoparteService = Depends(get_autoparte_service)):
+def consultar_autoparte_disponible(id: int, service: AutoparteService = Depends(get_autoparte_service)):
     """
     Obtiene los detalles de una autoparte por su ID.
 
@@ -195,14 +195,14 @@ def get_autoparte(id: int, service: AutoparteService = Depends(get_autoparte_ser
     Raises:
         HTTPException(404): Si la autoparte no existe.
     """
-    autoparte = service.get_by_id(id)
+    autoparte = service.consultar_autoparte_disponible(id)
     if not autoparte:
         raise HTTPException(status_code=404, detail="Autoparte no encontrada")
     return autoparte
 
 
 @router.put("/{id}", response_model=AutoparteResponse, dependencies=[Depends(require_supabase_user)], summary="Actualizar autoparte", description="Actualiza los datos de una autoparte existente.")
-def update_autoparte(
+def actualizar_informacion_autoparte(
     id: int,
     data: AutoparteCreate,
     service: AutoparteService = Depends(get_autoparte_service)
@@ -220,14 +220,14 @@ def update_autoparte(
     Raises:
         HTTPException(404): Si la autoparte no existe.
     """
-    autoparte = service.update_autoparte(id, data)
+    autoparte = service.actualizar_informacion_autoparte(id, data)
     if not autoparte:
         raise HTTPException(status_code=404, detail="Autoparte no encontrada")
     return autoparte
 
 
-@router.delete("/{id}", dependencies=[Depends(require_supabase_user)], summary="Eliminar autoparte", description="Elimina una autoparte del sistema.")
-def delete_autoparte(id: int, service: AutoparteService = Depends(get_autoparte_service)):
+@router.delete("/{id}", dependencies=[Depends(require_supabase_user)], summary="Dar de baja autoparte", description="Da de baja una autoparte del sistema.")
+def dar_de_baja_autoparte(id: int, service: AutoparteService = Depends(get_autoparte_service)):
     """
     Elimina una autoparte por su ID.
 
@@ -240,7 +240,7 @@ def delete_autoparte(id: int, service: AutoparteService = Depends(get_autoparte_
     Raises:
         HTTPException(404): Si la autoparte no existe.
     """
-    autoparte = service.delete_autoparte(id)
+    autoparte = service.dar_de_baja_autoparte(id)
     if not autoparte:
         raise HTTPException(status_code=404, detail="Autoparte no encontrada")
     return {"detail": "Autoparte eliminada"}
@@ -248,7 +248,7 @@ def delete_autoparte(id: int, service: AutoparteService = Depends(get_autoparte_
 
 # Endpoints específicos para autopartes
 @router.get("/modelo/{modelo}", response_model=list[AutoparteResponse], summary="Buscar autopartes por modelo", description="Busca autopartes compatibles con un modelo de vehículo específico.")
-def get_autopartes_by_modelo(
+def buscar_autopartes_por_modelo(
     modelo: str,
     service: AutoparteService = Depends(get_autoparte_service)
 ):
@@ -261,11 +261,11 @@ def get_autopartes_by_modelo(
     Returns:
         list[AutoparteResponse]: Lista de autopartes compatibles.
     """
-    return service.get_by_modelo(modelo)
+    return service.buscar_autopartes_por_modelo(modelo)
 
 
 @router.get("/anio/{anio}", response_model=list[AutoparteResponse], summary="Buscar autopartes por año", description="Busca autopartes compatibles con un año de vehículo específico.")
-def get_autopartes_by_anio(
+def buscar_autopartes_por_anio(
     anio: int,  # El usuario busca con un año numérico (ej: 2020)
     service: AutoparteService = Depends(get_autoparte_service)
 ):
@@ -278,4 +278,4 @@ def get_autopartes_by_anio(
     Returns:
         list[AutoparteResponse]: Lista de autopartes compatibles.
     """
-    return service.get_by_anio(anio)
+    return service.buscar_autopartes_por_anio(anio)

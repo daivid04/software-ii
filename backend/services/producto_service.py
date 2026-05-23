@@ -9,32 +9,34 @@ class ProductoService:
     def __init__(self, db: Session):
         self.repo = ProductoRepository(db)
     
-    def create_producto(self, data: ProductoCreate):
-        if self.repo.get_by_name(data.nombre):
+    def registrar_nuevo_producto(self, data: ProductoCreate):
+        """Registra un nuevo producto en el sistema"""
+        if self.repo.buscar_producto_por_nombre(data.nombre):
             raise ValueError("Ya existe un producto con ese nombre")
-        producto_data = data
-        producto = self.repo.create(producto_data)
+        producto = self.repo.registrar_producto(data)
         
-        # Invalidar caché de productos
+        # Invalidar caché de catálogo
         cache.invalidate_pattern('productos')
         
         return producto
     
-    def list_productos(self):
+    def obtener_catalogo_completo(self):
+        """Obtiene el catálogo completo de productos"""
         # Intentar obtener del caché
         cached = cache.get('productos_list')
         if cached is not None:
             return cached
         
         # Si no está en caché, obtener de la BD
-        productos = self.repo.get_all()
+        productos = self.repo.listar_catalogo_productos()
         
         # Guardar en caché por 5 minutos
         cache.set('productos_list', productos, ttl_seconds=300)
         
         return productos
     
-    def get_by_id(self, id: int):
+    def consultar_producto_disponible(self, id: int):
+        """Consulta si un producto está disponible"""
         # Intentar obtener del caché
         cache_key = f'producto_{id}'
         cached = cache.get(cache_key)
@@ -42,7 +44,7 @@ class ProductoService:
             return cached
         
         # Si no está en caché, obtener de la BD
-        producto = self.repo.get_by_id(id)
+        producto = self.repo.consultar_producto(id)
         
         # Guardar en caché
         if producto:
@@ -50,14 +52,17 @@ class ProductoService:
         
         return producto
     
-    def get_by_name(self, nombre: str):
-        return self.repo.get_by_name(nombre)
+    def buscar_producto_por_nombre(self, nombre: str):
+        """Busca un producto por nombre en el catálogo"""
+        return self.repo.buscar_producto_por_nombre(nombre)
     
-    def get_by_barcode(self, codBarras: str):
-        return self.repo.get_by_barcode(codBarras)
+    def escanear_codigo_barras(self, codigo_barras: str):
+        """Escanea un código de barras para obtener el producto"""
+        return self.repo.escanear_codigo_barras(codigo_barras)
     
-    def update_producto(self, id: int, data: ProductoCreate):
-        producto = self.repo.update(id, data)
+    def actualizar_stock_y_precios(self, id: int, data: ProductoCreate):
+        """Actualiza el stock y precios del producto"""
+        producto = self.repo.actualizar_inventario_producto(id, data)
         
         # Invalidar caché
         cache.delete(f'producto_{id}')
@@ -65,9 +70,10 @@ class ProductoService:
         
         return producto
     
-    def delete_producto(self, id: int):
+    def dar_de_baja_producto(self, id: int):
+        """Da de baja un producto del sistema"""
         try:
-            result = self.repo.delete(id)
+            result = self.repo.dar_de_baja_producto(id)
             
             # Invalidar caché
             cache.delete(f'producto_{id}')
@@ -75,5 +81,4 @@ class ProductoService:
             
             return result
         except ValueError as e:
-            # Re-lanzar como error para que el endpoint lo capture
             raise e
