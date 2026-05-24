@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
-from repositories.producto_repo import ProductoRepository
+from src.producto.infrastructure.producto_repo import ProductoRepository
 from schemas.producto_schema import ProductoCreate
-from db.models.producto import Producto
+from src.producto.infrastructure.producto import Producto
 from core.cache import cache
 
 
@@ -15,15 +15,16 @@ class ProductoService:
         if self.repo.buscar_producto_por_nombre(data.nombre):
             raise ValueError("Ya existe un producto con ese nombre")
         
-        nuevo_producto = Producto(
-            codigo_barras=data.codigo_barras,
-            img=data.img,
-            tipo="producto"
-        )
+        # 1. Crear el objeto de infraestructura (SQLAlchemy)
+        nuevo_producto = Producto(tipo="producto", **data.model_dump(exclude={'nombre', 'descripcion', 'marca', 'categoria', 'precio_compra', 'precio_venta', 'stock', 'stock_minimo'}))
         
-        nuevo_producto.actualizar_informacion_basica(data.nombre, data.descripcion, data.marca, data.categoria)
-        nuevo_producto.establecer_precios(data.precio_compra, data.precio_venta)
-        nuevo_producto.ajustar_inventario(data.stock, data.stock_minimo)
+        # 2. Convertir a dominio, operar, y devolver a infraestructura
+        domain = nuevo_producto.to_domain()
+        domain.actualizar_informacion_basica(data.nombre, data.descripcion, data.marca, data.categoria)
+        domain.establecer_precios(data.precio_compra, data.precio_venta)
+        domain.ajustar_inventario(data.stock, data.stock_minimo)
+        
+        nuevo_producto.from_domain(domain)
         
         producto_guardado = self.repo.guardar(nuevo_producto)
         cache.invalidate_pattern('productos')
@@ -71,22 +72,24 @@ class ProductoService:
     
     def actualizar_stock_y_precios(self, id: int, data: ProductoCreate):
         """Actualiza el stock y precios del producto"""
-        producto = self.repo.consultar_producto(id)
-        if not producto: return None
+        db_producto = self.repo.consultar_producto(id)
+        if not db_producto: return None
         
-        producto.actualizar_informacion_basica(data.nombre, data.descripcion, data.marca, data.categoria)
-        producto.establecer_precios(data.precio_compra, data.precio_venta)
-        producto.ajustar_inventario(data.stock, data.stock_minimo)
+        # 1. Convertir a dominio para aplicar lógica de negocio
+        domain = db_producto.to_domain()
         
-        if data.codigo_barras is not None: producto.codigo_barras = data.codigo_barras
-        if data.img is not None: producto.img = data.img
-            
-        producto_actualizado = self.repo.actualizar_inventario_producto(producto)
+        # 2. Aplicar reglas de negocio
+        domain.actualizar_informacion_basica(data.nombre, data.descripcion, data.marca, data.categoria)
+        domain.establecer_precios(data.precio_compra, data.precio_venta)
+        domain.ajustar_inventario(data.stock, data.stock_minimo)
         
+        # 3. Sincronizar de vuelta a SQLAlchemy
+        db_producto.from_domain(domain)
+        
+        producto_actualizado = self.repo.guardar(db_producto)
         cache.delete(f'producto_{id}')
         cache.invalidate_pattern('productos')
         return producto_actualizado
-    
     def dar_de_baja_producto(self, id: int):
         """Da de baja un producto del sistema"""
         try:

@@ -1,7 +1,6 @@
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
-from db.models.autoparte import Autoparte
-from schemas.autoparte_schema import AutoparteCreate    
+from src.autopartes.infrastructure.autoparte import Autoparte
 
 
 
@@ -12,17 +11,12 @@ class AutoparteRepository:
 
     # --- NUEVO MÉTODO PARA DDD ---
     def guardar(self, autoparte: Autoparte):
-        """Persiste los cambios del Agregado completo en la base de datos"""
+        """Persiste la entidad (ORM) en base de datos"""
         self.db.add(autoparte)
         self.db.commit()
         self.db.refresh(autoparte)
         return autoparte
     
-    def registrar_autoparte(self, autoparte_data: AutoparteCreate):
-        """Registra una nueva autoparte en el catálogo""" 
-        autoparte = Autoparte(**autoparte_data.model_dump())
-        return self.guardar(autoparte)
-
     def listar_catalogo_autopartes(self):
         """Lista todas las autopartes del catálogo"""
         return self.db.query(Autoparte).all()

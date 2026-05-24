@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, Date
 from db.base import Base
 from sqlalchemy.orm import relationship
-from db.models.value_objects import GarantiaVO, EstadoPagoVO, PrecioOrdenVO
+from src.shared.domain.value_objects import GarantiaVO, EstadoPagoVO, PrecioOrdenVO
 
 class Orden(Base):
     __tablename__ = "ordenes"

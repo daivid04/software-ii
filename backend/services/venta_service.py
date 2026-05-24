@@ -3,7 +3,7 @@ from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
 from repositories.venta_repo import VentaRepository
-from repositories.producto_repo import ProductoRepository
+from src.producto.infrastructure.producto_repo import ProductoRepository
 from schemas.venta_schema import VentaCreate
 from db.models.venta import Venta
 from db.models.venta_producto import VentaProducto

@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from db.base import SessionLocal
 from schemas.autoparte_schema import AutoparteCreate, AutoparteResponse
-from services.autoparte_service import AutoparteService
+from src.autopartes.application.autoparte_service import AutoparteService
 from core.auth import require_supabase_user
 
 router = APIRouter(tags=["Autopartes"])

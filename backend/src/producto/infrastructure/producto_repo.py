@@ -1,7 +1,6 @@
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
-from db.models import Producto
-from schemas.producto_schema import ProductoCreate
+from src.producto.infrastructure.producto import Producto
 
 
 class ProductoRepository:
@@ -11,14 +10,6 @@ class ProductoRepository:
 
     def guardar(self, producto: Producto):
         """Persiste los cambios del Agregado en la base de datos"""
-        self.db.add(producto)
-        self.db.commit()
-        self.db.refresh(producto)
-        return producto
-    
-    def registrar_producto(self, producto_data: ProductoCreate):
-        """Registra un nuevo producto en el catálogo"""
-        producto = Producto(**producto_data.model_dump())
         self.db.add(producto)
         self.db.commit()
         self.db.refresh(producto)
@@ -40,10 +31,6 @@ class ProductoRepository:
         """Escanea un código de barras y devuelve el producto"""
         return self.db.query(Producto).filter(Producto.codigo_barras == codigo_barras).first()
 
-    def actualizar_inventario_producto(self, producto: Producto):
-        """Actualiza el inventario del producto (precios, stock, etc.)"""
-        return self.guardar(producto)
-    
     def dar_de_baja_producto(self, id: int):
         """Da de baja un producto del catálogo"""
         producto = self.consultar_producto(id)

@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from db.base import SessionLocal
 from schemas.producto_schema import ProductoCreate, ProductoResponse
-from services.producto_service import ProductoService
+from src.producto.application.producto_service import ProductoService
 from core.auth import require_supabase_user
 
 router = APIRouter(tags=["Productos"])

@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String
 from db.base import Base
 from sqlalchemy.orm import relationship
-from db.models.value_objects import InformacionEmpleadoVO, EstadoEmpleadoVO
+from src.shared.domain.value_objects import InformacionEmpleadoVO, EstadoEmpleadoVO
 
 class Empleado(Base):
     __tablename__ = "empleados"

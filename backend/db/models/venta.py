@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, DateTime
 from sqlalchemy.orm import relationship
 from db.base import Base
 from datetime import datetime
-from db.models.value_objects import CantidadVentaVO, FechaVentaVO
+from src.shared.domain.value_objects import CantidadVentaVO, FechaVentaVO
 
 
 

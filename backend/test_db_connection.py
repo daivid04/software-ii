@@ -18,7 +18,7 @@ try:
     print("   ✓ Sesión creada")
     
     print("\n4. Probando query...")
-    from db.models.producto import Producto
+    from backend.src.producto.infrastructure.producto import Producto
     productos = db.query(Producto).all()
     print(f"   ✓ Productos encontrados: {len(productos)}")
     

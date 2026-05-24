@@ -5,7 +5,7 @@ Ejecutar con: python .\backend\seed_productos.py
 """
 
 from db.base import SessionLocal, engine, Base
-from db.models.producto import Producto
+from backend.src.producto.infrastructure.producto import Producto
 
 # Crear todas las tablas
 Base.metadata.create_all(bind=engine)

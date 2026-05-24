@@ -1,9 +1,14 @@
-from db.models.producto import Producto
-from db.models.autoparte import Autoparte
-from db.models.venta import Venta
-from db.models.venta_producto import VentaProducto
-from db.models.orden import Orden
-from db.models.servicio import Servicio
-from db.models.orden_servicio import OrdenServicio
-from db.models.empleado import Empleado
-from db.models.orden_empleado import OrdenEmpleado
+# db/models/__init__.py
+
+# 1. Los que ya moviste a src (usa rutas desde la raíz del proyecto)
+from src.producto.infrastructure.producto import Producto
+from src.autopartes.infrastructure.autoparte import Autoparte
+
+# 2. Los que aún viven en db/models (usa rutas relativas al archivo actual)
+from .venta import Venta
+from .venta_producto import VentaProducto
+from .orden import Orden
+from .servicio import Servicio
+from .orden_servicio import OrdenServicio
+from .empleado import Empleado
+from .orden_empleado import OrdenEmpleado
