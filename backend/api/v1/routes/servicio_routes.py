@@ -30,15 +30,13 @@ def registrar_nuevo_servicio(
     **Validaciones:**
     - Nombre: Mínimo 3 caracteres, máximo 200
     - Descripción: Mínimo 10 caracteres, máximo 500
-    - Precio: Debe ser mayor a 0
     
     **Ejemplo de Request correcto:**
     ```json
     {
         "nombre": "Cambio de aceite y filtro",
         "descripcion": "Servicio completo de cambio de aceite sintético y reemplazo de filtro de aceite",
-        "precio": 150.00
-    }
+}    }
     ```
     
     **Response exitosa:**
@@ -47,7 +45,6 @@ def registrar_nuevo_servicio(
         "id": 5,
         "nombre": "Cambio de aceite y filtro",
         "descripcion": "Servicio completo de cambio de aceite sintético...",
-        "precio": 150.00
     }
     ```
     
@@ -152,7 +149,9 @@ def actualizar_informacion_servicio(
         servicio = service.actualizar_informacion_servicio(id, data)
         if not servicio:
             raise HTTPException(status_code=404, detail="Servicio no encontrado")
-        return servicio
+        
+        # 👇 AQUÍ DEBE DEVOLVER LA VARIABLE 'servicio', NO UN DICCIONARIO
+        return servicio  
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 

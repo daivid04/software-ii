@@ -9,14 +9,13 @@ class ServicioRepository:
     def __init__(self, db: Session):
         self.db = db
     
-    def registrar_servicio(self, servicio_data: ServicioCreate):
-        """Registra un nuevo servicio en el catálogo"""
-        servicio = Servicio(**servicio_data.model_dump())
+    def guardar(self, servicio: Servicio):
+        """Persiste el Agregado completo en la base de datos"""
         self.db.add(servicio)
         self.db.commit()
         self.db.refresh(servicio)
         return servicio
-
+    
     def listar_catalogo_servicios(self):
         """Lista todos los servicios del catálogo"""
         return self.db.query(Servicio).all()
@@ -29,17 +28,6 @@ class ServicioRepository:
         """Busca un servicio por nombre"""
         return self.db.query(Servicio).filter(Servicio.nombre.ilike(nombre)).first()
 
-    def actualizar_servicio(self, id: int, servicio_data: ServicioCreate):
-        """Actualiza la información de un servicio"""
-        servicio = self.consultar_servicio(id)
-        if not servicio:
-            return None
-        data = servicio_data.model_dump(exclude_unset=True)
-        for key, value in data.items():
-            setattr(servicio, key, value)
-        self.db.commit()
-        self.db.refresh(servicio)
-        return servicio
     
     def dar_de_baja_servicio(self, id: int):
         """Da de baja un servicio del catálogo"""
@@ -48,7 +36,8 @@ class ServicioRepository:
             try:
                 self.db.delete(servicio)
                 self.db.commit()
-            except IntegrityError as e:
+            except IntegrityError:
                 self.db.rollback()
-                raise ValueError(f"No se puede eliminar el servicio porque tiene órdenes o referencias asociadas")
+                # Lanzamos un error de base de datos claro
+                raise ValueError("No se puede eliminar el servicio porque tiene órdenes o referencias asociadas")
         return servicio

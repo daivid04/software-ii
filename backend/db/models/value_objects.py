@@ -73,3 +73,15 @@ class FechaVentaVO:
             
         if fecha_a_comparar > ahora:
             raise ValueError("La fecha de la venta no puede ser una fecha futura")
+        
+@dataclass(frozen=True)
+class InformacionServicioVO:
+    """Value Object para validar la información de un servicio mecánico"""
+    nombre: str
+    descripcion: str
+
+    def __post_init__(self):
+        if not self.nombre or len(self.nombre.strip()) < 3:
+            raise ValueError("El nombre del servicio debe tener al menos 3 caracteres")
+        if not self.descripcion or len(self.descripcion.strip()) < 10:
+            raise ValueError("La descripción del servicio debe tener al menos 10 caracteres")

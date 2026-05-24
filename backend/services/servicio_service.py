@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from repositories.servicio_repo import ServicioRepository
 from schemas.servicio_schema import ServicioCreate
+from db.models.servicio import Servicio
 from core.cache import cache
 
 class ServicioService:
@@ -10,14 +11,20 @@ class ServicioService:
     
     def registrar_nuevo_servicio(self, data: ServicioCreate):
         """Registra un nuevo servicio en el sistema"""
+        """Registra un nuevo servicio usando DDD"""
         if self.repo.buscar_servicio_por_nombre(data.nombre):
             raise ValueError("Ya existe un servicio con ese nombre")
-        servicio = self.repo.registrar_servicio(data)
+            
+        # 1. Instanciamos la entidad
+        nuevo_servicio = Servicio()
         
-        # Invalidar caché
+        # 2. El Agregado valida y asigna su propia información
+        nuevo_servicio.actualizar_informacion(data.nombre, data.descripcion)
+        
+        # 3. Guardamos
+        servicio_guardado = self.repo.guardar(nuevo_servicio)
         cache.invalidate_pattern('servicios')
-        
-        return servicio
+        return servicio_guardado
     
     def obtener_catalogo_completo(self):
         """Obtiene el catálogo completo de servicios"""
@@ -54,28 +61,28 @@ class ServicioService:
     
     def actualizar_informacion_servicio(self, id: int, data: ServicioCreate):
         """Actualiza la información de un servicio"""
-        # Verificar si existe otro servicio con el mismo nombre
+        """Actualiza el servicio delegando al Agregado"""
         existing = self.repo.buscar_servicio_por_nombre(data.nombre)
         if existing and existing.id != id:
-            raise ValueError("Ya existe un servicio con ese nombre")
+            raise ValueError("Ya existe otro servicio con ese nombre")
+            
+        servicio = self.repo.consultar_servicio(id)
+        if not servicio:
+            return None
+            
+        # El Agregado valida y muta su estado
+        servicio.actualizar_informacion(data.nombre, data.descripcion)
         
-        servicio = self.repo.actualizar_servicio(id, data)
+        # El Repo guarda
+        servicio_actualizado = self.repo.guardar(servicio)
         
-        # Invalidar caché
         cache.delete(f'servicio_{id}')
         cache.invalidate_pattern('servicios')
-        
-        return servicio
+        return servicio_actualizado
     
     def dar_de_baja_servicio(self, id: int):
         """Da de baja un servicio"""
-        try:
-            result = self.repo.dar_de_baja_servicio(id)
-            
-            # Invalidar caché
-            cache.delete(f'servicio_{id}')
-            cache.invalidate_pattern('servicios')
-            
-            return result
-        except ValueError as e:
-            raise e
+        result = self.repo.dar_de_baja_servicio(id)
+        cache.delete(f'servicio_{id}')
+        cache.invalidate_pattern('servicios')
+        return result
