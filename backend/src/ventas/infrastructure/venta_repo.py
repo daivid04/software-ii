@@ -1,9 +1,9 @@
-from datetime import datetime
 from sqlalchemy import Date, cast
 from sqlalchemy.orm import Session
 from db.models import Venta
-from db.models import VentaProducto
-from db.models import Producto
+from datetime import datetime
+from src.ventas.infrastructure.venta import Venta
+
 
 
 

@@ -3,10 +3,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import Response, HTMLResponse
 from fastapi.openapi.docs import get_swagger_ui_html
-from api.v1.routes import venta_routes, orden_routes, servicio_routes, empleado_routes, status_routes, auth_routes
+from api.v1.routes import orden_routes, servicio_routes, empleado_routes, status_routes, auth_routes
 import time
 
-from src.autopartes.infrastructure import autoparte_routes
+from backend.src.autopartes.infrastructure import autoparte_routes
+from src.ventas.infrastructure import venta_routes
 from src.producto.infrastructure import producto_routes
 
 app = FastAPI(

@@ -34,3 +34,16 @@ class ProductoDomain:
         vo = InventarioVO(stock_actual=actual, stock_minimo=minimo)
         self.stock = vo.stock_actual
         self.stock_minimo = vo.stock_minimo
+
+    def registrar_despacho(self, cantidad: int):
+        if cantidad <= 0:
+            raise ValueError("La cantidad a despachar debe ser mayor a 0")
+            
+        if self.stock < cantidad:
+            raise ValueError(
+                f"Stock insuficiente para '{self.nombre}'. "
+                f"Stock actual: {self.stock}, Solicitado: {cantidad}"
+            )
+            
+        # Si pasa las validaciones, descontamos el stock
+        self.stock -= cantidad
