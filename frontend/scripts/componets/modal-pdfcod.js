@@ -278,7 +278,7 @@ function getDateLimit(days) {
  */
 function filterProductsByDate(products, days) {
     // Filtrar solo productos con código de barras
-    let filtered = products.filter(p => p.codBarras && p.codBarras.trim() !== '');
+    let filtered = products.filter(p => p.codigo_barras && p.codigo_barras.trim() !== '');
 
     if (days === null) {
         return filtered; // Todos los productos con código
@@ -337,7 +337,7 @@ function sortProducts(products, sortBy) {
                 return dateA - dateB;
             });
         case 'code':
-            return sorted.sort((a, b) => (a.codBarras || '').localeCompare(b.codBarras || ''));
+            return sorted.sort((a, b) => (a.codigo_barras || '').localeCompare(b.codigo_barras || ''));
         default:
             return sorted;
     }
@@ -488,7 +488,7 @@ async function generatePDF(products, optionLabel, options = {}) {
 
         // Generar imagen del código de barras PRIMERO (arriba)
         try {
-            const barcodeDataUrl = await generateBarcodeDataUrl(product.codBarras, cols);
+            const barcodeDataUrl = await generateBarcodeDataUrl(product.codigo_barras, cols);
             if (barcodeDataUrl) {
                 const imgX = x + (colWidth - barcodeWidth) / 2;
                 doc.addImage(barcodeDataUrl, 'PNG', imgX, textY, barcodeWidth, barcodeHeight);
@@ -928,7 +928,7 @@ async function generatePDFPreview(products, optionLabel, options) {
         }
 
         try {
-            const barcodeDataUrl = await generateBarcodeDataUrl(product.codBarras, cols);
+            const barcodeDataUrl = await generateBarcodeDataUrl(product.codigo_barras, cols);
             if (barcodeDataUrl) {
                 const imgX = x + (colWidth - barcodeWidth) / 2 - 1;
                 doc.addImage(barcodeDataUrl, 'PNG', imgX, textY, barcodeWidth, barcodeHeight);
@@ -938,11 +938,11 @@ async function generatePDFPreview(products, optionLabel, options) {
             textY += barcodeHeight + 2;
         }
 
-        if (options.includePrice && product.precioVenta) {
+        if (options.includePrice && product.precio_venta) {
             doc.setFontSize(8);
             doc.setFont('helvetica', 'bold');
             doc.setTextColor(0, 91, 182);
-            doc.text(`S/ ${parseFloat(product.precioVenta).toFixed(2)}`, x + colWidth / 2, textY, { align: 'center' });
+            doc.text(`S/ ${parseFloat(product.precio_venta).toFixed(2)}`, x + colWidth / 2, textY, { align: 'center' });
         }
 
         currentCol++;

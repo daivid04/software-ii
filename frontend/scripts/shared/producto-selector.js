@@ -12,7 +12,7 @@ export function displayProductos(productos, productosDisponibles) {
   const itemsHTML = productos.map(p => `
     <div class="dropdown-item" 
          data-id="${escapeHtml(p.id)}" 
-         data-precio="${escapeHtml(p.precioVenta)}" 
+         data-precio="${escapeHtml(p.precio_venta)}" 
          data-stock="${escapeHtml(p.stock)}" 
          data-nombre="${escapeHtml(p.nombre)}">
       ${escapeHtml(p.nombre)} ${p.marca ? `- ${escapeHtml(p.marca)}` : ''} (Stock: ${escapeHtml(p.stock)})

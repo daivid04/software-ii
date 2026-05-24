@@ -259,7 +259,7 @@ async function getExistingBarcodes() {
 
     // Filtrar solo los códigos de barras que no sean null o vacíos
     const barcodes = productos
-      .map(p => p.codBarras)
+      .map(p => p.codigo_barras)
       .filter(code => code != null && code !== '');
 
 

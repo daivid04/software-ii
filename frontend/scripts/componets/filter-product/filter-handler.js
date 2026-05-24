@@ -43,7 +43,7 @@ export function applyFilters(products = null) {
 
   if (filterState.lowStock) {
     filteredProducts = filteredProducts.filter(product =>
-      product.stock <= product.stockMin
+      product.stock <= product.stock_minimo
     );
   }
 
@@ -51,7 +51,7 @@ export function applyFilters(products = null) {
     const min = filterState.priceRange.min ?? 0;
     const max = filterState.priceRange.max ?? Infinity;
     filteredProducts = filteredProducts.filter(product => {
-      const price = product.precioVenta;
+      const price = product.precio_venta;
       return price >= min && price <= max;
     });
   }

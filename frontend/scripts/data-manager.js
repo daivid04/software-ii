@@ -235,7 +235,7 @@ export async function productUnderStock() {
   try {
     const products = await fetchFromApi('productos');
     const amount = products.reduce((count, product) => {
-      return count + (product.stock <= product.stockMin ? 1 : 0);
+      return count + (product.stock <= product.stock_minimo ? 1 : 0);
     }, 0);
 
     return amount;

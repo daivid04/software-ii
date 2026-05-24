@@ -77,7 +77,7 @@ async function processScannedProduct(barCode, reader) {
     // Llenar datos del producto
     reader.value = producto.nombre;
     reader.dataset.selectedId = producto.id;
-    reader.dataset.precio = producto.precioVenta;
+    reader.dataset.precio = producto.precio_venta;
     reader.dataset.stock = producto.stock;
 
     // Cerrar dropdown

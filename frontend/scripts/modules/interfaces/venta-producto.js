@@ -1,9 +1,9 @@
-import { fetchProductos, createVenta } from '../services/venta-api.js';
-import { showSuccess, showError, showWarning } from '../utils/notification.js';
-import { validateProductoSelected, validateCantidad, validateStockAvailable, validateVentaPreRegistro } from '../utils/venta-validator.js';
-import { displayProductos, filterProductos, clearProductoSearch } from '../shared/producto-selector.js';
-import { updateVentaTable } from '../shared/venta-table.js';
-import { initBarcodeReader } from '../shared/barcode-reader.js';
+import { fetchProductos, createVenta } from '../../services/venta-api.js';
+import { showSuccess, showError, showWarning } from '../../utils/notification.js';
+import { validateProductoSelected, validateCantidad, validateStockAvailable, validateVentaPreRegistro } from '../../utils/venta-validator.js';
+import { displayProductos, filterProductos, clearProductoSearch } from '../../shared/producto-selector.js';
+import { updateVentaTable } from '../../shared/venta-table.js';
+import { initBarcodeReader } from '../../shared/barcode-reader.js';
 
 let productosDisponibles = [];
 let productosVenta = [];
@@ -97,7 +97,7 @@ function handleAddProducto() {
   const productoId = parseInt(productoSearch.dataset.selectedId);
   const cantidad = parseInt(cantidadInput.value);
   const stock = parseInt(productoSearch.dataset.stock);
-  const precio = parseInt(productoSearch.dataset.precio);
+  const precio = parseFloat(productoSearch.dataset.precio);
 
   // Validar stock
   const stockValidation = validateStockAvailable(stock);
