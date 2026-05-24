@@ -1,5 +1,6 @@
 import re
 from dataclasses import dataclass
+from datetime import datetime, timezone
 
 @dataclass(frozen=True)
 class PrecioVO:
@@ -43,3 +44,32 @@ class CompatibilidadVehiculoVO:
         # Validamos que el string de 'año' contenga al menos un año válido de 4 dígitos
         if not self.anio or not re.search(r'\d{4}', self.anio):
             raise ValueError("El año de compatibilidad debe contener al menos un año válido (ej. 2020, 2018-2023)")
+        
+@dataclass(frozen=True)
+class CantidadVentaVO:
+    """Value Object para asegurar que la cantidad de un ítem vendido sea válida"""
+    valor: int
+
+    def __post_init__(self):
+        if self.valor <= 0:
+            raise ValueError("La cantidad de productos en la venta debe ser mayor a cero")
+
+@dataclass(frozen=True)
+class FechaVentaVO:
+    """Value Object para validar que la fecha de la transacción sea coherente"""
+    valor: datetime
+
+    def __post_init__(self):
+        # Regla de negocio: No se pueden registrar ventas con fechas del futuro
+        ahora = datetime.now(timezone.utc)
+        
+        fecha_a_comparar = self.valor
+        if fecha_a_comparar.tzinfo is None:
+            # Si viene sin zona horaria, le ponemos UTC por defecto
+            fecha_a_comparar = fecha_a_comparar.replace(tzinfo=timezone.utc)
+        else:
+            # Si ya trae zona horaria, la normalizamos a UTC
+            fecha_a_comparar = fecha_a_comparar.astimezone(timezone.utc)
+            
+        if fecha_a_comparar > ahora:
+            raise ValueError("La fecha de la venta no puede ser una fecha futura")

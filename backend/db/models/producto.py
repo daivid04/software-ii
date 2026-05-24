@@ -45,3 +45,8 @@ class Producto(Base):
         inventario_vo = InventarioVO(stock_actual=stock_actual, stock_minimo=stock_minimo)
         self.stock = inventario_vo.stock_actual
         self.stock_minimo = inventario_vo.stock_minimo
+
+    def registrar_despacho(self, cantidad_vendida: int):
+        inventario_actual = InventarioVO(self.stock, self.stock_minimo)
+        nuevo_inventario = inventario_actual.despachar(cantidad_vendida)
+        self.stock = nuevo_inventario.stock_actual

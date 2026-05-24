@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from db.base import SessionLocal
@@ -239,7 +239,11 @@ def dar_de_baja_venta(id: int, service: VentaService = Depends(get_venta_service
     Raises:
         HTTPException(404): Si la venta no existe.
     """
-    result = service.dar_de_baja_venta(id)
-    if not result:
-        raise HTTPException(status_code=404, detail="Venta no encontrada")
-    return {"detail": "Venta eliminada"}
+    try:
+        result = service.dar_de_baja_venta(id)
+        if not result:
+            raise HTTPException(status_code=404, detail="Venta no encontrada")
+        return {"detail": "Venta eliminada exitosamente"}
+    except Exception as e:
+        # Atrapa errores de integridad referencial o base de datos.
+        raise HTTPException(status_code=409, detail="No se puede eliminar la venta por dependencias o error interno")
