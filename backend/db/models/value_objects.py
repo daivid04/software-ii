@@ -110,3 +110,28 @@ class EstadoEmpleadoVO:
         estados_validos = ["activo", "inactivo", "vacaciones", "suspendido"]
         if not self.valor or self.valor.lower() not in estados_validos:
             raise ValueError(f"Estado de empleado no válido. Debe ser uno de: {', '.join(estados_validos)}")
+        
+@dataclass(frozen=True)
+class GarantiaVO:
+    """Valida que los meses/días de garantía no sean negativos"""
+    valor: int
+    def __post_init__(self):
+        if self.valor < 0:
+            raise ValueError("La garantía no puede ser un valor negativo")
+
+@dataclass(frozen=True)
+class EstadoPagoVO:
+    """Garantiza que el estado de pago pertenezca a un glosario cerrado"""
+    valor: str
+    def __post_init__(self):
+        estados_permitidos = ["pendiente", "pagado", "parcial", "cancelado"]
+        if not self.valor or self.valor.lower() not in estados_permitidos:
+            raise ValueError(f"Estado de pago inválido. Permitidos: {', '.join(estados_permitidos)}")
+
+@dataclass(frozen=True)
+class PrecioOrdenVO:
+    """Valida que los precios y cobros en la orden no sean negativos"""
+    valor: int
+    def __post_init__(self):
+        if self.valor < 0:
+            raise ValueError("El precio no puede ser negativo")

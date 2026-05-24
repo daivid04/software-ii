@@ -1,62 +1,18 @@
 from sqlalchemy.orm import Session
-from db.models import Orden
+from db.models.orden import Orden
 from sqlalchemy import Date, cast
-from db.models import OrdenServicio, Servicio
-from db.models import OrdenEmpleado, Empleado
+from sqlalchemy.exc import IntegrityError
 
 class OrdenRepository:
     def __init__(self, db: Session):
         self.db = db
 
-    def registrar_orden(self, garantia: int, estadoPago: str, precio: int, fecha):
-        orden = Orden(garantia=garantia, estadoPago=estadoPago, precio=precio, fecha=fecha)
+    def guardar(self, orden: Orden):
+        """Persiste el Agregado completo (Orden + Servicios + Empleados) de forma atómica"""
         self.db.add(orden)
         self.db.commit()
         self.db.refresh(orden)
         return orden
-
-    def registrar_orden_con_servicios(self, garantia: int, estadoPago: str, precio: int, fecha, servicios: list[dict], empleados: list[dict] | None = None):
-        orden = Orden(garantia=garantia, estadoPago=estadoPago, precio=precio, fecha=fecha)
-        self.db.add(orden)
-        try:
-            # flush to get orden.id without committing
-            self.db.flush()
-
-            for item in servicios:
-                sid = item.get("servicio_id")
-                precio_servicio = item.get("precio_servicio")
-                if not sid or precio_servicio is None:
-                    raise ValueError("Servicio o precio_servicio inválido")
-
-                servicio = self.db.query(Servicio).filter(Servicio.id == sid).first()
-                if not servicio:
-                    raise ValueError(f"Servicio con id {sid} no existe")
-
-                # create relation orden-servicio
-                os = OrdenServicio(orden_id=orden.id, servicio_id=sid, precio_servicio=precio_servicio)
-                self.db.add(os)
-
-            # asociar empleados si vienen
-            if empleados:
-                for item in empleados:
-                    eid = item.get("empleado_id")
-                    if not eid:
-                        raise ValueError("empleado_id inválido")
-                    empleado = self.db.query(Empleado).filter(Empleado.id == eid).first()
-                    if not empleado:
-                        raise ValueError(f"Empleado con id {eid} no existe")
-
-                    oe = OrdenEmpleado(orden_id=orden.id, empleado_id=eid)
-                    self.db.add(oe)
-
-            # commit everything
-            self.db.commit()
-            # refresh to load relationships
-            self.db.refresh(orden)
-            return orden
-        except Exception:
-            self.db.rollback()
-            raise
 
     def listar_catalogo_ordenes(self):
         return self.db.query(Orden).all()
@@ -67,8 +23,12 @@ class OrdenRepository:
     def dar_de_baja_orden(self, id: int):
         orden = self.consultar_orden(id)
         if orden:
-            self.db.delete(orden)
-            self.db.commit()
+            try:
+                self.db.delete(orden)
+                self.db.commit()
+            except IntegrityError:
+                self.db.rollback()
+                raise ValueError("No se puede eliminar la orden por restricciones de la base de datos")
             return True
         return False
 

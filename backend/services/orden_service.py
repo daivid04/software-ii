@@ -1,41 +1,53 @@
 from sqlalchemy.orm import Session
-from repositories.orden_repo import OrdenRepository
-from schemas.orden_schema import OrdenCreate
 from fastapi import HTTPException
 from core.cache import cache
+from schemas.orden_schema import OrdenCreate
+from db.models.orden import Orden
+from repositories.orden_repo import OrdenRepository
+from repositories.servicio_repo import ServicioRepository
+from repositories.empleado_repo import EmpleadoRepository
+from db.models import OrdenServicio, OrdenEmpleado
+
 
 class OrdenService:
     
     def __init__(self, db: Session):
         self.repo = OrdenRepository(db)
+        self.servicio_repo = ServicioRepository(db)
+        self.empleado_repo = EmpleadoRepository(db)
 
     def registrar_nueva_orden(self, data: OrdenCreate):
-        servicios = getattr(data, "servicios", None)
-        empleados = getattr(data, "empleados", None)
-
-        servicios_list = [p.model_dump() if hasattr(p, 'model_dump') else p for p in servicios] if servicios else []
-        empleados_list = [p.model_dump() if hasattr(p, 'model_dump') else p for p in empleados] if empleados else []
-
-        # Si hay servicios o empleados asociados, crear con relaciones
-        if servicios_list or empleados_list:
-            try:
-                orden = self.repo.registrar_orden_con_servicios(
-                    data.garantia,
-                    data.estadoPago,
-                    data.precio,
-                    data.fecha,
-                    servicios_list,
-                    empleados_list,
-                )
-            except ValueError as e:
-                raise HTTPException(status_code=400, detail=str(e))
-        else:
-            # Caso simple: solo la orden
-            orden = self.repo.registrar_orden(data.garantia, data.estadoPago, data.precio, data.fecha)
+        """Coordina la creación de una orden utilizando el modelo de dominio rico"""
+        nueva_orden = Orden()
         
-        # Invalidar caché cuando se crea nueva orden
-        cache.invalidate_pattern('ordenes')
-        return orden
+        try:
+            # 1. Validamos e inicializamos campos básicos
+            nueva_orden.inicializar_datos_basicos(data.garantia, data.estadoPago, data.precio, data.fecha)
+            
+            # 2. El Agregado valida y asocia los Servicios
+            servicios = getattr(data, "servicios", []) or []
+            for item in servicios:
+                servicio_db = self.servicio_repo.consultar_servicio(item.servicio_id)
+                if not servicio_db:
+                    raise ValueError(f"El servicio con ID {item.servicio_id} no existe")
+                nueva_orden.agregar_servicio(servicio_db, item.precio_servicio, OrdenServicio)
+            
+            # 3. El Agregado valida y asocia a los Empleados
+            empleados = getattr(data, "empleados", []) or []
+            for item in empleados:
+                empleado_db = self.empleado_repo.consultar_empleado(item.empleado_id)
+                if not empleado_db:
+                    raise ValueError(f"El empleado con ID {item.empleado_id} no existe")
+                nueva_orden.asignar_empleado(empleado_db, OrdenEmpleado)
+            
+            # 4. El Repositorio guarda todo el árbol en una sola transacción
+            orden_guardada = self.repo.guardar(nueva_orden)
+            
+            cache.invalidate_pattern('ordenes')
+            return orden_guardada
+            
+        except ValueError as e:
+            raise HTTPException(status_code=400, detail=str(e))
 
     def obtener_catalogo_completo(self):
         # Intentar obtener del caché
@@ -68,14 +80,11 @@ class OrdenService:
         return orden
 
     def consultar_ordenes_por_fecha(self, fecha):
-        ordenes = self.repo.consultar_ordenes_por_fecha(fecha)
-        return ordenes
+        return self.repo.consultar_ordenes_por_fecha(fecha)
 
     def dar_de_baja_orden(self, id: int):
         result = self.repo.dar_de_baja_orden(id)
-        
-        # Invalidar caché cuando se da de baja
-        cache.delete(f'orden_{id}')
-        cache.invalidate_pattern('ordenes')
-        
+        if result:
+            cache.delete(f'orden_{id}')
+            cache.invalidate_pattern('ordenes')
         return result

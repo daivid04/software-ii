@@ -247,7 +247,10 @@ def dar_de_baja_orden(id: int, service: OrdenService = Depends(get_orden_service
     Raises:
         HTTPException(404): Si la orden no existe.
     """
-    result = service.dar_de_baja_orden(id)
-    if not result:
-        raise HTTPException(status_code=404, detail="Orden no encontrada")
-    return {"detail": "Orden eliminada"}
+    try:
+        result = service.dar_de_baja_orden(id)
+        if not result:
+            raise HTTPException(status_code=404, detail="Orden no encontrada")
+        return {"detail": "Orden eliminada exitosamente"}
+    except ValueError as e:
+        raise HTTPException(status_code=409, detail=str(e))
