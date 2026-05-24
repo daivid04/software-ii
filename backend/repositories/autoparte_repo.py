@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
+from sqlalchemy.exc import IntegrityError
 from db.models.autoparte import Autoparte
-from schemas.autoparte_schema import AutoparteCreate
+from schemas.autoparte_schema import AutoparteCreate    
 
 
 
@@ -8,14 +9,19 @@ class AutoparteRepository:
 
     def __init__(self, db: Session):
         self.db = db
-    
-    def registrar_autoparte(self, autoparte_data: AutoparteCreate):
-        """Registra una nueva autoparte en el catálogo"""
-        autoparte = Autoparte(**autoparte_data.model_dump())
+
+    # --- NUEVO MÉTODO PARA DDD ---
+    def guardar(self, autoparte: Autoparte):
+        """Persiste los cambios del Agregado completo en la base de datos"""
         self.db.add(autoparte)
         self.db.commit()
         self.db.refresh(autoparte)
         return autoparte
+    
+    def registrar_autoparte(self, autoparte_data: AutoparteCreate):
+        """Registra una nueva autoparte en el catálogo""" 
+        autoparte = Autoparte(**autoparte_data.model_dump())
+        return self.guardar(autoparte)
 
     def listar_catalogo_autopartes(self):
         """Lista todas las autopartes del catálogo"""
@@ -29,24 +35,22 @@ class AutoparteRepository:
         """Busca una autoparte por nombre"""
         return self.db.query(Autoparte).filter(Autoparte.nombre.ilike(nombre)).first()
 
-    def actualizar_autoparte(self, id: int, autoparte_data: AutoparteCreate):
+
+    def actualizar_autoparte(self, autoparte: Autoparte):
         """Actualiza la información de una autoparte"""
-        autoparte = self.consultar_autoparte(id)
-        if not autoparte:
-            return None
-        data = autoparte_data.model_dump(exclude_unset=True)
-        for key, value in data.items():
-            setattr(autoparte, key, value)
-        self.db.commit()
-        self.db.refresh(autoparte)
-        return autoparte
+        """Ahora recibe el Agregado validado por el dominio y lo persiste"""
+        return self.guardar(autoparte)
     
     def dar_de_baja_autoparte(self, id: int):
         """Da de baja una autoparte del catálogo"""
         autoparte = self.consultar_autoparte(id)
         if autoparte:
-            self.db.delete(autoparte)
-            self.db.commit()
+            try:
+                self.db.delete(autoparte)
+                self.db.commit()
+            except IntegrityError as e:
+                self.db.rollback()
+                raise ValueError("No se puede dar de baja porque tiene referencias asociadas")
         return autoparte
 
     # Métodos específicos para autopartes
@@ -61,6 +65,4 @@ class AutoparteRepository:
         """
         anio_str = str(anio)
         # Buscar donde el año aparezca en el string (exacto, en rango o en lista)
-        return self.db.query(Autoparte).filter(
-            Autoparte.anio.contains(anio_str)
-        ).all()
+        return self.db.query(Autoparte).filter(Autoparte.anio.contains(anio_str)).all()

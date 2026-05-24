@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from db.base import SessionLocal
 from schemas.producto_schema import ProductoCreate, ProductoResponse
@@ -108,8 +108,8 @@ def create_producto(
     """
     try:
         return service.registrar_nuevo_producto(data)
-    except ValueError as exc:
-        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except ValueError as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
 
 @router.get("/", response_model=list[ProductoResponse], summary="Listar todos los productos")
@@ -278,10 +278,13 @@ def actualizar_stock_y_precios(
     **Autenticación:**
     Requiere token JWT en header: `Authorization: Bearer <token>`
     """
-    producto = service.actualizar_stock_y_precios(id, data)
-    if not producto:
-        raise HTTPException(status_code=404, detail="Producto no encontrado")
-    return producto
+    try:
+        producto = service.actualizar_stock_y_precios(id, data)
+        if not producto:
+            raise HTTPException(status_code=404, detail="Producto no encontrado")
+        return producto
+    except ValueError as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
 
 @router.delete("/{id}", dependencies=[Depends(require_supabase_user)], summary="Dar de baja producto")
@@ -311,5 +314,5 @@ def dar_de_baja_producto(id: int, service: ProductoService = Depends(get_product
         if not producto:
             raise HTTPException(status_code=404, detail="Producto no encontrado")
         return {"detail": "Producto dado de baja"}
-    except ValueError as e:
-        raise HTTPException(status_code=409, detail=str(e))
+    except Exception as e: # <--- CAMBIO AQUÍ
+        raise HTTPException(status_code=409, detail="No se puede eliminar porque tiene dependencias")

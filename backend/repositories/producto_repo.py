@@ -8,6 +8,13 @@ class ProductoRepository:
 
     def __init__(self, db: Session):
         self.db = db
+
+    def guardar(self, producto: Producto):
+        """Persiste los cambios del Agregado en la base de datos"""
+        self.db.add(producto)
+        self.db.commit()
+        self.db.refresh(producto)
+        return producto
     
     def registrar_producto(self, producto_data: ProductoCreate):
         """Registra un nuevo producto en el catálogo"""
@@ -33,17 +40,9 @@ class ProductoRepository:
         """Escanea un código de barras y devuelve el producto"""
         return self.db.query(Producto).filter(Producto.codigo_barras == codigo_barras).first()
 
-    def actualizar_inventario_producto(self, id: int, producto_data: ProductoCreate):
+    def actualizar_inventario_producto(self, producto: Producto):
         """Actualiza el inventario del producto (precios, stock, etc.)"""
-        producto = self.consultar_producto(id)
-        if not producto:
-            return None
-        data = producto_data.model_dump(exclude_unset=True)
-        for key, value in data.items():
-            setattr(producto, key, value)
-        self.db.commit()
-        self.db.refresh(producto)
-        return producto
+        return self.guardar(producto)
     
     def dar_de_baja_producto(self, id: int):
         """Da de baja un producto del catálogo"""

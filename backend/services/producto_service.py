@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from repositories.producto_repo import ProductoRepository
 from schemas.producto_schema import ProductoCreate
+from db.models.producto import Producto
 from core.cache import cache
 
 
@@ -13,13 +14,21 @@ class ProductoService:
         """Registra un nuevo producto en el sistema"""
         if self.repo.buscar_producto_por_nombre(data.nombre):
             raise ValueError("Ya existe un producto con ese nombre")
-        producto = self.repo.registrar_producto(data)
         
-        # Invalidar caché de catálogo
+        nuevo_producto = Producto(
+            codigo_barras=data.codigo_barras,
+            img=data.img,
+            tipo="producto"
+        )
+        
+        nuevo_producto.actualizar_informacion_basica(data.nombre, data.descripcion, data.marca, data.categoria)
+        nuevo_producto.establecer_precios(data.precio_compra, data.precio_venta)
+        nuevo_producto.ajustar_inventario(data.stock, data.stock_minimo)
+        
+        producto_guardado = self.repo.guardar(nuevo_producto)
         cache.invalidate_pattern('productos')
-        
-        return producto
-    
+        return producto_guardado
+
     def obtener_catalogo_completo(self):
         """Obtiene el catálogo completo de productos"""
         # Intentar obtener del caché
@@ -62,13 +71,21 @@ class ProductoService:
     
     def actualizar_stock_y_precios(self, id: int, data: ProductoCreate):
         """Actualiza el stock y precios del producto"""
-        producto = self.repo.actualizar_inventario_producto(id, data)
+        producto = self.repo.consultar_producto(id)
+        if not producto: return None
         
-        # Invalidar caché
+        producto.actualizar_informacion_basica(data.nombre, data.descripcion, data.marca, data.categoria)
+        producto.establecer_precios(data.precio_compra, data.precio_venta)
+        producto.ajustar_inventario(data.stock, data.stock_minimo)
+        
+        if data.codigo_barras is not None: producto.codigo_barras = data.codigo_barras
+        if data.img is not None: producto.img = data.img
+            
+        producto_actualizado = self.repo.actualizar_inventario_producto(producto)
+        
         cache.delete(f'producto_{id}')
         cache.invalidate_pattern('productos')
-        
-        return producto
+        return producto_actualizado
     
     def dar_de_baja_producto(self, id: int):
         """Da de baja un producto del sistema"""

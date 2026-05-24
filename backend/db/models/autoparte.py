@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
 from .producto import Producto
-
+from db.models.value_objects import CompatibilidadVehiculoVO
 
 
 class Autoparte(Producto):
@@ -13,3 +13,14 @@ class Autoparte(Producto):
     __mapper_args__ = {
         'polymorphic_identity': 'autoparte',
     }
+
+
+    # ==========================================
+    # LÓGICA DE DOMINIO ESPECÍFICA 
+    # ==========================================
+
+    def asignar_compatibilidad(self, modelo: str, anio: str):
+        """El Agregado delega la validación al Value Object inmutable"""
+        compatibilidad_vo = CompatibilidadVehiculoVO(modelo=modelo, anio=anio)
+        self.modelo = compatibilidad_vo.modelo
+        self.anio = compatibilidad_vo.anio

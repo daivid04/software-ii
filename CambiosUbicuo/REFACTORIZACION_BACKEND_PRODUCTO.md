@@ -1,46 +1,7 @@
 # Refactorización Backend - Producto (DDD - Lenguaje Ubicuo)
 
-## 📋 Resumen
-Refactorización completa del dominio **Producto** aplicando principios de **Domain-Driven Design (DDD)** con lenguaje ubicuo en español. Se cambió la nomenclatura de atributos de camelCase a snake_case y se reemplazaron métodos técnicos por métodos con lenguaje de negocio.
-
----
 
 ## 🔄 Cambios Realizados
-
-### 1. **Modelo de Datos** (`backend/db/models/producto.py`)
-
-#### Cambios de Atributos (camelCase → snake_case):
-```python
-# ANTES                    # DESPUÉS
-precioVenta               → precio_venta
-precioCompra              → precio_compra
-codBarras                 → codigo_barras
-stockMin                  → stock_minimo
-```
-
-**Cambios realizados:**
-- Renombrados 4 atributos de camelCase a snake_case
-- Las relaciones y mapeos se mantienen igual
-- Tabla sigue siendo `productos`
-
----
-
-### 2. **Schemas (DTOs)** (`backend/schemas/producto_schema.py`)
-
-#### Cambios:
-- Actualización de nombres de campos en `ProductoBase`, `ProductoCreate`, `ProductoResponse`
-- Se consolidaron las validaciones (había duplicadas)
-- Se agregó la clase `Config` dentro de `ProductoResponse`
-
-**Cambios realizados:**
-- Actualización de nombres de campos en `ProductoBase`, `ProductoCreate`, `ProductoResponse`
-- Se consolidaron las validaciones (había duplicadas)
-- Se agregó la clase `Config` dentro de `ProductoResponse`
-- Campo `codBarras` → `codigo_barras`
-- Campo `precioVenta` → `precio_venta`
-- Campo `precioCompra` → `precio_compra`
-- Campo `stockMin` → `stock_minimo`
-
 ---
 
 ### 3. **Repositorio** (`backend/repositories/producto_repo.py`)
@@ -97,20 +58,8 @@ stockMin                  → stock_minimo
 - `actualizar_stock_y_precios()` → Actualiza el stock y precios del producto
 - `dar_de_baja_producto()` → Da de baja un producto del sistema
 
-**Cambios adicionales:**
-- Se mantiene la lógica de caché para optimizar búsquedas
-- Validaciones de negocio se realizan en el servicio
-- Mensajes de error más descriptivos
 
 ---
-
-### 5. **Rutas API** (`backend/api/v1/routes/producto_routes.py`)
-
-#### Cambios Principales:
-- Actualización de llamadas a métodos de servicio
-- Cambio de parámetro de ruta: `/barcode/{codBarras}` → `/codigo-barras/{codigo_barras}`
-- Cambio de nombres de funciones endpoint
-- Actualización de mensajes y documentación
 
 #### Cambios Específicos:
 

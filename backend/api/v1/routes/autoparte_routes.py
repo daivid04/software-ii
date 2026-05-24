@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from db.base import SessionLocal
 from schemas.autoparte_schema import AutoparteCreate, AutoparteResponse
@@ -117,7 +117,10 @@ def create_autoparte(
     **Autenticación:
     Requiere token JWT en header: `Authorization: Bearer <token>`
     """
-    return service.registrar_nueva_autoparte(data)
+    try:
+        return service.registrar_nueva_autoparte(data)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 
 @router.get("/", response_model=list[AutoparteResponse], summary="Listar todas las autopartes")
@@ -220,10 +223,13 @@ def actualizar_informacion_autoparte(
     Raises:
         HTTPException(404): Si la autoparte no existe.
     """
-    autoparte = service.actualizar_informacion_autoparte(id, data)
-    if not autoparte:
-        raise HTTPException(status_code=404, detail="Autoparte no encontrada")
-    return autoparte
+    try:
+        autoparte = service.actualizar_informacion_autoparte(id, data)
+        if not autoparte:
+            raise HTTPException(status_code=404, detail="Autoparte no encontrada")
+        return autoparte
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 
 @router.delete("/{id}", dependencies=[Depends(require_supabase_user)], summary="Dar de baja autoparte", description="Da de baja una autoparte del sistema.")
@@ -240,10 +246,13 @@ def dar_de_baja_autoparte(id: int, service: AutoparteService = Depends(get_autop
     Raises:
         HTTPException(404): Si la autoparte no existe.
     """
-    autoparte = service.dar_de_baja_autoparte(id)
-    if not autoparte:
-        raise HTTPException(status_code=404, detail="Autoparte no encontrada")
-    return {"detail": "Autoparte eliminada"}
+    try:
+        autoparte = service.dar_de_baja_autoparte(id)
+        if not autoparte:
+            raise HTTPException(status_code=404, detail="Autoparte no encontrada")
+        return {"detail": "Autoparte eliminada"}
+    except Exception as e:
+        raise HTTPException(status_code=409, detail="No se puede eliminar porque tiene dependencias")
 
 
 # Endpoints específicos para autopartes
