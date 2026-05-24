@@ -85,3 +85,28 @@ class InformacionServicioVO:
             raise ValueError("El nombre del servicio debe tener al menos 3 caracteres")
         if not self.descripcion or len(self.descripcion.strip()) < 10:
             raise ValueError("La descripción del servicio debe tener al menos 10 caracteres")
+        
+@dataclass(frozen=True)
+class InformacionEmpleadoVO:
+    """Value Object para asegurar la validez de los datos de un empleado"""
+    nombres: str
+    apellidos: str
+    especialidad: str
+
+    def __post_init__(self):
+        if not self.nombres or len(self.nombres.strip()) < 2:
+            raise ValueError("Los nombres deben tener al menos 2 caracteres")
+        if not self.apellidos or len(self.apellidos.strip()) < 2:
+            raise ValueError("Los apellidos deben tener al menos 2 caracteres")
+        if not self.especialidad or len(self.especialidad.strip()) < 2:
+            raise ValueError("La especialidad debe tener al menos 2 caracteres")
+
+@dataclass(frozen=True)
+class EstadoEmpleadoVO:
+    """Value Object para garantizar que el estado del empleado sea coherente"""
+    valor: str
+
+    def __post_init__(self):
+        estados_validos = ["activo", "inactivo", "vacaciones", "suspendido"]
+        if not self.valor or self.valor.lower() not in estados_validos:
+            raise ValueError(f"Estado de empleado no válido. Debe ser uno de: {', '.join(estados_validos)}")

@@ -30,16 +30,14 @@ def registrar_nuevo_empleado(
     **Validaciones:**
     - Nombre: Mínimo 3 caracteres, máximo 200
     - Puesto: Mínimo 3 caracteres, máximo 100
-    - Teléfono: Formato válido (opcional)
-    - Email: Formato válido (opcional)
+
     
     **Ejemplo de Request correcto:**
     ```json
     {
         "nombre": "Carlos Méndez",
         "puesto": "Mecánico Senior",
-        "telefono": "555-1234",
-        "email": "carlos@tallerdiego.com"
+        "Especialidad": "Motor y transmisión",
     }
     ```
     
@@ -50,14 +48,16 @@ def registrar_nuevo_empleado(
         "nombre": "Carlos Méndez",
         "puesto": "Mecánico Senior",
         "telefono": "555-1234",
-        "email": "carlos@tallerdiego.com"
     }
     ```
     
     **Autenticación:**
     Requiere token JWT en header: `Authorization: Bearer <token>`
     """
-    return service.registrar_nuevo_empleado(data)
+    try:
+        return service.registrar_nuevo_empleado(data)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 @router.get("/", response_model=list[EmpleadoResponse], summary="Obtener catálogo completo de empleados")
 def obtener_catalogo_completo(
@@ -148,10 +148,13 @@ def actualizar_empleado(
     **Autenticación:**
     Requiere token JWT en header: `Authorization: Bearer <token>`
     """
-    empleado = service.actualizar_empleado(id, data)
-    if not empleado:
-        raise HTTPException(status_code=404, detail="Empleado no encontrado")
-    return empleado
+    try:
+        empleado = service.actualizar_empleado(id, data)
+        if not empleado:
+            raise HTTPException(status_code=404, detail="Empleado no encontrado")
+        return empleado
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 @router.delete("/{id}", dependencies=[Depends(require_supabase_user)], summary="Dar de baja empleado")
 def dar_de_baja_empleado(id: int, service: EmpleadoService = Depends(get_empleado_service)):
@@ -178,7 +181,11 @@ def dar_de_baja_empleado(id: int, service: EmpleadoService = Depends(get_emplead
     Raises:
         HTTPException(404): Si el empleado no existe.
     """
-    empleado = service.dar_de_baja_empleado(id)
-    if not empleado:
-        raise HTTPException(status_code=404, detail="Empleado no encontrado")
-    return {"detail": "Empleado eliminado"}
+    try:
+        empleado = service.dar_de_baja_empleado(id)
+        if not empleado:
+            raise HTTPException(status_code=404, detail="Empleado no encontrado")
+        return {"detail": "Empleado eliminado"}
+    except ValueError as e:
+        # Atrapa la restricción de base de datos desde el repo y el dominio
+        raise HTTPException(status_code=409, detail=str(e))
