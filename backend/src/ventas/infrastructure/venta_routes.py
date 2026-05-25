@@ -2,9 +2,9 @@ from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from db.base import SessionLocal
-from schemas.venta_schema import VentaCreate, VentaResponse
+from src.ventas.infrastructure.venta_schema import VentaCreate, VentaResponse
 from src.ventas.application.venta_service import VentaService
-from core.auth import require_supabase_user
+from src.auth.infrastructure.auth import require_supabase_user
 
 router = APIRouter(tags=["Ventas"])
 

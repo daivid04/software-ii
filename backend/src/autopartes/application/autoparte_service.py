@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from src.autopartes.infrastructure.autoparte_repo import AutoparteRepository
-from schemas.autoparte_schema import AutoparteCreate
+from src.autopartes.infrastructure.autoparte_schema import AutoparteCreate
 from src.autopartes.infrastructure.autoparte import Autoparte
 from src.autopartes.domain.autoparte_domain import AutoparteDomain
 

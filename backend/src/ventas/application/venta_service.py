@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from src.ventas.infrastructure.venta_repo import VentaRepository
 from src.producto.infrastructure.producto_repo import ProductoRepository
 from src.ventas.infrastructure.venta import Venta
-from db.models.venta_producto import VentaProducto
+from src.ventas.infrastructure.venta_producto import VentaProducto
 from core.cache import cache
 from src.ventas.domain.venta_domain import VentaDomain
 

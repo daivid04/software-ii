@@ -3,10 +3,14 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import Response, HTMLResponse
 from fastapi.openapi.docs import get_swagger_ui_html
-from api.v1.routes import orden_routes, servicio_routes, empleado_routes, status_routes, auth_routes
+from db import status_routes
 import time
 
-from backend.src.autopartes.infrastructure import autoparte_routes
+from src.auth.infrastructure import auth_routes
+from src.empleados.infrastructure import empleado_routes
+from src.ordenes.infrastructure import orden_routes
+from src.autopartes.infrastructure import autoparte_routes
+from src.servicios.infrastructure import servicio_routes
 from src.ventas.infrastructure import venta_routes
 from src.producto.infrastructure import producto_routes
 
@@ -83,3 +87,5 @@ async def custom_swagger_ui_html():
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
+
+

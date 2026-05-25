@@ -1,7 +1,7 @@
 // Service Worker para caché offline
-const CACHE_NAME = 'taller-diego-v12';
-const STATIC_CACHE = 'static-v12';
-const API_CACHE = 'api-v12';
+const CACHE_NAME = 'taller-diego-v13';
+const STATIC_CACHE = 'static-v13';
+const API_CACHE = 'api-v13';
 
 // Assets estáticos para cachear
 const STATIC_ASSETS = [

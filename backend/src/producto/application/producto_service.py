@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from src.producto.infrastructure.producto_repo import ProductoRepository
-from schemas.producto_schema import ProductoCreate
+from src.producto.infrastructure.producto_schema import ProductoCreate
 from src.producto.infrastructure.producto import Producto
 from core.cache import cache
 

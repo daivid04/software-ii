@@ -1,6 +1,5 @@
 from sqlalchemy import Date, cast
 from sqlalchemy.orm import Session
-from db.models import Venta
 from datetime import datetime
 from src.ventas.infrastructure.venta import Venta
 
