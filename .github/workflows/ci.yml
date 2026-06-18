@@ -3,7 +3,7 @@ name: MVP Continuous Integration
 on:
   pull_request:
     branches:
-      - main
+      - refact/implementar-arqui-hex
 
 jobs:
   build-and-test:
