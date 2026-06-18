@@ -8,4 +8,5 @@ python-multipart
 psycopg2-binary
 httpx
 pytest
-pytest-cov
+pytest-cov'
+flake8
