@@ -7,6 +7,11 @@ from src.auth.infrastructure.auth import require_supabase_user
 def override_require_supabase_user():
     return {"id": "test-user", "email": "test@demo.com"}
 
+def test_fail():
+    assert True == False
+def bad():
+    print(1)
+    x = undefined_variable
 app.dependency_overrides[require_supabase_user] = override_require_supabase_user
 
 client = TestClient(app)
