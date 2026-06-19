@@ -7,3 +7,7 @@ sqlalchemy
 python-multipart
 psycopg2-binary
 httpx
+flake8
+pytest
+pytest-cov
+python-dotenv
