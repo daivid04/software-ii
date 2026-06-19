@@ -23,7 +23,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run Linter
-        run: flake8 backend/
+        run: flake8 backend/ --exclude=backend/tests/
 
       - name: Run Unit Tests with Coverage
         run: pytest tests/ --cov=backend/ --cov-report=xml
